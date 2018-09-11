@@ -1,10 +1,11 @@
-package com.adach.scrumote.data.controller;
+package com.adach.scrumote.api;
 
-import com.adach.scrumote.data.dto.user.UserDto;
-import com.adach.scrumote.data.mapper.user.UserMapper;
-import com.adach.scrumote.data.service.UserService;
+import com.adach.scrumote.dto.UserDto;
+import com.adach.scrumote.mapper.UserMapper;
+import com.adach.scrumote.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-  @Autowired
-  UserService userService;
-
-  @Autowired
-  UserMapper userMapper;
+  private final UserService userService;
+  private final UserMapper userMapper;
 
   @GetMapping("/users")
   public List<UserDto> getUsers() {

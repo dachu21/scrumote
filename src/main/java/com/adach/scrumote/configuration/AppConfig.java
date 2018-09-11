@@ -1,7 +1,7 @@
 package com.adach.scrumote.configuration;
 
-import com.adach.scrumote.data.dto.user.UserDto;
-import com.adach.scrumote.data.entity.User;
+import com.adach.scrumote.dto.UserDto;
+import com.adach.scrumote.entity.User;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import java.lang.reflect.Type;
@@ -18,7 +18,7 @@ public class AppConfig {
   }
 
   @Bean
-  public DtoTypeMap typeMap() {
+  public DtoTypeMap dtoTypeMap() {
     BiMap<Type, Type> typesMap = HashBiMap.create();
     typesMap.put(User.class, UserDto.class);
     return new DtoTypeMap(typesMap);

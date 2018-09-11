@@ -1,4 +1,4 @@
-package com.adach.scrumote.data.mapper;
+package com.adach.scrumote.mapper;
 
 public interface Mapper<E, D> {
 

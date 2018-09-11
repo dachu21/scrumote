@@ -1,10 +1,12 @@
-package com.adach.scrumote.data.repository;
+package com.adach.scrumote.repository;
 
-import com.adach.scrumote.data.entity.User;
+import com.adach.scrumote.entity.User;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+  Optional<User> findByUsername(String username);
 }
