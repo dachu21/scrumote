@@ -1,8 +1,8 @@
 package com.adach.scrumote.mapper;
 
-import com.adach.scrumote.configuration.DtoTypeMap;
 import com.adach.scrumote.dto.AbstractDto;
 import com.adach.scrumote.entity.AbstractEntity;
+import com.adach.scrumote.configuration.DtoTypeMap;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
