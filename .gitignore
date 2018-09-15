@@ -2,6 +2,6 @@
 .idea/*
 !.idea/codeStyles
 
-/target
+*/target
 
 desktop.ini
