@@ -1,8 +1,8 @@
 package com.adach.scrumote.mapper;
 
+import com.adach.scrumote.configuration.DtoTypeMap;
 import com.adach.scrumote.dto.UserDto;
 import com.adach.scrumote.entity.User;
-import com.adach.scrumote.configuration.DtoTypeMap;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
