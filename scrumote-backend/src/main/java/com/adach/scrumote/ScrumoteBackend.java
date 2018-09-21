@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ScrumoteApplication {
+public class ScrumoteBackend {
 
   public static void main(String[] args) {
-    SpringApplication.run(ScrumoteApplication.class, args);
+    SpringApplication.run(ScrumoteBackend.class, args);
   }
 }
