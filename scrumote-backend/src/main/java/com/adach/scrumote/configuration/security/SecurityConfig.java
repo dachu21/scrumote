@@ -40,6 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+    http
+        .csrf()
+        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        .and()
+        .authorizeRequests()
+        .antMatchers("/swagger-ui.html")
+        .hasRole("ADMINISTRATOR")
+        .and()
+        .formLogin();
   }
 }

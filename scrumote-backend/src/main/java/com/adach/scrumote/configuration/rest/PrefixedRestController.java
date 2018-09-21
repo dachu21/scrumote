@@ -1,10 +1,9 @@
-package com.adach.scrumote.configuration.mvc;
+package com.adach.scrumote.configuration.rest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,4 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Retention(RetentionPolicy.RUNTIME)
 @RestController
 @RequestMapping("/api")
-public @interface PrefixedRestController {}
+public @interface PrefixedRestController {
+
+}

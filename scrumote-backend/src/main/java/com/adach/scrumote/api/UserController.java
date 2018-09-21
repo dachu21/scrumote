@@ -1,6 +1,6 @@
 package com.adach.scrumote.api;
 
-import com.adach.scrumote.configuration.mvc.PrefixedRestController;
+import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.UserDto;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.service.UserService;
