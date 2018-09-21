@@ -1,5 +1,6 @@
 package com.adach.scrumote.api;
 
+import com.adach.scrumote.configuration.mvc.PrefixedRestController;
 import com.adach.scrumote.dto.UserDto;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.service.UserService;
@@ -10,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@PrefixedRestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
