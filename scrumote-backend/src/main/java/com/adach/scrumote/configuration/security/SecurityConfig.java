@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
@@ -24,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public UserDetailsService userDetailsService() {
     return new UserDetailsServiceImpl(userRepository);
+  }
+
+  @Bean
+  public AuthenticationEntryPoint authenticationEntryPoint() {
+    return new AuthenticationEntryPointImpl();
   }
 
   @Bean
@@ -41,13 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http
-        .csrf()
-        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        .httpBasic()
+        .and()
+        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint())
         .and()
         .authorizeRequests()
-        .antMatchers("/swagger-ui.html")
-        .hasRole("ADMINISTRATOR")
-        .and()
-        .formLogin();
+        .antMatchers("/", "/ui/**", "/login", "/home").permitAll()
+        .anyRequest().authenticated();
   }
 }

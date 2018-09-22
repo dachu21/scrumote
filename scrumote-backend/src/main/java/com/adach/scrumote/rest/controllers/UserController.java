@@ -1,9 +1,10 @@
-package com.adach.scrumote.api;
+package com.adach.scrumote.rest.controllers;
 
-import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.UserDto;
 import com.adach.scrumote.mapper.UserMapper;
+import com.adach.scrumote.rest.PrefixedRestController;
 import com.adach.scrumote.service.UserService;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class UserController {
 
   private final UserService userService;
   private final UserMapper userMapper;
+
+  @GetMapping("/login")
+  public Principal user(Principal user) {
+    return user;
+  }
 
   @GetMapping("/users")
   public List<UserDto> getUsers() {
