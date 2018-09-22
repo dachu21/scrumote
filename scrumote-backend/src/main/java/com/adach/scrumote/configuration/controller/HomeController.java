@@ -1,4 +1,4 @@
-package com.adach.scrumote.configuration.controllers;
+package com.adach.scrumote.configuration.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,10 +6,10 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @ApiIgnore
-public class ForwardController {
+public class HomeController {
 
-  @GetMapping(value = "/**/{[path:[^.]*}")
-  public String forward() {
-    return "forward:/";
+  @GetMapping(path = "/")
+  public String getHome() {
+    return "ui/index.html";
   }
 }

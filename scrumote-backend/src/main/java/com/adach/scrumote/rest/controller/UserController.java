@@ -1,4 +1,4 @@
-package com.adach.scrumote.rest.controllers;
+package com.adach.scrumote.rest.controller;
 
 import com.adach.scrumote.dto.UserDto;
 import com.adach.scrumote.mapper.UserMapper;
