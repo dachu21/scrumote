@@ -46,16 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http
-        .httpBasic()
-        .and()
-        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPoint())
-        .and()
-        .authorizeRequests()
+    http.httpBasic();
+    http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+    http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
+
+    http.authorizeRequests()
         .antMatchers("/", "/ui/**", "/login", "/home").permitAll()
+        .antMatchers("/swagger-ui.html", "/v2/api-docs", "/csrf").hasAuthority("swagger")
         .anyRequest().authenticated();
   }
 }
