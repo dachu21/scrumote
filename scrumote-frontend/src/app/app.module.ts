@@ -9,10 +9,10 @@ import {
 } from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CustomMaterializeModule} from "./custom-materialize/custom-materialize.module";
 
 import {AppComponent} from './app.component';
-// import {HomeComponent} from './home.component';
-// import {LoginComponent} from './login.component';
 import {AppService} from './app.service';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
@@ -44,7 +44,9 @@ export class XhrInterceptor implements HttpInterceptor {
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    CustomMaterializeModule
   ],
   providers: [AppService, {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}],
   bootstrap: [AppComponent]
