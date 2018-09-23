@@ -1,8 +1,7 @@
-package com.adach.scrumote.rest.controller;
+package com.adach.scrumote.rest;
 
-import com.adach.scrumote.dto.UserDto;
+import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.mapper.UserMapper;
-import com.adach.scrumote.rest.PrefixedRestController;
 import com.adach.scrumote.service.UserService;
 import java.security.Principal;
 import java.util.List;
@@ -26,12 +25,12 @@ public class UserController {
   }
 
   @GetMapping("/users")
-  public List<UserDto> getUsers() {
-    return userService.findAll().stream().map(userMapper::mapToDto).collect(Collectors.toList());
+  public List<UserSimpleDto> getUsers() {
+    return userService.findAll().stream().map(userMapper::mapToSimpleDto).collect(Collectors.toList());
   }
 
   @PostMapping("/users")
-  public void addUser(@RequestBody UserDto userDto) {
-    userService.save(userMapper.mapToEntity(userDto));
+  public void addUser(@RequestBody UserSimpleDto userSimpleDto) {
+    userService.save(userMapper.mapToEntity(userSimpleDto));
   }
 }

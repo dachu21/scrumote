@@ -24,5 +24,5 @@ public abstract class AbstractEntity {
 
   @Version
   @Column(nullable = false, updatable = false)
-  protected Long version;
+  private Long version;
 }

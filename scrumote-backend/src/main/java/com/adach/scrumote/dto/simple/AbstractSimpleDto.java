@@ -1,10 +1,10 @@
-package com.adach.scrumote.dto;
+package com.adach.scrumote.dto.simple;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @EqualsAndHashCode
-public abstract class AbstractDto {
+public abstract class AbstractSimpleDto {
 
 }

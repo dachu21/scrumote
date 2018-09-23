@@ -1,6 +1,5 @@
-package com.adach.scrumote.rest.controller;
+package com.adach.scrumote.rest;
 
-import com.adach.scrumote.rest.PrefixedRestController;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

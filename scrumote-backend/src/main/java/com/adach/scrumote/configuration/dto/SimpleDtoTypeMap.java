@@ -1,13 +1,13 @@
-package com.adach.scrumote.configuration;
+package com.adach.scrumote.configuration.dto;
 
 import com.google.common.collect.BiMap;
 import java.lang.reflect.Type;
 
-public class DtoTypeMap {
+public class SimpleDtoTypeMap {
 
   private final BiMap<Type, Type> typesMap;
 
-  public DtoTypeMap(BiMap<Type, Type> typesMap) {
+  public SimpleDtoTypeMap(BiMap<Type, Type> typesMap) {
     this.typesMap = typesMap;
   }
 

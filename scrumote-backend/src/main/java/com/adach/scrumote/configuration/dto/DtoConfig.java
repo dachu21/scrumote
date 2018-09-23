@@ -1,6 +1,6 @@
-package com.adach.scrumote.configuration;
+package com.adach.scrumote.configuration.dto;
 
-import com.adach.scrumote.dto.UserDto;
+import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.User;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+public class DtoConfig {
 
   @Bean
   public ModelMapper modelMapper() {
@@ -18,9 +18,9 @@ public class AppConfig {
   }
 
   @Bean
-  public DtoTypeMap dtoTypeMap() {
+  public SimpleDtoTypeMap simpleDtoTypeMap() {
     BiMap<Type, Type> typesMap = HashBiMap.create();
-    typesMap.put(User.class, UserDto.class);
-    return new DtoTypeMap(typesMap);
+    typesMap.put(User.class, UserSimpleDto.class);
+    return new SimpleDtoTypeMap(typesMap);
   }
 }
