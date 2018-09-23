@@ -54,5 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/", "/ui/**", "/login", "/home").permitAll()
         .antMatchers("/swagger-ui.html", "/v2/api-docs", "/csrf").hasAuthority("swagger")
         .anyRequest().authenticated();
+    //TODO rejestracja
   }
 }

@@ -1,6 +1,7 @@
 package com.adach.scrumote.entity;
 
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,5 +35,5 @@ public class Role extends AbstractEntity {
       joinColumns = @JoinColumn(name = "role_id"),
       inverseJoinColumns = @JoinColumn(name = "permission_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "permission_id"}))
-  private Collection<Permission> permissions;
+  private Collection<Permission> permissions = new HashSet<>();
 }

@@ -1,6 +1,7 @@
 package com.adach.scrumote.entity;
 
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -45,7 +46,7 @@ public class User extends AbstractEntity {
 
   @Column(nullable = false)
   @NotNull
-  @Size(min = 60, max = 60)
+  @Size(min = 8, max = 64)
   private String password;
 
   @Column(nullable = false, unique = true)
@@ -70,7 +71,7 @@ public class User extends AbstractEntity {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "permission_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "permission_id"}))
-  private Collection<Permission> permissions;
+  private Collection<Permission> permissions = new HashSet<>();
 
   @ManyToMany
   @JoinTable(
@@ -78,5 +79,5 @@ public class User extends AbstractEntity {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"}))
-  private Collection<Role> roles;
+  private Collection<Role> roles = new HashSet<>();
 }

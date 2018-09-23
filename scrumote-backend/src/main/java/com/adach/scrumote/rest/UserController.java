@@ -1,11 +1,9 @@
 package com.adach.scrumote.rest;
 
 import com.adach.scrumote.dto.simple.UserSimpleDto;
-import com.adach.scrumote.mapper.UserMapper;
-import com.adach.scrumote.service.UserService;
+import com.adach.scrumote.service.external.UserPublicService;
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,21 +14,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-  private final UserService userService;
-  private final UserMapper userMapper;
+  private final UserPublicService userPublicService;
 
   @GetMapping("/login")
-  public Principal user(Principal user) {
+  public Principal loginUser(Principal user) {
     return user;
+  }
+
+  @PostMapping("/register")
+  public void registerUser(@RequestBody UserSimpleDto userSimpleDto) {
+    userPublicService.register(userSimpleDto);
   }
 
   @GetMapping("/users")
   public List<UserSimpleDto> getUsers() {
-    return userService.findAll().stream().map(userMapper::mapToSimpleDto).collect(Collectors.toList());
-  }
-
-  @PostMapping("/users")
-  public void addUser(@RequestBody UserSimpleDto userSimpleDto) {
-    userService.save(userMapper.mapToEntity(userSimpleDto));
+    return userPublicService.findAll();
   }
 }
