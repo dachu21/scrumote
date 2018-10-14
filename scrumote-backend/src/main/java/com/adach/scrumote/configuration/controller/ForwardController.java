@@ -10,6 +10,6 @@ public class ForwardController {
 
   @GetMapping(value = "/**/{[path:[^.]*}")
   public String forward() {
-    return "forward:/";
+    return "forward:ui/index.html";
   }
 }

@@ -51,9 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 
     http.authorizeRequests()
-        .antMatchers("/", "/ui/**", "/login", "/home").permitAll()
-        .antMatchers("/swagger-ui.html", "/v2/api-docs", "/csrf").hasAuthority("swagger")
+        .antMatchers(AntMatchers.ROUTES_PERMIT_ALL).permitAll()
+        .antMatchers(AntMatchers.ROUTES_ANONYMOUS).hasRole("ANONYMOUS")
+        .antMatchers(AntMatchers.API_ANONYMOUS).hasRole("ANONYMOUS")
+        .antMatchers(AntMatchers.SWAGGER).hasAuthority("swagger")
         .anyRequest().authenticated();
-    //TODO rejestracja
   }
 }

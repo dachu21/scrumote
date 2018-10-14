@@ -72,5 +72,6 @@ const MZ_MODULES = [
   imports: MZ_MODULES,
   exports: MZ_MODULES
 })
+
 export class CustomMaterializeModule {
 }

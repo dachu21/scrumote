@@ -8,19 +8,22 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterializeModule} from "./custom-materialize/custom-materialize.module";
 
 import {AppComponent} from './app.component';
-import {AppService} from './app.service';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home';
+import {LoginComponent} from './login';
+import {RegisterComponent} from './register';
+import {AlertService, AuthenticationService, UserService} from "./_services";
+import {AlertComponent} from "./_directives";
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
   {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent}
 ];
 
 @Injectable()
@@ -38,17 +41,25 @@ export class XhrInterceptor implements HttpInterceptor {
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CustomMaterializeModule
+    CustomMaterializeModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [AppService, {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}],
+  providers: [
+    AlertService,
+    UserService,
+    AuthenticationService,
+    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
