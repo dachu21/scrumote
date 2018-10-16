@@ -8,7 +8,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class ForwardController {
 
-  @GetMapping(value = "/**/{[path:[^.]*}")
+  @GetMapping(value = {"/", "/error", "/**/{[path:[^.]*}"})
   public String forward() {
     return "forward:ui/index.html";
   }
