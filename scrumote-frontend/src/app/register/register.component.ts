@@ -15,6 +15,30 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  errorMessageResources = {
+    username: {
+      required: 'Username is required.',
+    },
+    password: {
+      required: 'Password is required.',
+      minlength: 'Password must be at least 8 characters long.',
+      maxlength: 'Password cannot be more than 64 characters long.'
+    },
+    email: {
+      required: 'E-mail is required.',
+    },
+    firstName: {},
+    lastName: {}
+  };
+
+  labels = {
+    username: 'Username',
+    password: 'Password',
+    email: 'E-mail',
+    firstName: 'First name',
+    lastName: 'Last name'
+  };
+
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,

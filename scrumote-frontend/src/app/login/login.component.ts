@@ -15,6 +15,30 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
 
+  errorMessageResources = {
+    username: {
+      required: 'Username is required.',
+    },
+    password: {
+      required: 'Password is required.',
+    },
+  };
+
+  labels = {
+    username: 'Username',
+    password: 'Password',
+  };
+
+  constructor(
+      private authenticationService: AuthenticationService,
+      private http: HttpClient,
+      private router: Router,
+      private route: ActivatedRoute,
+      private alertService: AlertService,
+      private formBuilder: FormBuilder
+  ) {
+  }
+
   get form() {
     return this.loginForm.controls;
   }
@@ -26,16 +50,6 @@ export class LoginComponent implements OnInit {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
-
-  constructor(
-      private authenticationService: AuthenticationService,
-      private http: HttpClient,
-      private router: Router,
-      private route: ActivatedRoute,
-      private alertService: AlertService,
-      private formBuilder: FormBuilder
-  ) {
   }
 
   onSubmit() {
