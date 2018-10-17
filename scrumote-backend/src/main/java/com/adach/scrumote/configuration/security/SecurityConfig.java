@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http.httpBasic();
 
+    http.requiresChannel().anyRequest().requiresSecure();
+
     http.csrf()
         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .ignoringAntMatchers(AntMatchers.API_ANONYMOUS);
