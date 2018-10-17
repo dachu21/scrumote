@@ -4,6 +4,7 @@ import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class RoleInternalService {
 
   private final RoleRepository roleRepository;
 
+  @Secured({"ROLE_ANONYMOUS", "swagger"})
   public Role findStandardUserRole() {
     return roleRepository
         .findByName(STANDARD_USER_ROLE_NAME)

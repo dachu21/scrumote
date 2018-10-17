@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Retention(RetentionPolicy.RUNTIME)
 @RestController
 @RequestMapping("/api")
-public @interface PrefixedRestController {
+@interface PrefixedRestController {
 
 }

@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(AntMatchers.ROUTES_PERMIT_ALL).permitAll()
         .antMatchers(AntMatchers.ROUTES_ANONYMOUS).hasRole("ANONYMOUS")
         .antMatchers(AntMatchers.API_ANONYMOUS).hasRole("ANONYMOUS")
+        .antMatchers(AntMatchers.API_ANONYMOUS).hasAuthority("swagger")
         .antMatchers(AntMatchers.SWAGGER).hasAuthority("swagger")
         .anyRequest().authenticated();
   }

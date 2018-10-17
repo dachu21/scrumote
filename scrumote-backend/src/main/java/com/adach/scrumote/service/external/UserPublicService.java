@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class UserPublicService {
   private final RoleInternalService roleInternalService;
   private final PasswordEncoder passwordEncoder;
 
+  @Secured({"ROLE_ANONYMOUS", "swagger"})
   public void register(UserSimpleDto userSimpleDto) {
     User user = userMapper.mapToEntity(userSimpleDto);
     user.getRoles().add(roleInternalService.findStandardUserRole());
@@ -30,6 +32,7 @@ public class UserPublicService {
     userRepository.save(user);
   }
 
+  @Secured("admin")
   public List<UserSimpleDto> findAll() {
     return userRepository.findAll().stream().map(userMapper::mapToSimpleDto)
         .collect(Collectors.toList());

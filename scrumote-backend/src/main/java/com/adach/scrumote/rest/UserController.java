@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,16 +18,19 @@ public class UserController {
 
   private final UserPublicService userPublicService;
 
+  // Not @Secured - used by Spring Security.
   @GetMapping("/login")
   public Principal loginUser(Principal user) {
     return user;
   }
 
+  @Secured({"ROLE_ANONYMOUS", "swagger"})
   @PostMapping("/register")
   public void registerUser(@Valid @RequestBody UserSimpleDto userSimpleDto) {
     userPublicService.register(userSimpleDto);
   }
 
+  @Secured("admin")
   @GetMapping("/users")
   public List<UserSimpleDto> getUsers() {
     return userPublicService.findAll();
