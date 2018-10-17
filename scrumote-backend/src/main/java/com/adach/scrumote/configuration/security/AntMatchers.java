@@ -5,7 +5,7 @@ class AntMatchers {
   private static final String API_PREFIX = "/api";
 
   static final String[] ROUTES_PERMIT_ALL = {
-      "/", "/ui/**"
+      "/ui/**"
   };
 
   static final String[] ROUTES_ANONYMOUS = {
