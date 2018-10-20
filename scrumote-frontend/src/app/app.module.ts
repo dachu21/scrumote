@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {Injectable, NgModule} from '@angular/core';
 import {
   HTTP_INTERCEPTORS,
+  HttpClient,
   HttpClientModule,
   HttpHandler,
   HttpInterceptor,
@@ -11,6 +12,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterializeModule} from "./custom-materialize/custom-materialize.module";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home';
@@ -18,6 +21,8 @@ import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
 import {AlertService, AuthenticationService, UserService} from "./_services";
 import {AlertComponent} from "./_directives";
+
+import {environment as env} from "./environment";
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -37,6 +42,10 @@ export class XhrInterceptor implements HttpInterceptor {
   }
 }
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, env.i18n, '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +62,13 @@ export class XhrInterceptor implements HttpInterceptor {
     BrowserAnimationsModule,
     CustomMaterializeModule,
     RouterModule.forRoot(routes),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [
     AlertService,

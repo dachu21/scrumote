@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from "./_services";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,10 @@ import {AuthenticationService} from "./_services";
 })
 export class AppComponent {
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, translateService: TranslateService) {
     this.authenticationService.authenticate(undefined, undefined, undefined);
+    translateService.setDefaultLang('en');
+    translateService.use('en');
   }
 
   authenticated() {
