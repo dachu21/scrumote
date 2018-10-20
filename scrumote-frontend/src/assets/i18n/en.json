@@ -21,5 +21,9 @@
     },
     "firstName": {},
     "lastName": {}
+  },
+  "headers": {
+    "login": "Login",
+    "register": "Register"
   }
 }
