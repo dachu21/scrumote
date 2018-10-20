@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
     },
     email: {
       required: 'E-mail is required.',
+      email: 'E-mail address is not valid.'
     },
     firstName: {},
     lastName: {}
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       firstName: [''],
       lastName: ['']
     });
