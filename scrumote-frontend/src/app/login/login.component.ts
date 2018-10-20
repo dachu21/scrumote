@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -8,7 +8,7 @@ import {AlertService, AuthenticationService} from "../_services";
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm: FormGroup;
   loading = false;
@@ -37,19 +37,17 @@ export class LoginComponent implements OnInit {
       private alertService: AlertService,
       private formBuilder: FormBuilder
   ) {
-  }
 
-  get form() {
-    return this.loginForm.controls;
-  }
-
-  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  get form() {
+    return this.loginForm.controls;
   }
 
   onSubmit() {

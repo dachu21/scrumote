@@ -11,14 +11,14 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  authenticate(username, password, callback) {
+  authenticate(username: string | undefined, password: string | undefined, callback: (() => void) | undefined,) {
 
     const headers = new HttpHeaders(username && password ? {
       authorization: 'Basic ' + btoa(username + ':' + password)
     } : {});
 
-    this.http.get('/api/login', {headers: headers}).subscribe(response => {
-      if (response['name']) {
+    this.http.get<UserData>('/api/login', {headers: headers}).subscribe((response: UserData) => {
+      if (response.name) {
         this.authenticated = true;
       } else {
         this.authenticated = false;

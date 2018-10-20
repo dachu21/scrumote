@@ -1,7 +1,7 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <h2>Register</h2>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate *ngIf="errorMessageResources">
   <mz-input-container class="col s12 m6">
     <input mz-input mz-validation required
            id="username" formControlName="username" type="text"

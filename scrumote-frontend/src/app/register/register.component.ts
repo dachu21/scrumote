@@ -1,36 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService, UserService} from '../_services';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-register',
   templateUrl: 'register.component.html'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   registerForm: FormGroup;
   loading = false;
   submitted = false;
 
-  errorMessageResources = {
-    username: {
-      required: 'Username is required.',
-    },
-    password: {
-      required: 'Password is required.',
-      minlength: 'Password must be at least 8 characters long.',
-      maxlength: 'Password cannot be more than 64 characters long.'
-    },
-    email: {
-      required: 'E-mail is required.',
-      email: 'E-mail address is not valid.'
-    },
-    firstName: {},
-    lastName: {}
-  };
+  errorMessageResources = undefined;
 
   labels = {
     username: 'Username',
@@ -44,14 +30,9 @@ export class RegisterComponent implements OnInit {
       private formBuilder: FormBuilder,
       private router: Router,
       private userService: UserService,
-      private alertService: AlertService) {
-  }
+      private alertService: AlertService,
+      private translateService: TranslateService) {
 
-  get form() {
-    return this.registerForm.controls;
-  }
-
-  ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
@@ -59,6 +40,15 @@ export class RegisterComponent implements OnInit {
       firstName: [''],
       lastName: ['']
     });
+
+    this.translateService.get("errorMessageResources").subscribe((res: any) => {
+      this.errorMessageResources = res;
+      console.log(this.errorMessageResources);
+    });
+  }
+
+  get form() {
+    return this.registerForm.controls;
   }
 
   onSubmit() {

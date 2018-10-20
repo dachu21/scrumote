@@ -1,0 +1,18 @@
+{
+  "errorMessageResources": {
+    "username": {
+      "required": "Username is required."
+    },
+    "password": {
+      "required": "Password is required.",
+      "minlength": "Password must be at least 8 characters long.",
+      "maxlength": "Password cannot be more than 64 characters long."
+    },
+    "email": {
+      "required": "E-mail is required.",
+      "email": "E-mail address is not valid."
+    },
+    "firstName": {},
+    "lastName": {}
+  }
+}
