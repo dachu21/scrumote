@@ -2,9 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-
-import {AlertService, UserService} from '../_services';
-import {TranslateService} from "@ngx-translate/core";
+import {AlertService, TranslationsService, UserService} from '../_services';
 
 @Component({
   selector: 'app-register',
@@ -12,26 +10,19 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class RegisterComponent {
 
+  labels: any;
+  errorMessageResources: any;
+
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
-
-  errorMessageResources = undefined;
-
-  labels = {
-    username: 'Username',
-    password: 'Password',
-    email: 'E-mail',
-    firstName: 'First name',
-    lastName: 'Last name'
-  };
+  loading: boolean = false;
+  submitted: boolean = false;
 
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
       private userService: UserService,
       private alertService: AlertService,
-      private translateService: TranslateService) {
+      private translations: TranslationsService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -41,14 +32,8 @@ export class RegisterComponent {
       lastName: ['']
     });
 
-    this.translateService.get("errorMessageResources").subscribe((res: any) => {
-      this.errorMessageResources = res;
-      console.log(this.errorMessageResources);
-    });
-  }
-
-  get form() {
-    return this.registerForm.controls;
+    translations.labels.subscribe(value => this.labels = value);
+    translations.errorMessageResources.subscribe(value => this.errorMessageResources = value);
   }
 
   onSubmit() {

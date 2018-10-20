@@ -19,7 +19,7 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
-import {AlertService, AuthenticationService, UserService} from "./_services";
+import {AlertService, AuthenticationService, TranslationsService, UserService} from "./_services";
 import {AlertComponent} from "./_directives";
 
 import {environment as env} from "./environment";
@@ -74,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertService,
     UserService,
     AuthenticationService,
+    TranslationsService,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

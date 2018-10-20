@@ -1,28 +1,25 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {finalize} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {finalize} from "rxjs/operators";
 
 @Injectable()
 export class AuthenticationService {
 
-  authenticated = false;
+  authenticated: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router) {
   }
 
-  authenticate(username: string | undefined, password: string | undefined, callback: (() => void) | undefined,) {
+  authenticate(username: string | undefined, password: string | undefined, callback: (() => void) | undefined) {
 
     const headers = new HttpHeaders(username && password ? {
       authorization: 'Basic ' + btoa(username + ':' + password)
     } : {});
 
-    this.http.get<UserData>('/api/login', {headers: headers}).subscribe((response: UserData) => {
-      if (response.name) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
+    this.http.get<LoggedUser>('/api/login', {headers: headers}).subscribe((response: LoggedUser) => {
+      this.authenticated = !!response.name;
       return callback && callback();
     });
   }

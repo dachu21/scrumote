@@ -1,3 +1,0 @@
-interface UserData {
-  name: string;
-}

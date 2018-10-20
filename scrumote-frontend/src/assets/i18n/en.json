@@ -1,4 +1,11 @@
 {
+  "labels": {
+    "username": "Username",
+    "password": "Password",
+    "email": "E-mail",
+    "firstName": "First name",
+    "lastName": "Last name"
+  },
   "errorMessageResources": {
     "username": {
       "required": "Username is required."

@@ -1,0 +1,3 @@
+interface LoggedUser {
+  name: string;
+}

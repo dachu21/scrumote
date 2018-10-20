@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AlertService, AuthenticationService} from "../_services";
+import {AlertService, AuthenticationService, TranslationsService} from "../_services";
 
 @Component({
   selector: 'app-login',
@@ -10,24 +10,14 @@ import {AlertService, AuthenticationService} from "../_services";
 })
 export class LoginComponent {
 
+  labels: any;
+  errorMessageResources: any;
+
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
+  loading: boolean = false;
+  submitted: boolean = false;
+
   returnUrl: string;
-
-  errorMessageResources = {
-    username: {
-      required: 'Username is required.',
-    },
-    password: {
-      required: 'Password is required.',
-    },
-  };
-
-  labels = {
-    username: 'Username',
-    password: 'Password',
-  };
 
   constructor(
       private authenticationService: AuthenticationService,
@@ -35,19 +25,18 @@ export class LoginComponent {
       private router: Router,
       private route: ActivatedRoute,
       private alertService: AlertService,
-      private formBuilder: FormBuilder
-  ) {
+      private formBuilder: FormBuilder,
+      private translations: TranslationsService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
+    translations.labels.subscribe(value => this.labels = value);
+    translations.errorMessageResources.subscribe(value => this.errorMessageResources = value);
 
-  get form() {
-    return this.loginForm.controls;
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit() {
@@ -59,7 +48,7 @@ export class LoginComponent {
 
     this.loading = true;
 
-    this.authenticationService.authenticate(this.form.username.value, this.form.password.value, () => {
+    this.authenticationService.authenticate(this.loginForm.value.username, this.loginForm.value.password, () => {
       this.router.navigateByUrl(this.returnUrl);
     });
     return false;
