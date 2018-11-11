@@ -38,6 +38,6 @@ public class Vote extends AbstractEntity {
 
   @Column(nullable = false)
   @NotNull
-  private Integer value;
+  private String value;
   //endregion
 }

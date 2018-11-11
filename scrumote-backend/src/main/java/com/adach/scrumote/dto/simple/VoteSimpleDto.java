@@ -24,5 +24,5 @@ public class VoteSimpleDto extends AbstractSimpleDto {
   private Integer iteration;
 
   @NotNull
-  private Integer value;
+  private String value;
 }
