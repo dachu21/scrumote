@@ -26,6 +26,10 @@ public class Planning extends AbstractEntity {
   //region Data
   @Column(nullable = false, unique = true)
   @NotNull
+  private String code;
+
+  @Column(nullable = false)
+  @NotNull
   private String name;
 
   @Column
