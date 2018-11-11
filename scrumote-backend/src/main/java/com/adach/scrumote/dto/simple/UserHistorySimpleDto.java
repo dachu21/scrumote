@@ -36,5 +36,5 @@ public class UserHistorySimpleDto extends AbstractSimpleDto {
   private Integer firstVotesEqualEstimate;
 
   @NotNull
-  private Double averageCardLevelDifference;
+  private Double averageFirstVoteLevelDifference;
 }

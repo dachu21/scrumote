@@ -53,6 +53,44 @@ public class UserHistory extends AbstractEntity {
 
   @Column(nullable = false)
   @NotNull
-  private Double averageCardLevelDifference;
+  private Double averageFirstVoteLevelDifference;
   //endregion
+
+  public Integer getFirstVotes() {
+    return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
+  }
+
+  public void incrementPlannings() {
+    plannings++;
+  }
+
+  public void incrementIssues() {
+    issues++;
+  }
+
+  public void incrementVotes() {
+    votes++;
+  }
+
+  public void updateFirstVoteStatistics(Integer firstVoteLevel, Integer estimateLevel) {
+    int levelDifference = firstVoteLevel - estimateLevel;
+    updateAverageFirstVoteLevelDifference(levelDifference);
+    incrementFirstVotesCount(levelDifference);
+  }
+
+  private void updateAverageFirstVoteLevelDifference(int levelDifference) {
+    double totalLevelDifference = getFirstVotes() * averageFirstVoteLevelDifference;
+    totalLevelDifference += levelDifference;
+    averageFirstVoteLevelDifference = totalLevelDifference / (getFirstVotes() + 1);
+  }
+
+  private void incrementFirstVotesCount(int levelDifference) {
+    if (levelDifference < 0) {
+      firstVotesBelowEstimate++;
+    } else if (levelDifference > 0) {
+      firstVotesAboveEstimate++;
+    } else {
+      firstVotesEqualEstimate++;
+    }
+  }
 }
