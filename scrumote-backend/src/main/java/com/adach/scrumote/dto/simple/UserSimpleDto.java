@@ -16,8 +16,6 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 public class UserSimpleDto extends AbstractSimpleDto {
 
-  private Long id;
-
   @NotNull
   @Size(min = 3, max = 32)
   private String username;
