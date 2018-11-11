@@ -1,12 +1,13 @@
 package com.adach.scrumote.entity;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -65,13 +66,17 @@ public class User extends AbstractEntity {
   @Column(nullable = false)
   private boolean active;
 
+  @OneToOne
+  @JoinColumn(name = "user")
+  private UserHistory userHistory;
+
   @ManyToMany
   @JoinTable(
       name = "user_permissions_t",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "permission_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "permission_id"}))
-  private Collection<Permission> permissions = new HashSet<>();
+  private Set<Permission> permissions = new HashSet<>();
 
   @ManyToMany
   @JoinTable(
@@ -79,5 +84,5 @@ public class User extends AbstractEntity {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"}))
-  private Collection<Role> roles = new HashSet<>();
+  private Set<Role> roles = new HashSet<>();
 }

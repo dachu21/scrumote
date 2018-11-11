@@ -1,7 +1,7 @@
 package com.adach.scrumote.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -32,6 +32,6 @@ public class Deck extends AbstractEntity {
   //region Mappings
   @OneToMany(mappedBy = "deck")
   @OrderBy("level asc")
-  private Collection<Card> cards = new ArrayList<>();
+  private Set<Card> cards = new LinkedHashSet<>();
   //endregion
 }

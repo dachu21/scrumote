@@ -25,5 +25,8 @@ public class IssueSimpleDto extends AbstractSimpleDto {
 
   private String description;
 
+  @NotNull
+  private Integer iterations;
+
   private String estimate;
 }

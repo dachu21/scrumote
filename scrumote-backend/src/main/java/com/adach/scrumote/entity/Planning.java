@@ -1,10 +1,12 @@
 package com.adach.scrumote.entity;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,6 +26,11 @@ import lombok.Setter;
 public class Planning extends AbstractEntity {
 
   //region Data
+  @ManyToOne
+  @JoinColumn(nullable = false)
+  @NotNull
+  private Deck deck;
+
   @Column(nullable = false, unique = true)
   @NotNull
   private String code;
@@ -36,16 +43,12 @@ public class Planning extends AbstractEntity {
   private String description;
 
   @Column(nullable = false)
-  @NotNull
-  private Integer iterations;
-
-  @Column(nullable = false)
   private boolean finished;
   //endregion
 
   //region Mappings
   @OneToMany(mappedBy = "planning")
-  private Collection<Issue> issues = new HashSet<>();
+  private Set<Issue> issues = new HashSet<>();
   //endregion
 
   //region Optional getters

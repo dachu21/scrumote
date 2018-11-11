@@ -15,14 +15,15 @@ import lombok.Setter;
 public class PlanningSimpleDto extends AbstractSimpleDto {
 
   @NotNull
+  private Long deckId;
+
+  @NotNull
   private String code;
 
   @NotNull
   private String name;
 
   private String description;
-
-  private Integer iterations;
 
   private boolean finished;
 }

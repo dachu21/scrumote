@@ -1,13 +1,14 @@
 package com.adach.scrumote.entity;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -42,13 +43,18 @@ public class Issue extends AbstractEntity {
   @Column
   private String description;
 
+  @Column(nullable = false)
+  @NotNull
+  private Integer iterations;
+
   @Column
   private String estimate;
   //endregion
 
   //region Mappings
   @OneToMany(mappedBy = "issue")
-  private Collection<Vote> votes = new HashSet<>();
+  @OrderBy("iteration asc")
+  private Set<Vote> votes = new LinkedHashSet<>();
   //endregion
 
   //region Optional getters
