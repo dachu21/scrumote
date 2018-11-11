@@ -13,11 +13,11 @@ public class RoleInternalService {
 
   private static final String STANDARD_USER_ROLE_NAME = "STANDARD";
 
-  private final RoleRepository roleRepository;
+  private final RoleRepository repository;
 
   @Secured({"ROLE_ANONYMOUS", "swagger"})
   public Role findStandardUserRole() {
-    return roleRepository
+    return repository
         .findByName(STANDARD_USER_ROLE_NAME)
         .orElseThrow(() -> new RuntimeException("No standard role in DB.")); //TODO inny wyjatek
   }

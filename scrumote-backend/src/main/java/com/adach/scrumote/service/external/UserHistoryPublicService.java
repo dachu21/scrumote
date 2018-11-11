@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserHistoryPublicService {
 
-  private final UserHistoryRepository userHistoryRepository;
-  private final UserHistoryMapper userHistoryMapper;
+  private final UserHistoryRepository repository;
+  private final UserHistoryMapper mapper;
 }

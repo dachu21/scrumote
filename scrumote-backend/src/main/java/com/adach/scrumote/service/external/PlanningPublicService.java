@@ -17,18 +17,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlanningPublicService {
 
-  private final PlanningRepository planningRepository;
-  private final PlanningMapper planningMapper;
+  private final PlanningRepository repository;
+  private final PlanningMapper mapper;
 
   public void finish(Long id) {
     Planning planning = findIfExists(id);
     validateNotFinished(planning);
     planning.setFinished(true);
-    planningRepository.save(planning);
+    repository.save(planning);
   }
 
   private Planning findIfExists(Long id) {
-    Optional<Planning> planningOpt = planningRepository.findById(id);
+    Optional<Planning> planningOpt = repository.findById(id);
     if (planningOpt.isPresent()) {
       return planningOpt.get();
     } else {
@@ -44,7 +44,7 @@ public class PlanningPublicService {
   }
 
   public List<PlanningSimpleDto> findAll() {
-    return planningRepository.findAll().stream().map(planningMapper::mapToSimpleDto)
+    return repository.findAll().stream().map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());
   }
 }

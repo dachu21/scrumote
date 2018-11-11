@@ -17,24 +17,24 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserPublicService {
 
-  private final UserRepository userRepository;
-  private final UserMapper userMapper;
+  private final UserRepository repository;
+  private final UserMapper mapper;
 
   private final RoleInternalService roleInternalService;
   private final PasswordEncoder passwordEncoder;
 
   @Secured({"ROLE_ANONYMOUS", "swagger"})
   public void register(UserSimpleDto userSimpleDto) {
-    User user = userMapper.mapToEntity(userSimpleDto);
+    User user = mapper.mapToEntity(userSimpleDto);
     user.getRoles().add(roleInternalService.findStandardUserRole());
     user.setActive(true); //TODO jakis mechanizm
     user.setPassword(passwordEncoder.encode(user.getPassword())); //TODO walidacja hasla
-    userRepository.save(user);
+    repository.save(user);
   }
 
   @Secured("admin")
   public List<UserSimpleDto> findAll() {
-    return userRepository.findAll().stream().map(userMapper::mapToSimpleDto)
+    return repository.findAll().stream().map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());
   }
 }

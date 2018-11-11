@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class VotePublicService {
 
-  private final VoteRepository voteRepository;
-  private final VoteMapper voteMapper;
+  private final VoteRepository repository;
+  private final VoteMapper mapper;
 }

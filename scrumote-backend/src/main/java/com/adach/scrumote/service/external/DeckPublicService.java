@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DeckPublicService {
 
-  private final DeckRepository deckRepository;
-  private final DeckMapper deckMapper;
+  private final DeckRepository repository;
+  private final DeckMapper mapper;
 }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IssuePublicService {
 
-  private final IssueRepository issueRepository;
-  private final IssueMapper issueMapper;
+  private final IssueRepository repository;
+  private final IssueMapper mapper;
 }
