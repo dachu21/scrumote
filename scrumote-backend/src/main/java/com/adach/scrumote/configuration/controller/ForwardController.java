@@ -6,7 +6,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @ApiIgnore
-@SuppressWarnings("MVCPathVariableInspection")
+@SuppressWarnings({"MVCPathVariableInspection", "SameReturnValue"})
 public class ForwardController {
 
   // Not @Secured - used for routing.
