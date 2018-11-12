@@ -31,7 +31,11 @@ public class UserHistoryInternalService {
     for (Issue issue : issues) {
       planningUserHistories.addAll(updateUsersHistoryForIssue(issue));
     }
-    updatePlanningsCountsAndSave(planningUserHistories);
+
+    for (UserHistory planningUserHistory : planningUserHistories) {
+      planningUserHistory.incrementPlannings();
+      repository.save(planningUserHistory);
+    }
   }
 
   private Set<UserHistory> updateUsersHistoryForIssue(Issue issue) {
@@ -49,7 +53,10 @@ public class UserHistoryInternalService {
     for (Vote vote : votes) {
       issueUserHistories.add(updateUsersHistoryForVote(vote, cardLevelsMap, estimateLevel));
     }
-    updateIssuesCounts(issueUserHistories);
+
+    for (UserHistory issueUserHistory : issueUserHistories) {
+      issueUserHistory.incrementIssues();
+    }
 
     return issueUserHistories;
   }
@@ -63,18 +70,5 @@ public class UserHistoryInternalService {
       userHistory.updateFirstVoteStatistics(voteLevel, estimateLevel);
     }
     return userHistory;
-  }
-
-  private void updateIssuesCounts(Set<UserHistory> issueUserHistories) {
-    for (UserHistory issueUserHistory : issueUserHistories) {
-      issueUserHistory.incrementIssues();
-    }
-  }
-
-  private void updatePlanningsCountsAndSave(Set<UserHistory> planningUserHistories) {
-    for (UserHistory planningUserHistory : planningUserHistories) {
-      planningUserHistory.incrementPlannings();
-      repository.save(planningUserHistory);
-    }
   }
 }
