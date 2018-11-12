@@ -1,15 +1,15 @@
 package com.adach.scrumote.service.external;
 
-import com.adach.scrumote.mapper.RoleMapper;
-import com.adach.scrumote.repository.RoleRepository;
+import com.adach.scrumote.mapper.VoteMapper;
+import com.adach.scrumote.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RolePublicService {
+public class VoteExternalService {
 
-  private final RoleRepository repository;
-  private final RoleMapper mapper;
+  private final VoteRepository repository;
+  private final VoteMapper mapper;
 }

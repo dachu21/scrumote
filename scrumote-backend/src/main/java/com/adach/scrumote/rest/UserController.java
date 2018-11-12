@@ -1,7 +1,7 @@
 package com.adach.scrumote.rest;
 
 import com.adach.scrumote.dto.simple.UserSimpleDto;
-import com.adach.scrumote.service.external.UserPublicService;
+import com.adach.scrumote.service.external.UserExternalService;
 import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-  private final UserPublicService userPublicService;
+  private final UserExternalService userExternalService;
 
   // Not @Secured - used by Spring Security.
   @GetMapping("/login")
@@ -27,12 +27,12 @@ public class UserController {
   @Secured({"ROLE_ANONYMOUS", "swagger"})
   @PostMapping("/register")
   public void registerUser(@Valid @RequestBody UserSimpleDto userSimpleDto) {
-    userPublicService.register(userSimpleDto);
+    userExternalService.register(userSimpleDto);
   }
 
   @Secured("admin")
   @GetMapping("/users")
   public List<UserSimpleDto> getUsers() {
-    return userPublicService.findAll();
+    return userExternalService.findAll();
   }
 }

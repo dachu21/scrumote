@@ -1,15 +1,15 @@
 package com.adach.scrumote.service.external;
 
-import com.adach.scrumote.mapper.IssueMapper;
-import com.adach.scrumote.repository.IssueRepository;
+import com.adach.scrumote.mapper.CardMapper;
+import com.adach.scrumote.repository.UserHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IssuePublicService {
+public class CardExternalService {
 
-  private final IssueRepository repository;
-  private final IssueMapper mapper;
+  private final UserHistoryRepository repository;
+  private final CardMapper mapper;
 }

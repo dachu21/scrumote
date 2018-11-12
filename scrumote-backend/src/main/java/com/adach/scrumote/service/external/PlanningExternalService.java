@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PlanningPublicService {
+public class PlanningExternalService {
 
   private final PlanningRepository repository;
   private final PlanningMapper mapper;

@@ -1,7 +1,7 @@
 package com.adach.scrumote.rest;
 
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
-import com.adach.scrumote.service.external.PlanningPublicService;
+import com.adach.scrumote.service.external.PlanningExternalService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlanningController {
 
-  private final PlanningPublicService planningPublicService;
+  private final PlanningExternalService planningExternalService;
 
   @PutMapping("/planning/finish")
   public void finishPlanning(@RequestBody Long id) {
-    planningPublicService.finish(id);
+    planningExternalService.finish(id);
   }
 
   @GetMapping("/plannings")
   public List<PlanningSimpleDto> getPlannings() {
-    return planningPublicService.findAll();
+    return planningExternalService.findAll();
   }
 }

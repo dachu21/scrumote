@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PermissionPublicService {
+public class PermissionExternalService {
 
   private final PermissionRepository repository;
   private final PermissionMapper mapper;
