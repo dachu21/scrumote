@@ -67,7 +67,7 @@ public class User extends AbstractEntity {
   private boolean active;
 
   @OneToOne
-  @JoinColumn(name = "user")
+  @JoinColumn(name = "\"user\"")
   private UserHistory userHistory;
 
   @ManyToMany
