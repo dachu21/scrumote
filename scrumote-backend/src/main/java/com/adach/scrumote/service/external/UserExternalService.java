@@ -6,6 +6,7 @@ import com.adach.scrumote.entity.UserHistory;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.repository.UserRepository;
 import com.adach.scrumote.service.internal.RoleInternalService;
+import com.adach.scrumote.service.internal.UserInternalService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserExternalService {
 
+  private final UserInternalService internalService;
   private final UserRepository repository;
   private final UserMapper mapper;
 

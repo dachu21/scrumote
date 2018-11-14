@@ -13,11 +13,14 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlanningExternalService {
 
+  private final PlanningInternalService internalService;
   private final PlanningRepository repository;
   private final PlanningMapper mapper;
 

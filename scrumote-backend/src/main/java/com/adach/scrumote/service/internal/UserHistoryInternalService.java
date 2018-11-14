@@ -9,12 +9,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
 public class UserHistoryInternalService {
@@ -34,7 +36,6 @@ public class UserHistoryInternalService {
 
     for (UserHistory planningUserHistory : planningUserHistories) {
       planningUserHistory.incrementPlannings();
-      repository.save(planningUserHistory);
     }
   }
 
