@@ -6,9 +6,12 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -47,6 +50,14 @@ public class Planning extends AbstractEntity {
   //endregion
 
   //region Mappings
+  @ManyToMany
+  @JoinTable(
+      name = "planning_users_t",
+      joinColumns = @JoinColumn(name = "planning_id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id"),
+      uniqueConstraints = @UniqueConstraint(columnNames = {"planning_id", "user_id"}))
+  private Set<User> users = new HashSet<>();
+
   @OneToMany(mappedBy = "planning")
   private Set<Issue> issues = new HashSet<>();
   //endregion
