@@ -2,6 +2,7 @@ package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.User;
+import com.adach.scrumote.entity.UserHistory;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.repository.UserRepository;
 import com.adach.scrumote.service.internal.RoleInternalService;
@@ -29,6 +30,10 @@ public class UserExternalService {
     user.getRoles().add(roleInternalService.findStandardUserRole());
     user.setActive(true); //TODO jakis mechanizm
     user.setPassword(passwordEncoder.encode(user.getPassword())); //TODO walidacja hasla
+
+    UserHistory userHistory = UserHistory.createEmpty(user);
+    user.setUserHistory(userHistory);
+
     repository.save(user);
   }
 

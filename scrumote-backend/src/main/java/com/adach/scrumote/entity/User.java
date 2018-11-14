@@ -2,6 +2,7 @@ package com.adach.scrumote.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -66,7 +67,7 @@ public class User extends AbstractEntity {
   @Column(nullable = false)
   private boolean active;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "\"user\"")
   private UserHistory userHistory;
 

@@ -21,6 +21,18 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 public class UserHistory extends AbstractEntity {
 
+  public static UserHistory createEmpty(User user) {
+    UserHistory userHistory = new UserHistory();
+    userHistory.user = user;
+    userHistory.plannings = 0;
+    userHistory.issues = 0;
+    userHistory.firstVotesBelowEstimate = 0;
+    userHistory.firstVotesAboveEstimate = 0;
+    userHistory.firstVotesEqualEstimate = 0;
+    userHistory.averageFirstVoteLevelDifference = 0D;
+    return userHistory;
+  }
+
   //region Data
   @OneToOne
   @JoinColumn(nullable = false)
