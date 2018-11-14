@@ -5,6 +5,7 @@ import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,22 +14,22 @@ class LoggedUser extends User implements UserDetails {
 
   private static final String ROLE_PREFIX = "ROLE_";
 
-  private final Collection<GrantedAuthority> authorities;
+  private final Set<GrantedAuthority> authorities;
 
   LoggedUser(User user) {
     super(user);
     authorities = initializeAuthorities();
   }
 
-  private Collection<GrantedAuthority> initializeAuthorities() {
-    Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
+  private Set<GrantedAuthority> initializeAuthorities() {
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
     getRoles()
         .stream()
         .map(r -> new SimpleGrantedAuthority(ROLE_PREFIX + r.getName()))
         .forEach(grantedAuthorities::add);
 
-    Collection<Permission> allAuthorities = new HashSet<>(this.getPermissions());
+    Set<Permission> allAuthorities = new HashSet<>(this.getPermissions());
     getRoles()
         .stream()
         .map(Role::getPermissions)

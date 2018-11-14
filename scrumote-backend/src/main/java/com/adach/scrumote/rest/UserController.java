@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @PrefixedRestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserController {
+public class UserController extends AbstractController {
 
   private final UserExternalService userExternalService;
 
