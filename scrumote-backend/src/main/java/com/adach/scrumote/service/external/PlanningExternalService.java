@@ -6,6 +6,7 @@ import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
 import com.adach.scrumote.exception.planning.PlanningNotFoundException;
 import com.adach.scrumote.mapper.PlanningMapper;
 import com.adach.scrumote.repository.PlanningRepository;
+import com.adach.scrumote.service.internal.UserHistoryInternalService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,11 +21,14 @@ public class PlanningExternalService {
   private final PlanningRepository repository;
   private final PlanningMapper mapper;
 
+  private final UserHistoryInternalService userHistoryInternalService;
+
   public void finish(Long id) {
     Planning planning = findIfExists(id);
     validateNotFinished(planning);
     planning.setFinished(true);
     repository.save(planning);
+    userHistoryInternalService.updateUsersHistoryForPlanning(planning);
   }
 
   private Planning findIfExists(Long id) {
