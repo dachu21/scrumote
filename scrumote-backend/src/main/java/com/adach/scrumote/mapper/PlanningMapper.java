@@ -8,8 +8,12 @@ import com.adach.scrumote.entity.User;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_COMMITTED)
 public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSimpleDto> {
 
   public PlanningMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap) {
