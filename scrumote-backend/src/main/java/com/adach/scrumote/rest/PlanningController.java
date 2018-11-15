@@ -22,6 +22,13 @@ public class PlanningController extends AbstractController {
 
   private final PlanningExternalService planningExternalService;
 
+  @PostMapping("/planning")
+  public ResponseEntity<?> createPlanningWithUsers(@RequestBody PlanningWithUsersDto dto) {
+    Long id = planningExternalService.create(dto);
+    URI location = buildLocationUri(id);
+    return ResponseEntity.created(location).build();
+  }
+
   @GetMapping("/planning/{id}")
   public PlanningWithUsersDto getPlanningWithUsers(@PathVariable Long id) {
     return planningExternalService.findById(id);
@@ -30,13 +37,6 @@ public class PlanningController extends AbstractController {
   @GetMapping("/planning")
   public List<PlanningSimpleDto> getAllPlannings() {
     return planningExternalService.findAll();
-  }
-
-  @PostMapping("/planning")
-  public ResponseEntity<?> createPlanningWithUsers(@RequestBody PlanningWithUsersDto dto) {
-    Long id = planningExternalService.create(dto);
-    URI location = buildLocationUri(id);
-    return ResponseEntity.created(location).build();
   }
 
   @PutMapping("/planning/{id}")
