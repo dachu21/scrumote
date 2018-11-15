@@ -18,6 +18,14 @@ public class UserInternalService {
 
   private final UserRepository repository;
 
+  public User save(User user) {
+    return repository.save(user);
+  }
+
+  public List<User> findAll() {
+    return repository.findAll();
+  }
+
   public List<User> findByIds(Set<Long> userIds) {
     return repository.findAllById(userIds);
   }

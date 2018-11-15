@@ -4,7 +4,6 @@ import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserHistory;
 import com.adach.scrumote.mapper.UserMapper;
-import com.adach.scrumote.repository.UserRepository;
 import com.adach.scrumote.service.internal.RoleInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
 import java.util.List;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserExternalService {
 
   private final UserInternalService internalService;
-  private final UserRepository repository;
   private final UserMapper mapper;
 
   private final RoleInternalService roleInternalService;
@@ -40,12 +38,12 @@ public class UserExternalService {
     UserHistory userHistory = UserHistory.createEmpty(user);
     user.setUserHistory(userHistory);
 
-    repository.save(user);
+    internalService.save(user);
   }
 
   @Secured("admin")
   public List<UserSimpleDto> findAll() {
-    return repository.findAll().stream().map(mapper::mapToSimpleDto)
+    return internalService.findAll().stream().map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());
   }
 }

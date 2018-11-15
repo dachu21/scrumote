@@ -19,6 +19,10 @@ public class PlanningInternalService {
 
   private final PlanningRepository repository;
 
+  public Planning save(Planning planning) {
+    return repository.save(planning);
+  }
+
   public Planning findById(Long id) {
     Optional<Planning> planningOpt = repository.findById(id);
     if (planningOpt.isPresent()) {
@@ -30,5 +34,13 @@ public class PlanningInternalService {
 
   public List<Planning> findAll() {
     return repository.findAll();
+  }
+
+  public void deleteById(Long id) {
+    if (repository.existsById(id)) {
+      repository.deleteById(id);
+    } else {
+      throw new PlanningNotFoundException(String.format("Planning with id %d does not exist.", id));
+    }
   }
 }

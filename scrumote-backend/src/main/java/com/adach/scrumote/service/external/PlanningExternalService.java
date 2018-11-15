@@ -7,7 +7,6 @@ import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
 import com.adach.scrumote.mapper.PlanningMapper;
-import com.adach.scrumote.repository.PlanningRepository;
 import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.UserHistoryInternalService;
@@ -29,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PlanningExternalService {
 
   private final PlanningInternalService internalService;
-  private final PlanningRepository repository;
   private final PlanningMapper mapper;
 
   private final UserHistoryInternalService userHistoryInternalService;
@@ -53,8 +51,7 @@ public class PlanningExternalService {
     planning.setFinished(false);
     planning.setDeck(deck);
     planning.setUsers(users);
-    repository.save(planning);
-    return planning.getId();
+    return internalService.save(planning).getId();
   }
 
   public void update(Long id, PlanningWithUsersDto dto) {
@@ -76,8 +73,7 @@ public class PlanningExternalService {
   }
 
   public void delete(Long id) {
-    Planning planning = internalService.findById(id);
-    repository.delete(planning);
+    internalService.deleteById(id);
   }
 
   private void validateNotFinished(Planning planning) {
