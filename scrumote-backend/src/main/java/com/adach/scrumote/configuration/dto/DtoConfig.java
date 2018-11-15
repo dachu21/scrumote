@@ -21,6 +21,9 @@ import com.adach.scrumote.entity.Vote;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import java.lang.reflect.Type;
+import java.util.Optional;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +31,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DtoConfig {
 
+  private Converter<Optional<String>, String> fromOptionalString =
+      new AbstractConverter<Optional<String>, String>() {
+        @Override
+        protected String convert(Optional<String> optional) {
+          return optional.orElse(null);
+        }
+      };
+
+  private Converter<String, Optional<String>> toOptionalString =
+      new AbstractConverter<String, Optional<String>>() {
+        @Override
+        protected Optional<String> convert(String string) {
+          return Optional.ofNullable(string);
+        }
+      };
+
   @Bean
   public ModelMapper modelMapper() {
-    return new ModelMapper();
+    ModelMapper modelMapper = new ModelMapper();
+    modelMapper.addConverter(fromOptionalString);
+    modelMapper.addConverter(toOptionalString);
+    return modelMapper;
   }
 
   @Bean
