@@ -1,5 +1,6 @@
 package com.adach.scrumote.configuration.security;
 
+import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
+@RequiresNewTransactions
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 

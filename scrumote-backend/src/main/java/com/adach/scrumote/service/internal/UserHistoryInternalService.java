@@ -1,5 +1,6 @@
 package com.adach.scrumote.service.internal;
 
+import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.UserHistory;
@@ -13,12 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_COMMITTED)
+@MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
 public class UserHistoryInternalService {

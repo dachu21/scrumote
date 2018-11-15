@@ -1,5 +1,6 @@
 package com.adach.scrumote.rest;
 
+import com.adach.scrumote.configuration.controller.PrefixedRestController;
 import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.service.external.PlanningExternalService;
