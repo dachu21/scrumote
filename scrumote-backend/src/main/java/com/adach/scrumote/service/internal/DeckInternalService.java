@@ -18,10 +18,7 @@ public class DeckInternalService {
 
   public Deck findById(Long id) {
     Optional<Deck> deckOpt = repository.findById(id);
-    if (deckOpt.isPresent()) {
-      return deckOpt.get();
-    } else {
-      throw new DeckNotFoundException(String.format("Deck with id %d does not exist.", id));
-    }
+    return deckOpt.orElseThrow(
+        () -> new DeckNotFoundException(String.format("Deck with id %d does not exist.", id)));
   }
 }

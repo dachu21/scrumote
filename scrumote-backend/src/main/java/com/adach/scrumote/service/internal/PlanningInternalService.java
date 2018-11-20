@@ -23,11 +23,8 @@ public class PlanningInternalService {
 
   public Planning findById(Long id) {
     Optional<Planning> planningOpt = repository.findById(id);
-    if (planningOpt.isPresent()) {
-      return planningOpt.get();
-    } else {
-      throw new PlanningNotFoundException(String.format("Planning with id %d does not exist.", id));
-    }
+    return planningOpt.orElseThrow(() -> new PlanningNotFoundException(
+        String.format("Planning with id %d does not exist.", id)));
   }
 
   public List<Planning> findAll() {
