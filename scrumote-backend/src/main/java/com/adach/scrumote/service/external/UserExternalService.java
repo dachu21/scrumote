@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class UserExternalService {
   private final RoleInternalService roleInternalService;
   private final PasswordEncoder passwordEncoder;
 
-  @Secured({"ROLE_ANONYMOUS", "swagger"})
+  @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
   public void register(UserSimpleDto userSimpleDto) {
     User user = mapper.mapToEntity(userSimpleDto);
     user.getRoles().add(roleInternalService.findStandardUserRole());
@@ -39,7 +39,7 @@ public class UserExternalService {
     internalService.save(user);
   }
 
-  @Secured("admin")
+  @PreAuthorize("hasAnyAuthority('admin')")
   public List<UserSimpleDto> findAll() {
     return internalService.findAll().stream().map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());

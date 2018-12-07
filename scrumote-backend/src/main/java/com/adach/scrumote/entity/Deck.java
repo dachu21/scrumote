@@ -2,6 +2,7 @@ package com.adach.scrumote.entity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -33,5 +34,14 @@ public class Deck extends AbstractEntity {
   @OneToMany(mappedBy = "deck")
   @OrderBy("level asc")
   private Set<Card> cards = new LinkedHashSet<>();
+  //endregion
+
+  //region Methods
+  public boolean containsCardWithValue(String cardValue) {
+    return cards.stream()
+        .map(Card::getValue)
+        .collect(Collectors.toSet())
+        .contains(cardValue);
+  }
   //endregion
 }

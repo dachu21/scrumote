@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,37 +23,49 @@ public class PlanningController extends AbstractController {
 
   private final PlanningExternalService planningExternalService;
 
-  @PostMapping("/planning")
+  @PreAuthorize("hasAnyAuthority('createPlanning')")
+  @PostMapping("/plannings")
   public ResponseEntity<?> createPlanningWithUsers(@RequestBody PlanningWithUsersDto dto) {
-    Long id = planningExternalService.create(dto);
+    Long id = planningExternalService.createPlanningWithUsers(dto);
     URI location = buildLocationUri(id);
     return ResponseEntity.created(location).build();
   }
 
-  @GetMapping("/planning/{id}")
+  @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
+  @GetMapping("/plannings/{id}")
   public PlanningWithUsersDto getPlanningWithUsers(@PathVariable Long id) {
-    return planningExternalService.findById(id);
+    return planningExternalService.getPlanningWithUsers(id);
   }
 
-  @GetMapping("/planning")
+  @PreAuthorize("hasAnyAuthority('getAllPlannings')")
+  @GetMapping("/plannings")
   public List<PlanningSimpleDto> getAllPlannings() {
-    return planningExternalService.findAll();
+    return planningExternalService.getAllPlannings();
   }
 
-  @PutMapping("/planning/{id}")
+  @PreAuthorize("hasAnyAuthority('getMyPlannings')")
+  @GetMapping("/plannings/my")
+  public List<PlanningSimpleDto> getMyPlannings() {
+    return planningExternalService.getMyPlannings();
+  }
+
+  @PreAuthorize("hasAnyAuthority('updatePlanning')")
+  @PutMapping("/plannings/{id}")
   public ResponseEntity<?> updatePlanning(@PathVariable Long id,
       @RequestBody PlanningWithUsersDto dto) {
     planningExternalService.update(id, dto);
     return ResponseEntity.noContent().build();
   }
 
-  @PutMapping("/planning/{id}/finish")
+  @PreAuthorize("hasAnyAuthority('finishPlanning')")
+  @PutMapping("/plannings/{id}/finish")
   public ResponseEntity<?> finishPlanning(@PathVariable Long id) {
     planningExternalService.finish(id);
     return ResponseEntity.noContent().build();
   }
 
-  @DeleteMapping("/planning/{id}")
+  @PreAuthorize("hasAnyAuthority('deletePlanning')")
+  @DeleteMapping("/plannings/{id}")
   public ResponseEntity<?> deletePlanning(@PathVariable Long id) {
     planningExternalService.delete(id);
     return ResponseEntity.noContent().build();

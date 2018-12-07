@@ -29,5 +29,7 @@ public class PlanningWithUsersDto extends AbstractSimpleDto {
 
   private boolean finished;
 
+  private Long moderatorId;
+
   private Set<Long> userIds;
 }

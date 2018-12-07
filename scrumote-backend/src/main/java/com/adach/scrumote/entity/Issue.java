@@ -49,6 +49,9 @@ public class Issue extends AbstractEntity {
 
   @Column
   private String estimate;
+
+  @Column(nullable = false)
+  private boolean active;
   //endregion
 
   //region Mappings

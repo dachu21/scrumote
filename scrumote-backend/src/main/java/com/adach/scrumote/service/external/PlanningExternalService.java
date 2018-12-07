@@ -6,18 +6,19 @@ import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
-import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
 import com.adach.scrumote.mapper.PlanningMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.UserHistoryInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
+import com.adach.scrumote.service.security.CurrentUser;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,30 +33,49 @@ public class PlanningExternalService {
   private final DeckInternalService deckInternalService;
   private final UserInternalService userInternalService;
 
-  public PlanningWithUsersDto findById(Long id) {
+  @PreAuthorize("hasAnyAuthority('createPlanning')")
+  public Long createPlanningWithUsers(PlanningWithUsersDto dto) {
+    Deck deck = deckInternalService.findById(dto.getDeckId());
+    User moderator = CurrentUser.get();
+    Set<User> users = new HashSet<>(userInternalService.findByIds(dto.getUserIds()));
+
+    Planning planning = mapper.mapToEntity(dto);
+    planning.setFinished(false);
+    planning.setDeck(deck);
+    planning.setModerator(moderator);
+    planning.setUsers(users);
+
+    return internalService.save(planning).getId();
+  }
+
+  @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
+  public PlanningWithUsersDto getPlanningWithUsers(Long id) {
     Planning planning = internalService.findById(id);
+    internalService.validateContainsCurrentUserIfNotAuthorized(planning);
+
     return mapper.mapToDtoWithUsers(planning);
   }
 
-  public List<PlanningSimpleDto> findAll() {
+  @PreAuthorize("hasAnyAuthority('getAllPlannings')")
+  public List<PlanningSimpleDto> getAllPlannings() {
     return internalService.findAll().stream().map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());
   }
 
-  public Long create(PlanningWithUsersDto dto) {
-    Deck deck = deckInternalService.findById(dto.getDeckId());
-    Set<User> users = new HashSet<>(userInternalService.findByIds(dto.getUserIds()));
-    Planning planning = mapper.mapToEntity(dto);
-    planning.setFinished(false);
-    planning.setDeck(deck);
-    planning.setUsers(users);
-    return internalService.save(planning).getId();
+  @PreAuthorize("hasAnyAuthority('getMyPlannings')")
+  public List<PlanningSimpleDto> getMyPlannings() {
+    User currentUser = CurrentUser.get();
+    return internalService.findAllByUser(currentUser).stream().map(mapper::mapToSimpleDto)
+        .collect(Collectors.toList());
   }
 
+  @PreAuthorize("hasAnyAuthority('updatePlanning')")
   public void update(Long id, PlanningWithUsersDto dto) {
     Planning planning = internalService.findById(id);
+    internalService.validateHasModerator(planning, CurrentUser.get());
     Deck deck = deckInternalService.findById(dto.getDeckId());
     Set<User> users = new HashSet<>(userInternalService.findByIds(dto.getUserIds()));
+
     planning.setCode(dto.getCode());
     planning.setName(dto.getName());
     planning.setDescription(dto.getDescription());
@@ -63,21 +83,21 @@ public class PlanningExternalService {
     planning.setUsers(users);
   }
 
+  @PreAuthorize("hasAnyAuthority('finishPlanning')")
   public void finish(Long id) {
     Planning planning = internalService.findById(id);
-    validateNotFinished(planning);
+    internalService.validateHasModerator(planning, CurrentUser.get());
+    internalService.validateNotFinished(planning);
+
     planning.setFinished(true);
     userHistoryInternalService.updateUsersHistoryForPlanning(planning);
   }
 
+  @PreAuthorize("hasAnyAuthority('deletePlanning')")
   public void delete(Long id) {
-    internalService.deleteById(id);
-  }
+    Planning planning = internalService.findById(id);
+    internalService.validateFinished(planning);
 
-  private void validateNotFinished(Planning planning) {
-    if (planning.isFinished()) {
-      throw new PlanningAlreadyFinishedException(
-          String.format("Planning with id %d is already finished.", planning.getId()));
-    }
+    internalService.delete(planning);
   }
 }

@@ -47,6 +47,11 @@ public class Planning extends AbstractEntity {
 
   @Column(nullable = false)
   private boolean finished;
+
+  @ManyToOne
+  @JoinColumn(nullable = false)
+  @NotNull
+  private User moderator;
   //endregion
 
   //region Mappings
@@ -65,6 +70,16 @@ public class Planning extends AbstractEntity {
   //region Optional getters
   public Optional<String> getDescription() {
     return Optional.ofNullable(description);
+  }
+  //endregion
+
+  //region Methods
+  public boolean hasModerator(User user) {
+    return this.getModerator().equals(user);
+  }
+
+  public boolean containsUser(User user) {
+    return this.getUsers().contains(user);
   }
   //endregion
 }

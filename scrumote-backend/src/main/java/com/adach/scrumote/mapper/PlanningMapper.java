@@ -26,6 +26,7 @@ public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSi
     dto.setName(planning.getName());
     dto.setDescription(planning.getDescription().orElse(null));
     dto.setFinished(planning.isFinished());
+    dto.setModeratorId(planning.getModerator().getId());
     dto.setUserIds(planning.getUsers().stream().map(User::getId).collect(Collectors.toSet()));
     return dto;
   }

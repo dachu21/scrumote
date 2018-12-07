@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "vote_t")
+@Table(
+    name = "vote_t",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"issue_id", "user_id", "iteration"}))
 @Getter
 @Setter
 @AllArgsConstructor

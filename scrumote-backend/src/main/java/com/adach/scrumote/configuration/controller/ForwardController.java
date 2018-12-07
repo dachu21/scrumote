@@ -9,7 +9,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @SuppressWarnings({"MVCPathVariableInspection", "SameReturnValue"})
 public class ForwardController {
 
-  // Not @Secured - used for routing.
+  // Without @PreAuthorize - used for routing.
   @GetMapping(value = {"/", "/error", "/**/{regex:[^.]*}"})
   public String forward() {
     return "forward:/ui/index.html";

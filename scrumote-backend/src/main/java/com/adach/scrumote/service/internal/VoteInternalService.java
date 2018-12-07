@@ -1,7 +1,10 @@
 package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
+import com.adach.scrumote.entity.Issue;
+import com.adach.scrumote.entity.Vote;
 import com.adach.scrumote.repository.VoteRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,4 +15,14 @@ import org.springframework.stereotype.Service;
 public class VoteInternalService {
 
   private final VoteRepository repository;
+
+  //region Repository methods calls
+  public Vote save(Vote vote) {
+    return repository.save(vote);
+  }
+
+  public List<Vote> findAllByIssueAndIteration(Issue issue, Integer iteration) {
+    return repository.findAllByIssueAndIteration(issue, iteration);
+  }
+  //endregion
 }
