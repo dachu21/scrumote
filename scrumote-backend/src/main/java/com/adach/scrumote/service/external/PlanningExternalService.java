@@ -72,7 +72,8 @@ public class PlanningExternalService {
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
   public void update(Long id, PlanningWithUsersDto dto) {
     Planning planning = internalService.findById(id);
-    internalService.validateHasModerator(planning, CurrentUser.get());
+    validatePlanningForUpdateOrFinish(planning);
+
     Deck deck = deckInternalService.findById(dto.getDeckId());
     Set<User> users = new HashSet<>(userInternalService.findByIds(dto.getUserIds()));
 
@@ -86,8 +87,7 @@ public class PlanningExternalService {
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
   public void finish(Long id) {
     Planning planning = internalService.findById(id);
-    internalService.validateHasModerator(planning, CurrentUser.get());
-    internalService.validateNotFinished(planning);
+    validatePlanningForUpdateOrFinish(planning);
 
     planning.setFinished(true);
     userHistoryInternalService.updateUsersHistoryForPlanning(planning);
@@ -99,5 +99,11 @@ public class PlanningExternalService {
     internalService.validateFinished(planning);
 
     internalService.delete(planning);
+  }
+
+  private void validatePlanningForUpdateOrFinish(Planning planning) {
+    internalService.validateHasModerator(planning, CurrentUser.get());
+    internalService.validateHasZeroActiveIssues(planning);
+    internalService.validateNotFinished(planning);
   }
 }

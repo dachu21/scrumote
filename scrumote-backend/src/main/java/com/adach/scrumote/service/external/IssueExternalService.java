@@ -5,10 +5,12 @@ import com.adach.scrumote.dto.simple.IssueSimpleDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
+import com.adach.scrumote.entity.Vote;
 import com.adach.scrumote.mapper.IssueMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.IssueInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
+import com.adach.scrumote.service.internal.VoteInternalService;
 import com.adach.scrumote.service.security.CurrentUser;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,7 @@ public class IssueExternalService {
 
   private final PlanningInternalService planningInternalService;
   private final DeckInternalService deckInternalService;
+  private final VoteInternalService voteInternalService;
 
   @PreAuthorize("hasAnyAuthority('createIssue')")
   public Long createIssue(Long planningId, IssueSimpleDto dto) {
@@ -34,7 +37,7 @@ public class IssueExternalService {
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
 
     Issue issue = mapper.mapToEntity(dto);
-    issue.setIterations(0);
+    issue.setFinishedIterations(0);
     issue.setEstimate(null);
     issue.setPlanning(planning);
 
@@ -80,7 +83,6 @@ public class IssueExternalService {
     internalService.validateBelongsToPlanningWithId(issue, planningId);
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
-    internalService.validateNotActive(issue);
     issue.setActive(true);
   }
 
@@ -106,9 +108,28 @@ public class IssueExternalService {
     internalService.delete(issue);
   }
 
+  @PreAuthorize("hasAnyAuthority('createVote')")
+  public void deactivateIssueIfLastVote(Long id, Long voteId) {
+    Issue issue = internalService.findById(id);
+    Vote newVote = voteInternalService.findById(voteId);
+    Integer newVoteIteration = newVote.getIteration();
+    if (issue.isActive() && issue.getFinishedIterations().equals(newVoteIteration - 1)) {
+      Long usersCount = (long) issue.getPlanning().getUsers().size();
+      Long votesCount = issue.getVotes().stream()
+          .filter(vote -> vote.getIteration().equals(newVoteIteration))
+          .count();
+      if (usersCount.equals(votesCount)) {
+        issue.setActive(false);
+        issue.setFinishedIterations(newVoteIteration);
+        // TODO powiadomienie
+      }
+    }
+  }
+
   private void validateIssueAndPlanningForUpdateOrDelete(Issue issue, Planning planning) {
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
     internalService.validateNotEstimated(issue);
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
+    internalService.validateNotActive(issue);
   }
 }

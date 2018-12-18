@@ -2,6 +2,7 @@ package com.adach.scrumote.rest;
 
 import com.adach.scrumote.configuration.controller.PrefixedRestController;
 import com.adach.scrumote.dto.simple.VoteSimpleDto;
+import com.adach.scrumote.service.external.IssueExternalService;
 import com.adach.scrumote.service.external.VoteExternalService;
 import java.net.URI;
 import java.util.List;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class VoteController extends AbstractController {
 
   private final VoteExternalService voteExternalService;
+  private final IssueExternalService issueExternalService;
 
   @PreAuthorize("hasAnyAuthority('createVote')")
   @PostMapping("/plannings/{planningId}/issues/{issueId}/votes")
   public ResponseEntity<?> createVote(@PathVariable Long planningId, @PathVariable Long issueId,
       @RequestBody VoteSimpleDto dto) {
     Long id = voteExternalService.createVote(planningId, issueId, dto);
+    issueExternalService.deactivateIssueIfLastVote(issueId, id);
     URI location = buildLocationUri(id);
     return ResponseEntity.created(location).build();
   }

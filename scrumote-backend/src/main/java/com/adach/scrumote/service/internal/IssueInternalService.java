@@ -5,6 +5,7 @@ import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.exception.issue.IssueAlreadyActiveException;
 import com.adach.scrumote.exception.issue.IssueAlreadyEstimatedException;
+import com.adach.scrumote.exception.issue.IssueIterationCurrentlyActiveException;
 import com.adach.scrumote.exception.issue.IssueMismatchException;
 import com.adach.scrumote.exception.issue.IssueNotFoundException;
 import com.adach.scrumote.repository.IssueRepository;
@@ -60,7 +61,7 @@ public class IssueInternalService {
   public void validateNotActive(Issue issue) {
     if (issue.isActive()) {
       throw new IssueAlreadyActiveException(
-          String.format("Issue with id %d is already active.", issue.getId()));
+          String.format("Issue with id %d is active.", issue.getId()));
     }
   }
 
@@ -68,6 +69,14 @@ public class IssueInternalService {
     if (!issue.isActive()) {
       throw new IssueAlreadyActiveException(
           String.format("Issue with id %d is not active.", issue.getId()));
+    }
+  }
+
+  public void validateNotCurrentlyActiveIteration(Issue issue, Integer iteration) {
+    if (issue.isActive() && iteration.equals(issue.getFinishedIterations() + 1)) {
+      throw new IssueIterationCurrentlyActiveException(
+          String.format("Iteration no. %d is currently active iteration of issue with id %d.",
+              iteration, issue.getId()));
     }
   }
   //endregion

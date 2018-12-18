@@ -1,10 +1,12 @@
 package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
+import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
 import com.adach.scrumote.exception.planning.PlanningForbiddenException;
+import com.adach.scrumote.exception.planning.PlanningHasActiveIssuesException;
 import com.adach.scrumote.exception.planning.PlanningNotFinishedException;
 import com.adach.scrumote.exception.planning.PlanningNotFoundException;
 import com.adach.scrumote.repository.PlanningRepository;
@@ -73,6 +75,13 @@ public class PlanningInternalService {
     if (!planning.isFinished()) {
       throw new PlanningNotFinishedException(
           String.format("Planning with id %d is not finished yet.", planning.getId()));
+    }
+  }
+
+  public void validateHasZeroActiveIssues(Planning planning) {
+    if (planning.getIssues().stream().anyMatch(Issue::isActive)) {
+      throw new PlanningHasActiveIssuesException(
+          String.format("Planning with id %d has active issues.", planning.getId()));
     }
   }
   //endregion

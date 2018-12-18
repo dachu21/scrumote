@@ -43,17 +43,17 @@ public class VoteExternalService {
     vote.setIssue(issue);
     vote.setUser(CurrentUser.get());
     vote.setValue(dto.getValue());
-    vote.setIteration(issue.getIterations() + 1);
+    vote.setIteration(issue.getFinishedIterations() + 1);
 
     return internalService.save(vote).getId();
   }
 
   @PreAuthorize("hasAnyAuthority('getVotesForIssue')")
-  @SuppressWarnings("Duplicates")
   public List<VoteSimpleDto> getVotesForIssue(Long planningId, Long issueId, Integer iteration) {
     Issue issue = issueInternalService.findById(issueId);
     Planning planning = issue.getPlanning();
     issueInternalService.validateBelongsToPlanningWithId(issue, planningId);
+    issueInternalService.validateNotCurrentlyActiveIteration(issue, iteration);
     planningInternalService.validateContainsCurrentUserIfNotAuthorized(planning);
 
     return internalService.findAllByIssueAndIteration(issue, iteration).stream()
