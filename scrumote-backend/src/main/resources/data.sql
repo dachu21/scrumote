@@ -60,3 +60,25 @@ insert into user_permissions_t (user_id, permission_id) values
 (3, 1),
 (4, 1),
 (5, 1);
+
+insert into deck_t (id, version, name) values
+(1, 1, 'DECK_1');
+
+insert into card_t (id, version, level, "value", deck_id) values
+(1, 1, 1, '1', 1),
+(2, 1, 2, '2', 1),
+(3, 1, 3, '3', 1),
+(4, 1, 4, '5', 1),
+(5, 1, 5, '8', 1),
+(6, 1, 6, '13', 1),
+(7, 1, 7, '21', 1);
+
+insert into planning_t (id, version, code, description, finished, name, deck_id, moderator_id) values
+(1, 1, 'PLANNING_1', 'Planning description 1', false, 'Planning 1', 1, 3);
+
+insert into planning_users_t (planning_id, user_id) values
+(1, 4),
+(1, 5);
+
+insert into issue_t (id, version, active, code, description, estimate, finished_iterations, name, planning_id) values
+(1, 1, false, 'ISSUE_1', 'Issue description 1', null, 0, 'Issue 1', 1);

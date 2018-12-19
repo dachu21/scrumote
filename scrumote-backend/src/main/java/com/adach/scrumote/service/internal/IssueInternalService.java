@@ -7,6 +7,7 @@ import com.adach.scrumote.exception.issue.IssueAlreadyActiveException;
 import com.adach.scrumote.exception.issue.IssueAlreadyEstimatedException;
 import com.adach.scrumote.exception.issue.IssueIterationCurrentlyActiveException;
 import com.adach.scrumote.exception.issue.IssueMismatchException;
+import com.adach.scrumote.exception.issue.IssueNotActiveException;
 import com.adach.scrumote.exception.issue.IssueNotFoundException;
 import com.adach.scrumote.repository.IssueRepository;
 import java.util.List;
@@ -67,7 +68,7 @@ public class IssueInternalService {
 
   public void validateActive(Issue issue) {
     if (!issue.isActive()) {
-      throw new IssueAlreadyActiveException(
+      throw new IssueNotActiveException(
           String.format("Issue with id %d is not active.", issue.getId()));
     }
   }
