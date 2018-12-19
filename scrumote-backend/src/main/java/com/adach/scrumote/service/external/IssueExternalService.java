@@ -12,6 +12,8 @@ import com.adach.scrumote.service.internal.IssueInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.VoteInternalService;
 import com.adach.scrumote.service.security.CurrentUser;
+import com.adach.scrumote.sse.SseService;
+import com.adach.scrumote.sse.events.AllUsersVotedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,8 @@ public class IssueExternalService {
   private final DeckInternalService deckInternalService;
   private final VoteInternalService voteInternalService;
 
+  private final SseService sseService;
+
   @PreAuthorize("hasAnyAuthority('createIssue')")
   public Long createIssue(Long planningId, IssueSimpleDto dto) {
     Planning planning = planningInternalService.findById(planningId);
@@ -45,7 +49,6 @@ public class IssueExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('getIssue')")
-  @SuppressWarnings("Duplicates")
   public IssueSimpleDto getIssue(Long planningId, Long id) {
     Issue issue = internalService.findById(id);
     Planning planning = issue.getPlanning();
@@ -121,7 +124,7 @@ public class IssueExternalService {
       if (usersCount.equals(votesCount)) {
         issue.setActive(false);
         issue.setFinishedIterations(newVoteIteration);
-        // TODO powiadomienie
+        sendAllUsersVotedEvent(issue);
       }
     }
   }
@@ -131,5 +134,11 @@ public class IssueExternalService {
     internalService.validateNotEstimated(issue);
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
     internalService.validateNotActive(issue);
+  }
+
+  private void sendAllUsersVotedEvent(Issue issue) {
+    AllUsersVotedEvent event = new AllUsersVotedEvent(
+        issue.getPlanning().getId(), issue.getId(), issue.getFinishedIterations());
+    sseService.sendSseEvent(event);
   }
 }
