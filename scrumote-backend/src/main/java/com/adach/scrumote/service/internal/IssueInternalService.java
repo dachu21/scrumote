@@ -55,7 +55,7 @@ public class IssueInternalService {
   public void validateNotEstimated(Issue issue) {
     if (issue.getEstimate().isPresent()) {
       throw new IssueAlreadyEstimatedException(
-          String.format("Issue with id %d is already estimated"));
+          String.format("Issue with id %d is already estimated", issue.getId()));
     }
   }
 
