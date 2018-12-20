@@ -6,16 +6,27 @@ import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
+import com.adach.scrumote.service.internal.DeckInternalService;
+import com.adach.scrumote.service.internal.UserInternalService;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @MandatoryTransactions
 public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSimpleDto> {
 
-  public PlanningMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap) {
+  private final DeckInternalService deckInternalService;
+  private final UserInternalService userInternalService;
+
+  @Autowired
+  public PlanningMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap,
+      DeckInternalService deckInternalService,
+      UserInternalService userInternalService) {
     super(modelMapper, simpleDtoTypeMap);
+    this.deckInternalService = deckInternalService;
+    this.userInternalService = userInternalService;
   }
 
   public PlanningWithUsersDto mapToDtoWithUsers(Planning planning) {
@@ -36,6 +47,8 @@ public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSi
     planning.setCode(dto.getCode());
     planning.setName(dto.getName());
     planning.setDescription(dto.getDescription());
+    planning.setDeck(deckInternalService.findById(dto.getDeckId()));
+    planning.getUsers().addAll(userInternalService.findByIds(dto.getUserIds()));
     return planning;
   }
 }

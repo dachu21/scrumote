@@ -1,8 +1,10 @@
 package com.adach.scrumote.entity;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -25,15 +27,18 @@ import lombok.Setter;
 public class Deck extends AbstractEntity {
 
   //region Data
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   @NotNull
   private String name;
   //endregion
 
   //region Mappings
-  @OneToMany(mappedBy = "deck")
+  @OneToMany(mappedBy = "deck", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   @OrderBy("level asc")
   private Set<Card> cards = new LinkedHashSet<>();
+
+  @OneToMany(mappedBy = "deck")
+  private Set<Planning> plannings = new HashSet<>();
   //endregion
 
   //region Methods

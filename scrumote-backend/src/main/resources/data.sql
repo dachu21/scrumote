@@ -14,7 +14,7 @@ insert into permission_t (id, version, name) values
 (6, 1, 'getMyPlannings'), -- DEV
 (7, 1, 'updatePlanning'), -- PO & SM
 (8, 1, 'finishPlanning'), -- PO & SM
-(9, 1, 'deletePlanning'), -- PO & SM
+(9, 1, 'deletePlanning'), -- ADM
 (10, 1, 'createIssue'), -- PO & SM
 (11, 1, 'getIssue'), -- DEV
 (12, 1, 'getIssuesForPlanning'), -- DEV
@@ -23,13 +23,18 @@ insert into permission_t (id, version, name) values
 (15, 1, 'estimateIssue'), -- PO & SM
 (16, 1, 'deleteIssue'), -- PO & SM
 (17, 1, 'createVote'), -- DEV
-(18, 1, 'getVotesForIssue'); -- DEV
+(18, 1, 'getVotesForIssue'), -- DEV
+(19, 1, 'createDeck'), -- ADM
+(20, 1, 'getDeck'), -- ADM & DEV & PO & SM
+(21, 1, 'updateDeck'), -- ADM
+(22, 1, 'deleteDeck'); -- ADM
 alter sequence permission_seq restart with 19;
 
 insert into role_permissions_t (role_id, permission_id) values
-(2, 2), (2, 3), (2, 5), (2, 7), (2, 8), (2, 9), (2, 10), (2, 13), (2, 14), (2, 15), (2, 16),
-(3, 2), (3, 3), (3, 5), (3, 7), (3, 8), (3, 9), (3, 10), (3, 13), (3, 14), (3, 15), (3, 16),
-(4, 4), (4, 6), (4, 11), (4, 12), (4, 17), (4, 18);
+(1, 9), (1, 19), (1, 20), (1, 21), (1, 22),
+(2, 2), (2, 3), (2, 5), (2, 7), (2, 8), (2, 10), (2, 13), (2, 14), (2, 15), (2, 16), (2, 20),
+(3, 2), (3, 3), (3, 5), (3, 7), (3, 8), (3, 10), (3, 13), (3, 14), (3, 15), (3, 16), (3, 20),
+(4, 4), (4, 6), (4, 11), (4, 12), (4, 17), (4, 18), (4, 20);
 
 insert into user_t (id, version, active, password, username, email, first_name, last_name) values
 (1, 1, true, '$2a$10$4dA/YnrD2OhqYcN3KrnrZegKS7eJQRnwIkXhIkkOCBXCwNOnQ54vq', 'admin', 'a@server.com', 'A', 'Xyz'),
@@ -63,6 +68,7 @@ insert into user_permissions_t (user_id, permission_id) values
 
 insert into deck_t (id, version, name) values
 (1, 1, 'DECK_1');
+alter sequence deck_seq restart with 2;
 
 insert into card_t (id, version, level, "value", deck_id) values
 (1, 1, 1, '1', 1),
@@ -72,9 +78,11 @@ insert into card_t (id, version, level, "value", deck_id) values
 (5, 1, 5, '8', 1),
 (6, 1, 6, '13', 1),
 (7, 1, 7, '21', 1);
+alter sequence card_seq restart with 8;
 
 insert into planning_t (id, version, code, description, finished, name, deck_id, moderator_id) values
 (1, 1, 'PLANNING_1', 'Planning description 1', false, 'Planning 1', 1, 3);
+alter sequence planning_seq restart with 2;
 
 insert into planning_users_t (planning_id, user_id) values
 (1, 4),
@@ -82,3 +90,4 @@ insert into planning_users_t (planning_id, user_id) values
 
 insert into issue_t (id, version, active, code, description, estimate, finished_iterations, name, planning_id) values
 (1, 1, false, 'ISSUE_1', 'Issue description 1', null, 0, 'Issue 1', 1);
+alter sequence issue_seq restart with 2;

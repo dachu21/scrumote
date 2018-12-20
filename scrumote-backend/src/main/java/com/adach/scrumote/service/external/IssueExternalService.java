@@ -112,7 +112,7 @@ public class IssueExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('createVote')")
-  public void deactivateIssueIfLastVote(Long id, Long voteId) {
+  public void deactivateIssueIfAllUsersVoted(Long id, Long voteId) {
     Issue issue = internalService.findById(id);
     Vote newVote = voteInternalService.findById(voteId);
     Integer newVoteIteration = newVote.getIteration();

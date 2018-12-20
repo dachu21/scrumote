@@ -1,6 +1,6 @@
 package com.adach.scrumote.rest;
 
-import com.adach.scrumote.configuration.controller.PrefixedRestController;
+import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.service.external.UserExternalService;
 import java.security.Principal;

@@ -1,6 +1,6 @@
 package com.adach.scrumote.rest;
 
-import com.adach.scrumote.configuration.controller.PrefixedRestController;
+import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.service.external.PlanningExternalService;
@@ -53,21 +53,21 @@ public class PlanningController extends AbstractController {
   @PutMapping("/plannings/{id}")
   public ResponseEntity<?> updatePlanning(@PathVariable Long id,
       @RequestBody PlanningWithUsersDto dto) {
-    planningExternalService.update(id, dto);
+    planningExternalService.updatePlanning(id, dto);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
   @PutMapping("/plannings/{id}/finish")
   public ResponseEntity<?> finishPlanning(@PathVariable Long id) {
-    planningExternalService.finish(id);
+    planningExternalService.finishPlanning(id);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('deletePlanning')")
   @DeleteMapping("/plannings/{id}")
   public ResponseEntity<?> deletePlanning(@PathVariable Long id) {
-    planningExternalService.delete(id);
+    planningExternalService.deletePlanning(id);
     return ResponseEntity.noContent().build();
   }
 }

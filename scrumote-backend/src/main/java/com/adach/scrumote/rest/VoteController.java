@@ -1,6 +1,6 @@
 package com.adach.scrumote.rest;
 
-import com.adach.scrumote.configuration.controller.PrefixedRestController;
+import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.simple.VoteSimpleDto;
 import com.adach.scrumote.service.external.IssueExternalService;
 import com.adach.scrumote.service.external.VoteExternalService;
@@ -28,7 +28,7 @@ public class VoteController extends AbstractController {
   public ResponseEntity<?> createVote(@PathVariable Long planningId, @PathVariable Long issueId,
       @RequestBody VoteSimpleDto dto) {
     Long id = voteExternalService.createVote(planningId, issueId, dto);
-    issueExternalService.deactivateIssueIfLastVote(issueId, id);
+    issueExternalService.deactivateIssueIfAllUsersVoted(issueId, id);
     URI location = buildLocationUri(id);
     return ResponseEntity.created(location).build();
   }

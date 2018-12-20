@@ -1,4 +1,4 @@
-package com.adach.scrumote.configuration.controller;
+package com.adach.scrumote.configuration.rest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

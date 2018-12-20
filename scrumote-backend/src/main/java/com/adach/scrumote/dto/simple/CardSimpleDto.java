@@ -11,11 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = "value")
 public class CardSimpleDto extends AbstractSimpleDto {
-
-  @NotNull
-  private Long deckId;
 
   @NotNull
   private Integer level;
