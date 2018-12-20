@@ -27,10 +27,10 @@ public class UserExternalService {
   private final PasswordEncoder passwordEncoder;
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
-  public void register(UserSimpleDto userSimpleDto) {
+  public void registerUser(UserSimpleDto userSimpleDto) {
     User user = mapper.mapToEntity(userSimpleDto);
-    user.getRoles().add(roleInternalService.findStandardUserRole());
-    user.setActive(true); //TODO jakis mechanizm
+    user.getRoles().add(roleInternalService.findDeveloperRole());
+    user.setActive(true);
     user.setPassword(passwordEncoder.encode(user.getPassword())); //TODO walidacja hasla
 
     UserHistory userHistory = UserHistory.createEmpty(user);

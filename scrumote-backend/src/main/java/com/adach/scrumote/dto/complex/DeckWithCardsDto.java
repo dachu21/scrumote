@@ -1,6 +1,6 @@
 package com.adach.scrumote.dto.complex;
 
-import com.adach.scrumote.dto.simple.AbstractSimpleDto;
+import com.adach.scrumote.dto.AbstractDto;
 import com.adach.scrumote.dto.simple.CardSimpleDto;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class DeckWithCardsDto extends AbstractSimpleDto {
+public class DeckWithCardsDto extends AbstractDto {
 
   @NotNull
   private String name;

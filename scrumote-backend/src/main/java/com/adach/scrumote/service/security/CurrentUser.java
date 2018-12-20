@@ -18,8 +18,9 @@ public class CurrentUser {
   }
 
   public static User get() {
-    User detached = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return userInternalService.findById(detached.getId());
+    User detachedUser = (User) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
+    return userInternalService.findById(detachedUser.getId());
   }
 
   public static boolean hasAuthority(String authority) {

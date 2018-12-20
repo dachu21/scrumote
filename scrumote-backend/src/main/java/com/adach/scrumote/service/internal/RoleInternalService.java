@@ -18,7 +18,7 @@ public class RoleInternalService {
   private final RoleRepository repository;
 
   //region Repository methods calls
-  public Role findStandardUserRole() {
+  public Role findDeveloperRole() {
     return repository
         .findByName(DEVELOPER_ROLE_NAME)
         .orElseThrow(() -> new RoleNotFoundException("Role 'DEVELOPER' does not exist."));

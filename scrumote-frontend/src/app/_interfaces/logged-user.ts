@@ -1,3 +1,0 @@
-interface LoggedUser {
-  name: string;
-}

@@ -1,15 +1,10 @@
 package com.adach.scrumote.dto.simple;
 
+import com.adach.scrumote.dto.AbstractDto;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
-@EqualsAndHashCode
-public abstract class AbstractSimpleDto {
-
-  @Getter
-  @Setter
-  protected Long id;
+@EqualsAndHashCode(callSuper = true)
+public abstract class AbstractSimpleDto extends AbstractDto {
 }

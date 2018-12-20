@@ -1,6 +1,6 @@
 package com.adach.scrumote.dto.complex;
 
-import com.adach.scrumote.dto.simple.AbstractSimpleDto;
+import com.adach.scrumote.dto.AbstractDto;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class PlanningWithUsersDto extends AbstractSimpleDto {
+public class PlanningWithUsersDto extends AbstractDto {
 
   @NotNull
   private Long deckId;
