@@ -6,6 +6,7 @@ import com.adach.scrumote.dto.simple.IssueSimpleDto;
 import com.adach.scrumote.dto.simple.PermissionSimpleDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.dto.simple.RoleSimpleDto;
+import com.adach.scrumote.dto.simple.SystemFeatureSimpleDto;
 import com.adach.scrumote.dto.simple.UserHistorySimpleDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.dto.simple.VoteSimpleDto;
@@ -15,6 +16,7 @@ import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Permission;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.Role;
+import com.adach.scrumote.entity.SystemFeature;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserHistory;
 import com.adach.scrumote.entity.Vote;
@@ -67,6 +69,7 @@ public class DtoConfig {
     typesMap.put(UserHistory.class, UserHistorySimpleDto.class);
     typesMap.put(User.class, UserSimpleDto.class);
     typesMap.put(Vote.class, VoteSimpleDto.class);
+    typesMap.put(SystemFeature.class, SystemFeatureSimpleDto.class);
     return new SimpleDtoTypeMap(typesMap);
   }
 }

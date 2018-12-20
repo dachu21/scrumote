@@ -26,6 +26,7 @@ public class UserHistory extends AbstractEntity {
     userHistory.user = user;
     userHistory.plannings = 0;
     userHistory.issues = 0;
+    userHistory.votes = 0;
     userHistory.firstVotesBelowEstimate = 0;
     userHistory.firstVotesAboveEstimate = 0;
     userHistory.firstVotesEqualEstimate = 0;
