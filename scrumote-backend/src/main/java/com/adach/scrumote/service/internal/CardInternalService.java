@@ -1,6 +1,7 @@
 package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
+import com.adach.scrumote.entity.Card;
 import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.repository.CardRepository;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CardInternalService {
+public class CardInternalService extends AbstractInternalService<Card> {
 
   private final CardRepository repository;
 

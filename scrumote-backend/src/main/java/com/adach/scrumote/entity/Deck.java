@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -33,7 +34,8 @@ public class Deck extends AbstractEntity {
   //endregion
 
   //region Mappings
-  @OneToMany(mappedBy = "deck", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+  @JoinColumn(name = "deck_id", nullable = false)
   @OrderBy("level asc")
   private Set<Card> cards = new LinkedHashSet<>();
 
@@ -47,6 +49,10 @@ public class Deck extends AbstractEntity {
         .map(Card::getValue)
         .collect(Collectors.toSet())
         .contains(cardValue);
+  }
+
+  public void removeAllCards() {
+    cards.clear();
   }
   //endregion
 }

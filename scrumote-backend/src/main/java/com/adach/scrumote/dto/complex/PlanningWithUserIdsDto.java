@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class PlanningWithUsersDto extends AbstractDto {
+public class PlanningWithUserIdsDto extends AbstractDto {
 
   @NotNull
   private Long deckId;

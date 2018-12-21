@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-public class UserHistoryInternalService {
+public class UserHistoryInternalService extends AbstractInternalService<UserHistory> {
 
   private final UserHistoryRepository repository;
 

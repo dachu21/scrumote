@@ -2,7 +2,7 @@ package com.adach.scrumote.mapper;
 
 import com.adach.scrumote.configuration.dto.SimpleDtoTypeMap;
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
-import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
+import com.adach.scrumote.dto.complex.PlanningWithUserIdsDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
@@ -29,9 +29,10 @@ public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSi
     this.userInternalService = userInternalService;
   }
 
-  public PlanningWithUsersDto mapToDtoWithUsers(Planning planning) {
-    PlanningWithUsersDto dto = new PlanningWithUsersDto();
+  public PlanningWithUserIdsDto mapToDtoWithUsers(Planning planning) {
+    PlanningWithUserIdsDto dto = new PlanningWithUserIdsDto();
     dto.setId(planning.getId());
+    dto.setVersion(planning.getVersion());
     dto.setDeckId(planning.getDeck().getId());
     dto.setCode(planning.getCode());
     dto.setName(planning.getName());
@@ -42,7 +43,7 @@ public class PlanningMapper extends AbstractSimpleDtoMapper<Planning, PlanningSi
     return dto;
   }
 
-  public Planning mapToEntity(PlanningWithUsersDto dto) {
+  public Planning mapToEntity(PlanningWithUserIdsDto dto) {
     Planning planning = new Planning();
     planning.setCode(dto.getCode());
     planning.setName(dto.getName());

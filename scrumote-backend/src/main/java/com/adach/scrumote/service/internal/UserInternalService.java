@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserInternalService {
+public class UserInternalService extends AbstractInternalService<User> {
 
   private final UserRepository repository;
 

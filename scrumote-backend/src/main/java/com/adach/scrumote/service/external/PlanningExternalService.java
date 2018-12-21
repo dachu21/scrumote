@@ -1,7 +1,7 @@
 package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
-import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
+import com.adach.scrumote.dto.complex.PlanningWithUserIdsDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.entity.Planning;
@@ -34,7 +34,7 @@ public class PlanningExternalService {
   private final UserInternalService userInternalService;
 
   @PreAuthorize("hasAnyAuthority('createPlanning')")
-  public Long createPlanningWithUsers(PlanningWithUsersDto dto) {
+  public Long createPlanningWithUsers(PlanningWithUserIdsDto dto) {
     User moderator = CurrentUser.get();
 
     Planning planning = mapper.mapToEntity(dto);
@@ -45,7 +45,7 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
-  public PlanningWithUsersDto getPlanningWithUsers(Long id) {
+  public PlanningWithUserIdsDto getPlanningWithUsers(Long id) {
     Planning planning = internalService.findById(id);
     internalService.validateContainsCurrentUserIfNotAuthorized(planning);
 
@@ -66,7 +66,7 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
-  public void updatePlanning(Long id, PlanningWithUsersDto dto) {
+  public void updatePlanning(Long id, PlanningWithUserIdsDto dto) {
     Planning planning = internalService.findById(id);
     validatePlanningForUpdateOrFinish(planning);
 

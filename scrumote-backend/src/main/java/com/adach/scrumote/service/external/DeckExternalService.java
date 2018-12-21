@@ -32,14 +32,21 @@ public class DeckExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")
-  public void updateDeck(Long id, DeckWithCardsDto dto) {
+  public void updateDeck(Long id, Long version, DeckWithCardsDto dto) {
     Deck deck = internalService.findById(id);
+    internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
+
+    deck.setName(dto.getName());
+    deck.removeAllCards();
+    mapper.addNewCardsToDeck(deck, dto);
+    internalService.validateCardsHaveValidLevels(deck);
   }
 
   @PreAuthorize("hasAnyAuthority('deleteDeck')")
-  public void deleteDeck(Long id) {
+  public void deleteDeck(Long id, Long version) {
     Deck deck = internalService.findById(id);
+    internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 
     internalService.delete(deck);

@@ -25,6 +25,7 @@ public class DeckMapper extends AbstractSimpleDtoMapper<Deck, DeckSimpleDto> {
   public DeckWithCardsDto mapToDtoWithCards(Deck deck) {
     DeckWithCardsDto dto = new DeckWithCardsDto();
     dto.setId(deck.getId());
+    dto.setVersion(deck.getVersion());
     dto.setName(deck.getName());
     deck.getCards().stream()
         .map(cardMapper::mapToSimpleDto)
@@ -35,12 +36,15 @@ public class DeckMapper extends AbstractSimpleDtoMapper<Deck, DeckSimpleDto> {
   public Deck mapToEntity(DeckWithCardsDto dto) {
     Deck deck = new Deck();
     deck.setName(dto.getName());
+    addNewCardsToDeck(deck, dto);
+    return deck;
+  }
+
+  public void addNewCardsToDeck(Deck deck, DeckWithCardsDto dto) {
     dto.getCards().stream()
         .map(cardMapper::mapToEntity)
         .forEach(card -> {
-          card.setDeck(deck);
           deck.getCards().add(card);
         });
-    return deck;
   }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RoleInternalService {
+public class RoleInternalService extends AbstractInternalService<Role> {
 
   private static final String DEVELOPER_ROLE_NAME = "DEVELOPER";
 

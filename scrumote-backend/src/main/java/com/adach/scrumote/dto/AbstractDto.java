@@ -11,5 +11,9 @@ public abstract class AbstractDto {
 
   @Getter
   @Setter
-  protected Long id;
+  private Long id;
+
+  @Getter
+  @Setter
+  private Long version;
 }

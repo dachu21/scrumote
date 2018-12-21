@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DeckInternalService {
+public class DeckInternalService extends AbstractInternalService<Deck> {
 
   private final DeckRepository repository;
 

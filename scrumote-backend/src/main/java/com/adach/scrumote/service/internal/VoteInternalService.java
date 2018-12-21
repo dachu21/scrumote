@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class VoteInternalService {
+public class VoteInternalService extends AbstractInternalService<Vote> {
 
   private final VoteRepository repository;
 

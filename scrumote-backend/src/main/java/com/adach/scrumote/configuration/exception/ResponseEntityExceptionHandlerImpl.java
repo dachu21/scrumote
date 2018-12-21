@@ -3,6 +3,7 @@ package com.adach.scrumote.configuration.exception;
 import com.adach.scrumote.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionHandler {
 
+  private static final String OPTIMISTIC_LOCK_CODE = "exception.optimisticLock.outdatedVersion";
   private static final String INTEGRITY_VIOLATION_CODE = "exception.integrityViolation";
-  private static final String VALIDATION_ERROR_CODE = "exception.validation";
   private static final String ACCESS_DENIED_CODE = "exception.accessDenied";
+  private static final String VALIDATION_ERROR_CODE = "exception.validation";
   private static final String INTERNAL_SERVER_ERROR_CODE = "exception.unknown";
 
   @ExceptionHandler(ApplicationException.class)
@@ -28,6 +30,14 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
     log.error(e.getMessage(), e);
     ErrorResponse errorResponse = new ErrorResponse(e.getCode());
     return new ResponseEntity<>(errorResponse, e.getHttpStatus());
+  }
+
+  @ExceptionHandler(OptimisticLockingFailureException.class)
+  public final ResponseEntity<ErrorResponse> handleOptimisticLockingFailureException(
+      DataIntegrityViolationException e, WebRequest request) {
+    log.error(e.getMessage(), e);
+    ErrorResponse errorResponse = new ErrorResponse(OPTIMISTIC_LOCK_CODE);
+    return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SystemFeatureInternalService {
+public class SystemFeatureInternalService extends AbstractInternalService<SystemFeature> {
 
   private final SystemFeatureRepository repository;
 

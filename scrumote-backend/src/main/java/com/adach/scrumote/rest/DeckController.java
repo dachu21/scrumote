@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @PrefixedRestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,15 +38,19 @@ public class DeckController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")
   @PutMapping("/decks/{id}")
-  public ResponseEntity<?> updateDeck(@PathVariable Long id, @RequestBody DeckWithCardsDto dto) {
-    deckExternalService.updateDeck(id, dto);
+  public ResponseEntity<?> updateDeck(@PathVariable Long id, @RequestBody DeckWithCardsDto dto,
+      @RequestHeader(value = VERSION_HEADER) String versionHeader) {
+    Long version = extractVersion(versionHeader);
+    deckExternalService.updateDeck(id, version, dto);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('deleteDeck')")
   @DeleteMapping("/decks/{id}")
-  public ResponseEntity<?> deleteDeck(@PathVariable Long id) {
-    deckExternalService.deleteDeck(id);
+  public ResponseEntity<?> deleteDeck(@PathVariable Long id,
+      @RequestHeader(value = VERSION_HEADER) String versionHeader) {
+    Long version = extractVersion(versionHeader);
+    deckExternalService.deleteDeck(id, version);
     return ResponseEntity.noContent().build();
   }
 }

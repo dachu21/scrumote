@@ -1,7 +1,7 @@
 package com.adach.scrumote.rest;
 
 import com.adach.scrumote.configuration.rest.PrefixedRestController;
-import com.adach.scrumote.dto.complex.PlanningWithUsersDto;
+import com.adach.scrumote.dto.complex.PlanningWithUserIdsDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.service.external.PlanningExternalService;
 import java.net.URI;
@@ -25,7 +25,7 @@ public class PlanningController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   @PostMapping("/plannings")
-  public ResponseEntity<?> createPlanningWithUsers(@RequestBody PlanningWithUsersDto dto) {
+  public ResponseEntity<?> createPlanningWithUsers(@RequestBody PlanningWithUserIdsDto dto) {
     Long id = planningExternalService.createPlanningWithUsers(dto);
     URI location = buildLocationUri(id);
     return ResponseEntity.created(location).build();
@@ -33,7 +33,7 @@ public class PlanningController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
   @GetMapping("/plannings/{id}")
-  public PlanningWithUsersDto getPlanningWithUsers(@PathVariable Long id) {
+  public PlanningWithUserIdsDto getPlanningWithUsers(@PathVariable Long id) {
     return planningExternalService.getPlanningWithUsers(id);
   }
 
@@ -52,7 +52,7 @@ public class PlanningController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
   @PutMapping("/plannings/{id}")
   public ResponseEntity<?> updatePlanning(@PathVariable Long id,
-      @RequestBody PlanningWithUsersDto dto) {
+      @RequestBody PlanningWithUserIdsDto dto) {
     planningExternalService.updatePlanning(id, dto);
     return ResponseEntity.noContent().build();
   }

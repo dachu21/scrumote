@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PlanningInternalService {
+public class PlanningInternalService extends AbstractInternalService<Planning> {
 
   private final PlanningRepository repository;
 
