@@ -33,9 +33,9 @@ public class PlanningController extends AbstractController {
   }
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
-  @GetMapping("/plannings/{id}")
-  public PlanningSimpleDto getPlanning(@PathVariable Long id) {
-    return planningExternalService.getPlanning(id);
+  @GetMapping("/plannings/{planningId}")
+  public PlanningSimpleDto getPlanning(@PathVariable Long planningId) {
+    return planningExternalService.getPlanning(planningId);
   }
 
   @PreAuthorize("hasAnyAuthority('getAllPlannings')")
@@ -51,30 +51,30 @@ public class PlanningController extends AbstractController {
   }
 
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
-  @PutMapping("/plannings/{id}")
-  public ResponseEntity<?> updatePlanning(@PathVariable Long id,
+  @PutMapping("/plannings/{planningId}")
+  public ResponseEntity<?> updatePlanning(@PathVariable Long planningId,
       @RequestBody @Valid PlanningSimpleDto dto,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    planningExternalService.updatePlanning(id, version, dto);
+    planningExternalService.updatePlanning(planningId, version, dto);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
-  @PutMapping("/plannings/{id}/finish")
-  public ResponseEntity<?> finishPlanning(@PathVariable Long id,
+  @PutMapping("/plannings/{planningId}/finish")
+  public ResponseEntity<?> finishPlanning(@PathVariable Long planningId,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    planningExternalService.finishPlanning(id, version);
+    planningExternalService.finishPlanning(planningId, version);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('deletePlanning')")
-  @DeleteMapping("/plannings/{id}")
-  public ResponseEntity<?> deletePlanning(@PathVariable Long id,
+  @DeleteMapping("/plannings/{planningId}")
+  public ResponseEntity<?> deletePlanning(@PathVariable Long planningId,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    planningExternalService.deletePlanning(id, version);
+    planningExternalService.deletePlanning(planningId, version);
     return ResponseEntity.noContent().build();
   }
 }

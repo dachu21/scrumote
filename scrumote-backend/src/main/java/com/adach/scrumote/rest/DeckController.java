@@ -32,27 +32,27 @@ public class DeckController extends AbstractController {
   }
 
   @PreAuthorize("hasAnyAuthority('getDeck')")
-  @GetMapping("/decks/{id}")
-  public DeckWithCardsDto getDeckWithCards(@PathVariable Long id) {
-    return deckExternalService.getDeckWithCards(id);
+  @GetMapping("/decks/{deckId}")
+  public DeckWithCardsDto getDeckWithCards(@PathVariable Long deckId) {
+    return deckExternalService.getDeckWithCards(deckId);
   }
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")
-  @PutMapping("/decks/{id}")
-  public ResponseEntity<?> updateDeck(@PathVariable Long id,
+  @PutMapping("/decks/{deckId}")
+  public ResponseEntity<?> updateDeck(@PathVariable Long deckId,
       @RequestBody @Valid DeckWithCardsDto dto,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    deckExternalService.updateDeck(id, version, dto);
+    deckExternalService.updateDeck(deckId, version, dto);
     return ResponseEntity.noContent().build();
   }
 
   @PreAuthorize("hasAnyAuthority('deleteDeck')")
-  @DeleteMapping("/decks/{id}")
-  public ResponseEntity<?> deleteDeck(@PathVariable Long id,
+  @DeleteMapping("/decks/{deckId}")
+  public ResponseEntity<?> deleteDeck(@PathVariable Long deckId,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    deckExternalService.deleteDeck(id, version);
+    deckExternalService.deleteDeck(deckId, version);
     return ResponseEntity.noContent().build();
   }
 }

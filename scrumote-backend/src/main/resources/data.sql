@@ -91,7 +91,7 @@ insert into card_t (id, version, level, "value", deck_id) values
 alter sequence card_seq restart with 8;
 
 insert into planning_t (id, version, code, description, finished, name, deck_id, moderator_id) values
-(1, 0, 'PLANNING_1', 'Planning description 1', false, 'Planning 1', 1, 3);
+(1, 0, 'PLANNING_1', 'Planning description 1', false, 'Planning 1', 1, 5);
 alter sequence planning_seq restart with 2;
 
 insert into planning_users_t (planning_id, user_id) values

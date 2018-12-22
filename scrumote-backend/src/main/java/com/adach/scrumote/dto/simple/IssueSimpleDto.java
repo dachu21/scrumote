@@ -22,7 +22,9 @@ public class IssueSimpleDto extends AbstractSimpleDto {
 
   private String description;
 
-  private Integer iterations;
+  private Integer finishedIterations;
 
   private String estimate;
+
+  private boolean active;
 }

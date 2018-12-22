@@ -4,6 +4,7 @@ import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.simple.SystemFeatureSimpleDto;
 import com.adach.scrumote.service.external.SystemFeatureExternalService;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,12 @@ public class SystemFeatureController extends AbstractController {
   }
 
   @PreAuthorize("hasAnyAuthority('updateSystemFeature')")
-  @PutMapping("/system-features/{id}")
-  public ResponseEntity<?> updateSystemFeature(@PathVariable Long id,
-      @RequestBody SystemFeatureSimpleDto dto,
+  @PutMapping("/system-features/{featureId}")
+  public ResponseEntity<?> updateSystemFeature(@PathVariable Long featureId,
+      @RequestBody @Valid SystemFeatureSimpleDto dto,
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
-    systemFeatureExternalService.updateSystemFeature(id, version, dto);
+    systemFeatureExternalService.updateSystemFeature(featureId, version, dto);
     return ResponseEntity.noContent().build();
   }
 }

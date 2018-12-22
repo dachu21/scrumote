@@ -26,14 +26,14 @@ public class DeckExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('getDeck')")
-  public DeckWithCardsDto getDeckWithCards(Long id) {
-    Deck deck = internalService.findById(id);
+  public DeckWithCardsDto getDeckWithCards(Long deckId) {
+    Deck deck = internalService.findById(deckId);
     return mapper.mapToDtoWithCards(deck);
   }
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")
-  public void updateDeck(Long id, Long version, DeckWithCardsDto dto) {
-    Deck deck = internalService.findById(id);
+  public void updateDeck(Long deckId, Long version, DeckWithCardsDto dto) {
+    Deck deck = internalService.findById(deckId);
     internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 
@@ -44,8 +44,8 @@ public class DeckExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('deleteDeck')")
-  public void deleteDeck(Long id, Long version) {
-    Deck deck = internalService.findById(id);
+  public void deleteDeck(Long deckId, Long version) {
+    Deck deck = internalService.findById(deckId);
     internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 

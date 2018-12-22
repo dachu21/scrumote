@@ -48,8 +48,8 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
-  public PlanningSimpleDto getPlanning(Long id) {
-    Planning planning = internalService.findById(id);
+  public PlanningSimpleDto getPlanning(Long planningId) {
+    Planning planning = internalService.findById(planningId);
     internalService.validateContainsCurrentUserIfNotAuthorized(planning);
 
     return mapper.mapToSimpleDto(planning);
@@ -68,8 +68,8 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
-  public void updatePlanning(Long id, Long version, PlanningSimpleDto dto) {
-    Planning planning = internalService.findById(id);
+  public void updatePlanning(Long planningId, Long version, PlanningSimpleDto dto) {
+    Planning planning = internalService.findById(planningId);
     internalService.validateVersion(planning, version);
     validatePlanningForUpdateOrFinish(planning);
 
@@ -86,8 +86,8 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
-  public void finishPlanning(Long id, Long version) {
-    Planning planning = internalService.findById(id);
+  public void finishPlanning(Long planningId, Long version) {
+    Planning planning = internalService.findById(planningId);
     internalService.validateVersion(planning, version);
     validatePlanningForUpdateOrFinish(planning);
 
@@ -96,8 +96,8 @@ public class PlanningExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('deletePlanning')")
-  public void deletePlanning(Long id, Long version) {
-    Planning planning = internalService.findById(id);
+  public void deletePlanning(Long planningId, Long version) {
+    Planning planning = internalService.findById(planningId);
     internalService.validateVersion(planning, version);
     internalService.validateFinished(planning);
 

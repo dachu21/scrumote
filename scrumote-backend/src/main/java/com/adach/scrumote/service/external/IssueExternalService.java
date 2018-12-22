@@ -44,16 +44,17 @@ public class IssueExternalService {
     Issue issue = mapper.mapToEntity(dto);
     issue.setFinishedIterations(0);
     issue.setEstimate(null);
+    issue.setActive(false);
     issue.setPlanning(planning);
+    setDescriptionToNullIfBlank(issue);
 
     return internalService.save(issue).getId();
   }
 
   @PreAuthorize("hasAnyAuthority('getIssue')")
-  public IssueSimpleDto getIssue(Long planningId, Long id) {
-    Issue issue = internalService.findById(id);
-    Planning planning = issue.getPlanning();
-    internalService.validateBelongsToPlanningWithId(issue, planningId);
+  public IssueSimpleDto getIssue(Long planningId, Long issueId) {
+    Issue issue = internalService.findById(issueId);
+    Planning planning = findPlanningAndValidateItsId(issue, planningId);
     planningInternalService.validateContainsCurrentUserIfNotAuthorized(planning);
 
     return mapper.mapToSimpleDto(issue);
@@ -69,32 +70,30 @@ public class IssueExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('updateIssue')")
-  public void updateIssue(Long planningId, Long id, IssueSimpleDto dto) {
-    Issue issue = internalService.findById(id);
-    Planning planning = issue.getPlanning();
-    internalService.validateBelongsToPlanningWithId(issue, planningId);
+  public void updateIssue(Long planningId, Long issueId, Long version, IssueSimpleDto dto) {
+    Issue issue = findIssueAndValidateVersion(issueId, version);
+    Planning planning = findPlanningAndValidateItsId(issue, planningId);
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     issue.setCode(dto.getCode());
     issue.setName(dto.getName());
     issue.setDescription(dto.getDescription());
+    setDescriptionToNullIfBlank(issue);
   }
 
   @PreAuthorize("hasAnyAuthority('activateIssue')")
-  public void activateIssue(Long planningId, Long id) {
-    Issue issue = internalService.findById(id);
-    Planning planning = issue.getPlanning();
-    internalService.validateBelongsToPlanningWithId(issue, planningId);
+  public void activateIssue(Long planningId, Long issueId, Long version) {
+    Issue issue = findIssueAndValidateVersion(issueId, version);
+    Planning planning = findPlanningAndValidateItsId(issue, planningId);
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     issue.setActive(true);
   }
 
   @PreAuthorize("hasAnyAuthority('estimateIssue')")
-  public void estimateIssue(Long planningId, Long id, String cardValue) {
-    Issue issue = internalService.findById(id);
-    Planning planning = issue.getPlanning();
-    internalService.validateBelongsToPlanningWithId(issue, planningId);
+  public void estimateIssue(Long planningId, Long issueId, Long version, String cardValue) {
+    Issue issue = findIssueAndValidateVersion(issueId, version);
+    Planning planning = findPlanningAndValidateItsId(issue, planningId);
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     Deck deck = planning.getDeck();
@@ -103,10 +102,9 @@ public class IssueExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('deleteIssue')")
-  public void deleteIssue(Long planningId, Long id) {
-    Issue issue = internalService.findById(id);
-    Planning planning = issue.getPlanning();
-    internalService.validateBelongsToPlanningWithId(issue, planningId);
+  public void deleteIssue(Long planningId, Long issueId, Long version) {
+    Issue issue = findIssueAndValidateVersion(issueId, version);
+    Planning planning = findPlanningAndValidateItsId(issue, planningId);
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     internalService.delete(issue);
@@ -130,11 +128,29 @@ public class IssueExternalService {
     }
   }
 
+  private Issue findIssueAndValidateVersion(Long id, Long version) {
+    Issue issue = internalService.findById(id);
+    internalService.validateVersion(issue, version);
+    return issue;
+  }
+
+  private Planning findPlanningAndValidateItsId(Issue issue, Long planningId) {
+    Planning planning = issue.getPlanning();
+    internalService.validateBelongsToPlanningWithId(issue, planningId);
+    return planning;
+  }
+
   private void validateIssueAndPlanningForUpdateOrDelete(Issue issue, Planning planning) {
     planningInternalService.validateNotFinished(planning);
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
     internalService.validateNotEstimated(issue);
     internalService.validateNotActive(issue);
+  }
+
+  private void setDescriptionToNullIfBlank(Issue issue) {
+    if (issue.getDescription().isPresent() && issue.getDescription().get().isBlank()) {
+      issue.setDescription(null);
+    }
   }
 
   private void sendAllUsersVotedEvent(Issue issue) {
