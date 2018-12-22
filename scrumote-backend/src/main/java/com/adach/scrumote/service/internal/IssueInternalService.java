@@ -5,9 +5,9 @@ import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.exception.issue.IssueAlreadyActiveException;
 import com.adach.scrumote.exception.issue.IssueAlreadyEstimatedException;
-import com.adach.scrumote.exception.issue.IssueIterationCurrentlyActiveException;
+import com.adach.scrumote.exception.issue.IssueIterationIsCurrentlyActiveException;
+import com.adach.scrumote.exception.issue.IssueIterationIsNotCurrentlyActiveException;
 import com.adach.scrumote.exception.issue.IssueMismatchException;
-import com.adach.scrumote.exception.issue.IssueNotActiveException;
 import com.adach.scrumote.exception.issue.IssueNotFoundException;
 import com.adach.scrumote.repository.IssueRepository;
 import java.util.List;
@@ -66,17 +66,18 @@ public class IssueInternalService extends AbstractInternalService<Issue> {
     }
   }
 
-  public void validateActive(Issue issue) {
-    if (!issue.isActive()) {
-      throw new IssueNotActiveException(
-          String.format("Issue with id %d is not active.", issue.getId()));
+  public void validateIsNotCurrentlyActiveIteration(Issue issue, Integer iteration) {
+    if (issue.isActive() && iteration.equals(issue.getFinishedIterations() + 1)) {
+      throw new IssueIterationIsCurrentlyActiveException(
+          String.format("Iteration no. %d is currently active iteration of issue with id %d.",
+              iteration, issue.getId()));
     }
   }
 
-  public void validateNotCurrentlyActiveIteration(Issue issue, Integer iteration) {
-    if (issue.isActive() && iteration.equals(issue.getFinishedIterations() + 1)) {
-      throw new IssueIterationCurrentlyActiveException(
-          String.format("Iteration no. %d is currently active iteration of issue with id %d.",
+  public void validateIsCurrentlyActiveIteration(Issue issue, Integer iteration) {
+    if (!issue.isActive() || !iteration.equals(issue.getFinishedIterations() + 1)) {
+      throw new IssueIterationIsNotCurrentlyActiveException(
+          String.format("Iteration no. %d is not currently active iteration of issue with id %d.",
               iteration, issue.getId()));
     }
   }

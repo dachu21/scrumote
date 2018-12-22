@@ -27,8 +27,8 @@ public class PlanningController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   @PostMapping("/plannings")
   public ResponseEntity<?> createPlanningWithUsers(@RequestBody @Valid PlanningSimpleDto dto) {
-    Long id = planningExternalService.createPlanning(dto);
-    URI location = buildLocationUri(id);
+    Long newPlanningId = planningExternalService.createPlanning(dto);
+    URI location = buildLocationUri(newPlanningId);
     return ResponseEntity.created(location).build();
   }
 

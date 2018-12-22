@@ -41,7 +41,7 @@ public class UserHistoryInternalService extends AbstractInternalService<UserHist
 
   private Set<UserHistory> updateUsersHistoryForIssue(Issue issue) {
 
-    if (!issue.getEstimate().isPresent()) {
+    if (issue.getEstimate().isEmpty()) {
       log.debug(String.format("Issue with id %d is not estimated. Skipping...", issue.getId()));
       return Collections.emptySet();
     }

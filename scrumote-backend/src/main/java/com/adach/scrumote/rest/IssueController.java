@@ -28,8 +28,8 @@ public class IssueController extends AbstractController {
   @PostMapping("/plannings/{planningId}/issues")
   public ResponseEntity<?> createIssue(@PathVariable Long planningId,
       @RequestBody @Valid IssueSimpleDto dto) {
-    Long id = issueExternalService.createIssue(planningId, dto);
-    URI location = buildLocationUri(id);
+    Long newIssueId = issueExternalService.createIssue(planningId, dto);
+    URI location = buildLocationUri(newIssueId);
     return ResponseEntity.created(location).build();
   }
 

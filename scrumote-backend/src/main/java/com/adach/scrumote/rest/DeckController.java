@@ -26,8 +26,8 @@ public class DeckController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('createDeck')")
   @PostMapping("/decks")
   public ResponseEntity<?> createDeck(@RequestBody @Valid DeckWithCardsDto dto) {
-    Long id = deckExternalService.createDeck(dto);
-    URI location = buildLocationUri(id);
+    Long newDeckId = deckExternalService.createDeck(dto);
+    URI location = buildLocationUri(newDeckId);
     return ResponseEntity.created(location).build();
   }
 

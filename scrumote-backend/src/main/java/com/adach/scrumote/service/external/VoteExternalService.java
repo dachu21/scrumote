@@ -34,16 +34,17 @@ public class VoteExternalService {
   @PreAuthorize("hasAnyAuthority('createVote')")
   public Long createVote(Long planningId, Long issueId, VoteSimpleDto dto) {
     Issue issue = issueInternalService.findById(issueId);
+    Planning planning = issue.getPlanning();
+    Deck deck = planning.getDeck();
+
     issueInternalService.validateBelongsToPlanningWithId(issue, planningId);
-    issueInternalService.validateActive(issue);
-    Deck deck = issue.getPlanning().getDeck();
+    issueInternalService.validateIsCurrentlyActiveIteration(issue, dto.getIteration());
+    planningInternalService.validateContainsCurrentUser(planning);
     deckInternalService.validateContainsCardWithValue(deck, dto.getValue());
 
     Vote vote = mapper.mapToEntity(dto);
     vote.setIssue(issue);
     vote.setUser(CurrentUser.get());
-    vote.setValue(dto.getValue());
-    vote.setIteration(issue.getFinishedIterations() + 1);
 
     return internalService.save(vote).getId();
   }
@@ -52,8 +53,9 @@ public class VoteExternalService {
   public List<VoteSimpleDto> getVotesForIssue(Long planningId, Long issueId, Integer iteration) {
     Issue issue = issueInternalService.findById(issueId);
     Planning planning = issue.getPlanning();
+
     issueInternalService.validateBelongsToPlanningWithId(issue, planningId);
-    issueInternalService.validateNotCurrentlyActiveIteration(issue, iteration);
+    issueInternalService.validateIsNotCurrentlyActiveIteration(issue, iteration);
     planningInternalService.validateContainsCurrentUserIfNotAuthorized(planning);
 
     return internalService.findAllByIssueAndIteration(issue, iteration).stream()

@@ -15,14 +15,10 @@ import lombok.Setter;
 public class VoteSimpleDto extends AbstractSimpleDto {
 
   @NotNull
-  private Long issueId;
-
-  @NotNull
-  private Long userId;
-
-  @NotNull
   private Integer iteration;
 
   @NotNull
   private String value;
+
+  private Long userId;
 }

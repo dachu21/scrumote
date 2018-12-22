@@ -4,10 +4,11 @@ import com.adach.scrumote.configuration.rest.PrefixedRestController;
 import com.adach.scrumote.dto.simple.VoteSimpleDto;
 import com.adach.scrumote.service.external.IssueExternalService;
 import com.adach.scrumote.service.external.VoteExternalService;
-import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +27,10 @@ public class VoteController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('createVote')")
   @PostMapping("/plannings/{planningId}/issues/{issueId}/votes")
   public ResponseEntity<?> createVote(@PathVariable Long planningId, @PathVariable Long issueId,
-      @RequestBody VoteSimpleDto dto) {
-    Long id = voteExternalService.createVote(planningId, issueId, dto);
-    issueExternalService.deactivateIssueIfAllUsersVoted(issueId, id);
-    URI location = buildLocationUri(id);
-    return ResponseEntity.created(location).build();
+      @RequestBody @Valid VoteSimpleDto dto) {
+    Long newVoteId = voteExternalService.createVote(planningId, issueId, dto);
+    issueExternalService.deactivateIssueIfAllUsersVoted(issueId, newVoteId);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PreAuthorize("hasAnyAuthority('getVotesForIssue')")

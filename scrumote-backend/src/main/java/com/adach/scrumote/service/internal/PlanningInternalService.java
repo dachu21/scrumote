@@ -49,11 +49,20 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   //endregion
 
   //region Validation methods
+  public void validateContainsCurrentUser(Planning planning) {
+    if (!planning.containsUser(CurrentUser.get())) {
+      throw new PlanningForbiddenException(
+          String.format("Current user does not have write access to planning with id %d.",
+              planning.getId()));
+    }
+  }
+
   public void validateContainsCurrentUserIfNotAuthorized(Planning planning) {
     if (!CurrentUser.hasAuthority("getAnyPlanning") &&
         !planning.containsUser(CurrentUser.get())) {
-      throw new PlanningForbiddenException(String
-          .format("Current user does not have access to planning with id %d.", planning.getId()));
+      throw new PlanningForbiddenException(
+          String.format("Current user does not have read access to planning with id %d.",
+              planning.getId()));
     }
   }
 
