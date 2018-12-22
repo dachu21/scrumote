@@ -70,10 +70,6 @@ public class UserHistory extends AbstractEntity {
   //endregion
 
   //region Methods
-  public Integer getFirstVotes() {
-    return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
-  }
-
   public void incrementPlannings() {
     plannings++;
   }
@@ -96,6 +92,10 @@ public class UserHistory extends AbstractEntity {
     double totalLevelDifference = getFirstVotes() * averageFirstVoteLevelDifference;
     totalLevelDifference += levelDifference;
     averageFirstVoteLevelDifference = totalLevelDifference / (getFirstVotes() + 1);
+  }
+
+  private Integer getFirstVotes() {
+    return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
   }
 
   private void incrementFirstVotesCount(int levelDifference) {

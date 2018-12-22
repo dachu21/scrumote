@@ -14,7 +14,7 @@ public abstract class SseEvent {
 
   private final SseEventMetadata metadata;
 
-  public SseEvent(String name) {
+  protected SseEvent(String name) {
     this.metadata = new SseEventMetadata(Instant.now(), name);
   }
 }

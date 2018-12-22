@@ -19,7 +19,7 @@ import org.modelmapper.Converter;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CustomDtoConverters {
 
-  static Converter<Optional<String>, String> fromOptionalToString =
+  static final Converter<Optional<String>, String> fromOptionalToString =
       new AbstractConverter<>() {
         @Override
         protected String convert(Optional<String> optional) {
@@ -27,7 +27,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<String, Optional<String>> fromStringToOptional =
+  static final Converter<String, Optional<String>> fromStringToOptional =
       new AbstractConverter<>() {
         @Override
         protected Optional<String> convert(String string) {
@@ -35,7 +35,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Card, Long> fromCardToLong =
+  static final Converter<Card, Long> fromCardToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Card entity) {
@@ -43,7 +43,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Deck, Long> fromDeckToLong =
+  static final Converter<Deck, Long> fromDeckToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Deck entity) {
@@ -51,7 +51,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Issue, Long> fromIssueToLong =
+  static final Converter<Issue, Long> fromIssueToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Issue entity) {
@@ -59,7 +59,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Permission, Long> fromPermissionToLong =
+  static final Converter<Permission, Long> fromPermissionToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Permission entity) {
@@ -67,7 +67,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Planning, Long> fromPlanningToLong =
+  static final Converter<Planning, Long> fromPlanningToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Planning entity) {
@@ -75,7 +75,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Role, Long> fromRoleToLong =
+  static final Converter<Role, Long> fromRoleToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Role entity) {
@@ -83,7 +83,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<UserHistory, Long> fromUserHistoryToLong =
+  static final Converter<UserHistory, Long> fromUserHistoryToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(UserHistory entity) {
@@ -91,7 +91,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<User, Long> fromUserToLong =
+  static final Converter<User, Long> fromUserToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(User entity) {
@@ -99,7 +99,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<Vote, Long> fromVoteToLong =
+  static final Converter<Vote, Long> fromVoteToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(Vote entity) {
@@ -107,7 +107,7 @@ class CustomDtoConverters {
         }
       };
 
-  static Converter<SystemFeature, Long> fromSystemFeatureToLong =
+  static final Converter<SystemFeature, Long> fromSystemFeatureToLong =
       new AbstractConverter<>() {
         @Override
         protected Long convert(SystemFeature entity) {

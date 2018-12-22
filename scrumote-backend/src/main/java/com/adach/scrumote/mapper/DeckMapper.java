@@ -43,8 +43,6 @@ public class DeckMapper extends AbstractSimpleDtoMapper<Deck, DeckSimpleDto> {
   public void addNewCardsToDeck(Deck deck, DeckWithCardsDto dto) {
     dto.getCards().stream()
         .map(cardMapper::mapToEntity)
-        .forEach(card -> {
-          deck.getCards().add(card);
-        });
+        .forEach(card -> deck.getCards().add(card));
   }
 }

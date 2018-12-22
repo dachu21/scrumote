@@ -39,6 +39,7 @@ public class User extends AbstractEntity {
     this.active = user.active;
     this.permissions = user.permissions;
     this.roles = user.roles;
+    this.userHistory = user.userHistory;
   }
 
   @Column(nullable = false, unique = true)
