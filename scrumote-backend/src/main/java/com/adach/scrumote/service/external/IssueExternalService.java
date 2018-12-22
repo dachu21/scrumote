@@ -38,6 +38,7 @@ public class IssueExternalService {
   @PreAuthorize("hasAnyAuthority('createIssue')")
   public Long createIssue(Long planningId, IssueSimpleDto dto) {
     Planning planning = planningInternalService.findById(planningId);
+    planningInternalService.validateNotFinished(planning);
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
 
     Issue issue = mapper.mapToEntity(dto);
@@ -130,9 +131,9 @@ public class IssueExternalService {
   }
 
   private void validateIssueAndPlanningForUpdateOrDelete(Issue issue, Planning planning) {
+    planningInternalService.validateNotFinished(planning);
     planningInternalService.validateHasModerator(planning, CurrentUser.get());
     internalService.validateNotEstimated(issue);
-    planningInternalService.validateHasModerator(planning, CurrentUser.get());
     internalService.validateNotActive(issue);
   }
 

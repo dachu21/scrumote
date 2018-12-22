@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @PrefixedRestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -33,8 +34,10 @@ public class SystemFeatureController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('updateSystemFeature')")
   @PutMapping("/system-features/{id}")
   public ResponseEntity<?> updateSystemFeature(@PathVariable Long id,
-      @RequestBody SystemFeatureSimpleDto dto) {
-    systemFeatureExternalService.updateSystemFeature(id, dto);
+      @RequestBody SystemFeatureSimpleDto dto,
+      @RequestHeader(value = VERSION_HEADER) String versionHeader) {
+    Long version = extractVersion(versionHeader);
+    systemFeatureExternalService.updateSystemFeature(id, version, dto);
     return ResponseEntity.noContent().build();
   }
 }

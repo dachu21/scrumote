@@ -1,5 +1,7 @@
 package com.adach.scrumote.dto.simple;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,7 +25,13 @@ public class PlanningSimpleDto extends AbstractSimpleDto {
   @NotNull
   private String name;
 
+  @NotNull
+  private Set<Long> users = new LinkedHashSet<>();
+
   private String description;
 
   private boolean finished;
+
+  private Long moderatorId;
+
 }

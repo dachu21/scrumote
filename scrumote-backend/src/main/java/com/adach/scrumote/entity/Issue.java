@@ -3,6 +3,7 @@ package com.adach.scrumote.entity;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -55,7 +56,7 @@ public class Issue extends AbstractEntity {
   //endregion
 
   //region Mappings
-  @OneToMany(mappedBy = "issue")
+  @OneToMany(mappedBy = "issue", cascade = CascadeType.REMOVE)
   @OrderBy("iteration asc")
   private Set<Vote> votes = new LinkedHashSet<>();
   //endregion

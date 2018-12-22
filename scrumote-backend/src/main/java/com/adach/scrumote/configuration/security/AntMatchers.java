@@ -14,7 +14,7 @@ class AntMatchers {
 
   static final String[] API_ANONYMOUS = {
       API_PREFIX + "/register",
-      API_PREFIX + "/system-features"
+      API_PREFIX + "/system-features/*"
   };
 
   static final String[] SWAGGER = {

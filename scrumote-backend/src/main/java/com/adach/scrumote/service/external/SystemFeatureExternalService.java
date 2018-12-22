@@ -32,8 +32,10 @@ public class SystemFeatureExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('updateSystemFeature')")
-  public void updateSystemFeature(Long id, SystemFeatureSimpleDto dto) {
+  public void updateSystemFeature(Long id, Long version, SystemFeatureSimpleDto dto) {
     SystemFeature systemFeature = internalService.findById(id);
+    internalService.validateVersion(systemFeature, version);
+
     systemFeature.setEnabled(dto.isEnabled());
   }
 }
