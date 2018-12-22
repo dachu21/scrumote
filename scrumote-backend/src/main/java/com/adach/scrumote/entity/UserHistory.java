@@ -69,6 +69,7 @@ public class UserHistory extends AbstractEntity {
   private Double averageFirstVoteLevelDifference;
   //endregion
 
+  //region Methods
   public Integer getFirstVotes() {
     return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
   }
@@ -106,4 +107,5 @@ public class UserHistory extends AbstractEntity {
       firstVotesEqualEstimate++;
     }
   }
+  //endregion
 }

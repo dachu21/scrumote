@@ -56,8 +56,11 @@ alter sequence user_seq restart with 6;
 
 insert into user_history_t(id, version, average_first_vote_level_difference, first_votes_above_estimate, first_votes_below_estimate, first_votes_equal_estimate, issues, plannings, votes, user_id) values
 (1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-(2, 0, 0, 0, 0, 0, 0, 0, 0, 2);
-alter sequence user_history_seq restart with 3;
+(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(3, 0, 0, 0, 0, 0, 0, 0, 0, 3),
+(4, 0, 0, 0, 0, 0, 0, 0, 0, 4),
+(5, 0, 0, 0, 0, 0, 0, 0, 0, 5);
+alter sequence user_history_seq restart with 6;
 
 insert into user_roles_t (user_id, role_id) values
 (1, 1),

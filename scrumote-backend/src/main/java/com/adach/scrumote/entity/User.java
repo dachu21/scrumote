@@ -67,8 +67,7 @@ public class User extends AbstractEntity {
   @Column(nullable = false)
   private boolean active;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "\"user\"")
+  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
   private UserHistory userHistory;
 
   @ManyToMany
