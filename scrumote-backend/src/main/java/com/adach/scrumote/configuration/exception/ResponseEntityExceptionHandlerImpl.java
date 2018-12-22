@@ -70,9 +70,11 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
     return new ResponseEntity<>(errorResponse, ACCESS_DENIED_STATUS);
   }
 
-  @ExceptionHandler(HttpMessageNotReadableException.class)
-  public final ResponseEntity<ErrorResponse> handleAccessDeniedException(
-      HttpMessageNotReadableException e, WebRequest request) {
+  @Override
+  @SuppressWarnings("NullableProblems")
+  public final ResponseEntity<Object> handleHttpMessageNotReadable(
+      HttpMessageNotReadableException e, HttpHeaders headers, HttpStatus status,
+      WebRequest request) {
     log.error(e.getMessage(), e);
     ErrorResponse errorResponse = new ErrorResponse(HTTP_NOT_READABLE_ERROR_CODE);
     return new ResponseEntity<>(errorResponse, HTTP_NOT_READABLE_ERROR_STATUS);
