@@ -7,40 +7,70 @@ alter sequence role_seq restart with 5;
 
 insert into permission_t (id, version, name) values
 (1, 0, 'swagger'),
-(2, 0, 'createPlanning'), -- PO & SM
-(3, 0, 'getAnyPlanning'), -- PO & SM
-(4, 0, 'getMyPlanning'), -- DEV
-(5, 0, 'getAllPlannings'), -- PO & SM
-(6, 0, 'getMyPlannings'), -- DEV
-(7, 0, 'updatePlanning'), -- PO & SM
-(8, 0, 'finishPlanning'), -- PO & SM
-(9, 0, 'deletePlanning'), -- ADM
-(10, 0, 'createIssue'), -- PO & SM
-(11, 0, 'getIssue'), -- DEV
-(12, 0, 'getIssuesForPlanning'), -- DEV
-(13, 0, 'updateIssue'), -- PO & SM
-(14, 0, 'activateIssue'), -- PO & SM
-(15, 0, 'estimateIssue'), -- PO & SM
-(16, 0, 'deleteIssue'), -- PO & SM
-(17, 0, 'createVote'), -- DEV
-(18, 0, 'getVotesForIssue'), -- DEV
-(19, 0, 'createDeck'), -- ADM
-(20, 0, 'getDeck'), -- ADM & DEV & PO & SM
-(21, 0, 'updateDeck'), -- ADM
-(22, 0, 'deleteDeck'), -- ADM
-(23, 0, 'getAllSystemFeatures'), -- ADM
-(24, 0, 'updateSystemFeature'); -- ADM
-alter sequence permission_seq restart with 19;
+                                                -- | ADM | PO & SM | DEV
+(2, 0, 'createPlanning'),                       -- |  -  |    +    |  -
+(3, 0, 'getAnyPlanning'),                       -- |  +  |    +    |  -
+(4, 0, 'getMyPlanning'),                        -- |  -  |    +    |  +
+(5, 0, 'getAllPlannings'),                      -- |  +  |    +    |  -
+(6, 0, 'getMyPlannings'),                       -- |  -  |    -    |  +
+(7, 0, 'updatePlanning'),                       -- |  -  |    +    |  -
+(8, 0, 'finishPlanning'),                       -- |  -  |    +    |  -
+(9, 0, 'deletePlanning'),                       -- |  +  |    -    |  -
+
+(10, 0, 'createIssue'),                         -- |  -  |    +    |  -
+(11, 0, 'getIssue'),                            -- |  +  |    +    |  +
+(12, 0, 'getIssuesForPlanning'),                -- |  +  |    +    |  +
+(13, 0, 'updateIssue'),                         -- |  -  |    +    |  -
+(14, 0, 'activateIssue'),                       -- |  -  |    +    |  -
+(15, 0, 'estimateIssue'),                       -- |  -  |    +    |  -
+(16, 0, 'deleteIssue'),                         -- |  -  |    +    |  -
+
+(17, 0, 'createVote'),                          -- |  -  |    -    |  +
+(18, 0, 'getVotesForIssue'),                    -- |  +  |    +    |  +
+
+(19, 0, 'createDeck'),                          -- |  +  |    -    |  -
+(20, 0, 'getDeck'),                             -- |  +  |    +    |  +
+(21, 0, 'updateDeck'),                          -- |  +  |    -    |  -
+(22, 0, 'deleteDeck'),                          -- |  +  |    -    |  -
+
+(23, 0, 'getAllSystemFeatures'),                -- |  +  |    -    |  -
+(24, 0, 'updateSystemFeature');                 -- |  +  |    -    |  -
+
+(25, 0, 'createUser');                          -- |  +  |    -    |  -
+(26, 0, 'getMyUser');                           -- |  +  |    +    |  +
+(27, 0, 'getAnyUser');                          -- |  +  |    -    |  -
+(28, 0, 'getAllUsers');                         -- |  +  |    +    |  -
+(29, 0, 'getUsersForPlanning');                 -- |  +  |    +    |  +
+(30, 0, 'updateMyUser');                        -- |  +  |    +    |  +
+(31, 0, 'updateAnyUser');                       -- |  +  |    -    |  -
+(32, 0, 'updateMyUsersPassword');               -- |  +  |    +    |  +
+(33, 0, 'updateAnyUsersPassword');              -- |  +  |    -    |  -
+alter sequence permission_seq restart with 34;
 
 insert into role_permissions_t (role_id, permission_id) values
 -- ADMINISTRATOR
-(1, 9), (1, 19), (1, 20), (1, 21), (1, 22), (1, 23), (1, 24),
+(1, 3), (1, 5), (1, 9),
+(1, 11), (1, 12),
+(1, 18),
+(1, 19), (1, 20), (1, 21), (1, 22),
+(1, 23), (1, 24),
+(1, 25), (1, 26), (1, 27), (1, 28), (1, 29), (1, 30), (1, 31), (1, 32), (1, 33),
 -- SCRUM_MASTER
-(2, 2), (2, 3), (2, 5), (2, 7), (2, 8), (2, 10), (2, 13), (2, 14), (2, 15), (2, 16), (2, 20),
+(2, 2), (2, 3), (2, 4), (2, 5), (2, 7), (2, 8),
+(2, 10), (2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16),
+(2, 20),
+(2, 26), (2, 28), (2, 29), (2, 30), (2, 32),
 -- PRODUCT_OWNER
-(3, 2), (3, 3), (3, 5), (3, 7), (3, 8), (3, 10), (3, 13), (3, 14), (3, 15), (3, 16), (3, 20),
+(3, 2), (3, 3), (3, 4), (3, 5), (3, 7), (3, 8),
+(3, 10), (2, 11), (2, 12), (3, 13), (3, 14), (3, 15), (3, 16),
+(3, 20),
+(3, 26), (3, 28), (3, 29), (3, 30), (3, 32),
 -- DEVELOPER
-(4, 4), (4, 6), (4, 11), (4, 12), (4, 17), (4, 18), (4, 20);
+(4, 4), (4, 6),
+(4, 11), (4, 12),
+(4, 17), (4, 18),
+(4, 20),
+(4, 26), (4, 29), (4, 30), (4, 32);
 
 insert into system_feature_t (id, version, code, enabled) values
 (1, 1, 'REGISTRATION', true);

@@ -1,29 +1,28 @@
 package com.adach.scrumote.service.security;
 
+import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.service.internal.UserInternalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CurrentUser {
+@MandatoryTransactions
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class SessionService {
 
-  private static UserInternalService userInternalService;
+  private final UserInternalService userInternalService;
 
-  @Autowired
-  public CurrentUser(UserInternalService userInternalService) {
-    CurrentUser.userInternalService = userInternalService;
-  }
-
-  public static User get() {
+  public User getCurrentUser() {
     User detachedUser = (User) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
     return userInternalService.findById(detachedUser.getId());
   }
 
-  public static boolean hasAuthority(String authority) {
+  public boolean hasAuthority(String authority) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null) {
       return authentication.getAuthorities()

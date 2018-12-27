@@ -11,7 +11,7 @@ import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.IssueInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.VoteInternalService;
-import com.adach.scrumote.service.security.CurrentUser;
+import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,8 @@ public class VoteExternalService {
   private final DeckInternalService deckInternalService;
   private final PlanningInternalService planningInternalService;
 
+  private final SessionService sessionService;
+
   @PreAuthorize("hasAnyAuthority('createVote')")
   public Long createVote(Long planningId, Long issueId, VoteSimpleDto dto) {
     Issue issue = issueInternalService.findById(issueId);
@@ -44,7 +46,7 @@ public class VoteExternalService {
 
     Vote vote = mapper.mapToEntity(dto);
     vote.setIssue(issue);
-    vote.setUser(CurrentUser.get());
+    vote.setUser(sessionService.getCurrentUser());
 
     return internalService.save(vote).getId();
   }

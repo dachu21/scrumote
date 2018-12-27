@@ -10,7 +10,7 @@ import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.UserHistoryInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
-import com.adach.scrumote.service.security.CurrentUser;
+import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +30,13 @@ public class PlanningExternalService {
   private final DeckInternalService deckInternalService;
   private final UserInternalService userInternalService;
 
+  private final SessionService sessionService;
+
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   public Long createPlanning(PlanningSimpleDto dto) {
     Planning planning = mapper.mapToEntity(dto);
 
-    User moderator = CurrentUser.get();
+    User moderator = sessionService.getCurrentUser();
     Deck deck = deckInternalService.findById(dto.getDeckId());
     List<User> users = userInternalService.findByIds(dto.getUsers());
 
@@ -63,7 +65,8 @@ public class PlanningExternalService {
 
   @PreAuthorize("hasAnyAuthority('getMyPlannings')")
   public List<PlanningSimpleDto> getMyPlannings() {
-    return internalService.findAllByUser(CurrentUser.get()).stream().map(mapper::mapToSimpleDto)
+    return internalService.findAllByUser(sessionService.getCurrentUser()).stream()
+        .map(mapper::mapToSimpleDto)
         .collect(Collectors.toList());
   }
 
@@ -105,7 +108,7 @@ public class PlanningExternalService {
   }
 
   private void validatePlanningForUpdateOrFinish(Planning planning) {
-    internalService.validateHasModerator(planning, CurrentUser.get());
+    internalService.validateHasModerator(planning, sessionService.getCurrentUser());
     internalService.validateHasZeroActiveIssues(planning);
     internalService.validateNotFinished(planning);
   }

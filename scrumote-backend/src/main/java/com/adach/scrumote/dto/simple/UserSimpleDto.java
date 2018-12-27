@@ -21,10 +21,6 @@ public class UserSimpleDto extends AbstractSimpleDto {
   private String username;
 
   @NotNull
-  @Size(min = 8, max = 64)
-  private String password;
-
-  @NotNull
   @Email
   private String email;
 

@@ -11,7 +11,7 @@ import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.IssueInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.VoteInternalService;
-import com.adach.scrumote.service.security.CurrentUser;
+import com.adach.scrumote.service.security.SessionService;
 import com.adach.scrumote.sse.SseService;
 import com.adach.scrumote.sse.events.AllUsersVotedEvent;
 import java.util.List;
@@ -33,13 +33,14 @@ public class IssueExternalService {
   private final DeckInternalService deckInternalService;
   private final VoteInternalService voteInternalService;
 
+  private final SessionService sessionService;
   private final SseService sseService;
 
   @PreAuthorize("hasAnyAuthority('createIssue')")
   public Long createIssue(Long planningId, IssueSimpleDto dto) {
     Planning planning = planningInternalService.findById(planningId);
     planningInternalService.validateNotFinished(planning);
-    planningInternalService.validateHasModerator(planning, CurrentUser.get());
+    planningInternalService.validateHasModerator(planning, sessionService.getCurrentUser());
 
     Issue issue = mapper.mapToEntity(dto);
     issue.setFinishedIterations(0);
@@ -142,7 +143,7 @@ public class IssueExternalService {
 
   private void validateIssueAndPlanningForUpdateOrDelete(Issue issue, Planning planning) {
     planningInternalService.validateNotFinished(planning);
-    planningInternalService.validateHasModerator(planning, CurrentUser.get());
+    planningInternalService.validateHasModerator(planning, sessionService.getCurrentUser());
     internalService.validateNotEstimated(issue);
     internalService.validateNotActive(issue);
   }

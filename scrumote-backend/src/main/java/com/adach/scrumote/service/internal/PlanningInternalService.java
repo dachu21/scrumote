@@ -10,7 +10,7 @@ import com.adach.scrumote.exception.planning.PlanningHasActiveIssuesException;
 import com.adach.scrumote.exception.planning.PlanningNotFinishedException;
 import com.adach.scrumote.exception.planning.PlanningNotFoundException;
 import com.adach.scrumote.repository.PlanningRepository;
-import com.adach.scrumote.service.security.CurrentUser;
+import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 public class PlanningInternalService extends AbstractInternalService<Planning> {
 
   private final PlanningRepository repository;
+
+  private final SessionService sessionService;
 
   //region Repository methods calls
   public Planning save(Planning planning) {
@@ -50,7 +52,7 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
 
   //region Validation methods
   public void validateContainsCurrentUser(Planning planning) {
-    if (!planning.containsUser(CurrentUser.get())) {
+    if (!planning.containsUser(sessionService.getCurrentUser())) {
       throw new PlanningForbiddenException(
           String.format("Current user does not have write access to planning with id %d.",
               planning.getId()));
@@ -58,8 +60,8 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   }
 
   public void validateContainsCurrentUserIfNotAuthorized(Planning planning) {
-    if (!CurrentUser.hasAuthority("getAnyPlanning") &&
-        !planning.containsUser(CurrentUser.get())) {
+    if (!sessionService.hasAuthority("getAnyPlanning") &&
+        !planning.containsUser(sessionService.getCurrentUser())) {
       throw new PlanningForbiddenException(
           String.format("Current user does not have read access to planning with id %d.",
               planning.getId()));
