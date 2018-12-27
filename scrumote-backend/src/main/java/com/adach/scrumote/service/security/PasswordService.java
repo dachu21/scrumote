@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class PasswordService {
 
   private static final Integer MIN_LENGTH = 8;
-  private static final Integer MAX_LENGTH = 8;
+  private static final Integer MAX_LENGTH = 64;
   private static final boolean UPPERCASE_REQUIRED = true;
   private static final boolean NUMBER_REQUIRED = true;
 
@@ -27,14 +27,14 @@ public class PasswordService {
   }
 
   public void validateEqualToOldPassword(String password, User user) {
-    if (!encode(password).equals(user.getPassword())) {
+    if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new OldPasswordNotValidException(
           String.format("Provided old password for user with id %d is not valid.", user.getId()));
     }
   }
 
   public void validateNotEqualToOldPassword(String password, User user) {
-    if (encode(password).equals(user.getPassword())) {
+    if (passwordEncoder.matches(password, user.getPassword())) {
       throw new PasswordSameAsOldException(
           String.format("Provided password for user with id %d is same as old.", user.getId()));
     }
@@ -43,8 +43,8 @@ public class PasswordService {
   public void validateSatisfiesConditions(String password) {
     if (password.length() < MIN_LENGTH ||
         password.length() > MAX_LENGTH ||
-        (UPPERCASE_REQUIRED && containsUppercase(password)) ||
-        (NUMBER_REQUIRED && containsNumber(password))) {
+        (UPPERCASE_REQUIRED && !containsUppercase(password)) ||
+        (NUMBER_REQUIRED && !containsNumber(password))) {
       throw new PasswordDoesNotSatisfyConditions("Provided password does not satisfy conditions");
     }
   }

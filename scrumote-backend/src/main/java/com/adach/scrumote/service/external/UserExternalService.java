@@ -123,6 +123,7 @@ public class UserExternalService {
 
     passwordService.validateEqualToOldPassword(dto.getOldPassword(), currentUser);
     passwordService.validateNotEqualToOldPassword(dto.getNewPassword(), currentUser);
+    passwordService.validateSatisfiesConditions(dto.getNewPassword());
 
     String encodedPassword = passwordService.encode(dto.getNewPassword());
     currentUser.setPassword(encodedPassword);
@@ -132,6 +133,8 @@ public class UserExternalService {
   public void updateAnyUsersPassword(Long userId, Long version, PasswordDto dto) {
     User user = internalService.findById(userId);
     internalService.validateVersion(user, version);
+
+    passwordService.validateSatisfiesConditions(dto.getNewPassword());
 
     String encodedPassword = passwordService.encode(dto.getNewPassword());
     user.setPassword(encodedPassword);

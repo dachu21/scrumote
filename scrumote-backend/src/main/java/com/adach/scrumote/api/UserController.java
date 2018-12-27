@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @PrefixedRestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -25,11 +26,22 @@ public class UserController extends AbstractController {
 
   private final UserExternalService userExternalService;
 
+  @Override
+  URI buildLocationUri(Long id) {
+    return ServletUriComponentsBuilder
+        .fromCurrentRequest()
+        .path("/../{id}")
+        .buildAndExpand(id)
+        .normalize()
+        .toUri();
+  }
+
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
   @PostMapping("/users/register")
   public ResponseEntity<?> registerUser(@RequestBody @Valid UserWithPasswordDto dto) {
     Long newUserId = userExternalService.registerUser(dto);
     URI location = buildLocationUri(newUserId);
+
     return ResponseEntity.created(location).build();
   }
 
