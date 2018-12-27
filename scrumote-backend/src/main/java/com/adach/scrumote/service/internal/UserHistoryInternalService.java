@@ -23,7 +23,7 @@ public class UserHistoryInternalService extends AbstractInternalService<UserHist
 
   private final UserHistoryRepository repository;
 
-  private final CardInternalService cardInternalService;
+  private final DeckInternalService deckInternalService;
 
   public void updateUsersHistoryForPlanning(Planning planning) {
 
@@ -48,7 +48,8 @@ public class UserHistoryInternalService extends AbstractInternalService<UserHist
 
     Set<UserHistory> issueUserHistories = new HashSet<>();
     Set<Vote> votes = issue.getVotes();
-    Map<String, Integer> cardLevelsMap = cardInternalService.getCardLevelsMapForIssue(issue);
+    Map<String, Integer> cardLevelsMap = deckInternalService
+        .getCardLevelsMapForDeck(issue.getPlanning().getDeck());
     Integer estimateLevel = cardLevelsMap.get(issue.getEstimate().get());
 
     for (Vote vote : votes) {

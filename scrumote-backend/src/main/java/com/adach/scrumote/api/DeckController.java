@@ -1,6 +1,6 @@
-package com.adach.scrumote.rest;
+package com.adach.scrumote.api;
 
-import com.adach.scrumote.configuration.rest.PrefixedRestController;
+import com.adach.scrumote.configuration.api.PrefixedRestController;
 import com.adach.scrumote.dto.complex.DeckWithCardsDto;
 import com.adach.scrumote.service.external.DeckExternalService;
 import java.net.URI;

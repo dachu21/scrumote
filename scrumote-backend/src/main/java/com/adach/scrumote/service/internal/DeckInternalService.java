@@ -8,7 +8,9 @@ import com.adach.scrumote.exception.deck.DeckNotFoundException;
 import com.adach.scrumote.exception.deck.DeckUsedInPlanningsException;
 import com.adach.scrumote.exception.deck.InvalidCardsLevelsInDeckException;
 import com.adach.scrumote.repository.DeckRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -64,4 +66,10 @@ public class DeckInternalService extends AbstractInternalService<Deck> {
     }
   }
   //endregion
+
+  public Map<String, Integer> getCardLevelsMapForDeck(Deck deck) {
+    Map<String, Integer> cardsMap = new HashMap<>();
+    deck.getCards().forEach(card -> cardsMap.put(card.getValue(), card.getLevel()));
+    return cardsMap;
+  }
 }

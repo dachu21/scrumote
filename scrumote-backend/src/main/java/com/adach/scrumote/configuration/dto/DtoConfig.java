@@ -3,7 +3,6 @@ package com.adach.scrumote.configuration.dto;
 import com.adach.scrumote.dto.simple.CardSimpleDto;
 import com.adach.scrumote.dto.simple.DeckSimpleDto;
 import com.adach.scrumote.dto.simple.IssueSimpleDto;
-import com.adach.scrumote.dto.simple.PermissionSimpleDto;
 import com.adach.scrumote.dto.simple.PlanningSimpleDto;
 import com.adach.scrumote.dto.simple.RoleSimpleDto;
 import com.adach.scrumote.dto.simple.SystemFeatureSimpleDto;
@@ -13,7 +12,6 @@ import com.adach.scrumote.dto.simple.VoteSimpleDto;
 import com.adach.scrumote.entity.Card;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.entity.Issue;
-import com.adach.scrumote.entity.Permission;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.SystemFeature;
@@ -54,7 +52,7 @@ public class DtoConfig {
     typesMap.put(Card.class, CardSimpleDto.class);
     typesMap.put(Deck.class, DeckSimpleDto.class);
     typesMap.put(Issue.class, IssueSimpleDto.class);
-    typesMap.put(Permission.class, PermissionSimpleDto.class);
+//    typesMap.put(Permission.class, PermissionSimpleDto.class); //TODO usunac lub przywrocic
     typesMap.put(Planning.class, PlanningSimpleDto.class);
     typesMap.put(Role.class, RoleSimpleDto.class);
     typesMap.put(UserHistory.class, UserHistorySimpleDto.class);

@@ -1,5 +1,6 @@
 package com.adach.scrumote.sse;
 
+import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Service
+@MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
 public class SseService {

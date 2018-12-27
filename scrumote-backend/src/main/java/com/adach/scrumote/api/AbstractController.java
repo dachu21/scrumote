@@ -1,4 +1,4 @@
-package com.adach.scrumote.rest;
+package com.adach.scrumote.api;
 
 import com.adach.scrumote.exception.optimisticlock.InvalidVersionHeaderException;
 import com.adach.scrumote.exception.optimisticlock.MissingVersionHeaderException;
