@@ -13,16 +13,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class UserSimpleDto extends AbstractSimpleDto {
 
   @NotNull
   @Size(min = 3, max = 32)
   private String username;
-
-  @NotNull
-  @Size(min = 8, max = 64)
-  private String password;
 
   @NotNull
   @Email

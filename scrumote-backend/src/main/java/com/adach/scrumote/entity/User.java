@@ -26,7 +26,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class User extends AbstractEntity {
 
   public User(User user) {
@@ -39,6 +39,7 @@ public class User extends AbstractEntity {
     this.active = user.active;
     this.permissions = user.permissions;
     this.roles = user.roles;
+    this.userHistory = user.userHistory;
   }
 
   @Column(nullable = false, unique = true)
@@ -67,8 +68,7 @@ public class User extends AbstractEntity {
   @Column(nullable = false)
   private boolean active;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "\"user\"")
+  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
   private UserHistory userHistory;
 
   @ManyToMany

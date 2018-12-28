@@ -8,12 +8,13 @@ class AntMatchers {
       "/ui/**"
   };
 
-  static final String[] ROUTES_ANONYMOUS = {
+  static final String[] ROUTES_ANONYMOUS = { //TODO chyba sie tego pozbyc i postawic na angulara
       "/login", "/register"
   };
 
   static final String[] API_ANONYMOUS = {
-      API_PREFIX + "/register"
+      API_PREFIX + "/register",
+      API_PREFIX + "/system-features/*"
   };
 
   static final String[] SWAGGER = {

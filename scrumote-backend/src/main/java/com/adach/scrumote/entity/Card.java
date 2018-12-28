@@ -2,8 +2,6 @@ package com.adach.scrumote.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,15 +16,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = "value")
 public class Card extends AbstractEntity {
 
   //region Data
-  @ManyToOne
-  @JoinColumn(nullable = false)
-  @NotNull
-  private Deck deck;
-
   @Column(nullable = false)
   @NotNull
   private Integer level;

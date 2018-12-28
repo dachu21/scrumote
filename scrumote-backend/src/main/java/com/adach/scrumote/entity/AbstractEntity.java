@@ -8,7 +8,6 @@ import javax.persistence.Version;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -19,10 +18,10 @@ public abstract class AbstractEntity {
   @Column(nullable = false, updatable = false)
   @GeneratedValue(generator = "abstract-generator")
   @Getter
-  @Setter
   protected Long id;
 
   @Version
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false)
+  @Getter
   private Long version;
 }

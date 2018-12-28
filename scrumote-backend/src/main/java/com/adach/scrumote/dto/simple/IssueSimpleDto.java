@@ -11,11 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class IssueSimpleDto extends AbstractSimpleDto {
-
-  @NotNull
-  private Long planningId;
 
   @NotNull
   private String code;
@@ -25,8 +22,9 @@ public class IssueSimpleDto extends AbstractSimpleDto {
 
   private String description;
 
-  @NotNull
-  private Integer iterations;
+  private Integer finishedIterations;
 
   private String estimate;
+
+  private boolean active;
 }

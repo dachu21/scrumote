@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public class PlanningAlreadyFinishedException extends ApplicationException {
 
-  private static final String CODE = "exception.planningAlreadyFinished";
+  private static final String CODE = "exception.planning.alreadyFinished";
   private static final HttpStatus STATUS = HttpStatus.BAD_REQUEST;
 
   public PlanningAlreadyFinishedException(String message) {

@@ -3,6 +3,7 @@ package com.adach.scrumote.entity;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Issue extends AbstractEntity {
 
   //region Data
@@ -45,14 +46,17 @@ public class Issue extends AbstractEntity {
 
   @Column(nullable = false)
   @NotNull
-  private Integer iterations;
+  private Integer finishedIterations;
 
   @Column
   private String estimate;
+
+  @Column(nullable = false)
+  private boolean active;
   //endregion
 
   //region Mappings
-  @OneToMany(mappedBy = "issue")
+  @OneToMany(mappedBy = "issue", cascade = CascadeType.REMOVE)
   @OrderBy("iteration asc")
   private Set<Vote> votes = new LinkedHashSet<>();
   //endregion

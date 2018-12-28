@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 @MandatoryTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-public class UserHistoryInternalService {
+public class UserHistoryInternalService extends AbstractInternalService<UserHistory> {
 
   private final UserHistoryRepository repository;
 
-  private final CardInternalService cardInternalService;
+  private final DeckInternalService deckInternalService;
 
   public void updateUsersHistoryForPlanning(Planning planning) {
 
@@ -41,14 +41,15 @@ public class UserHistoryInternalService {
 
   private Set<UserHistory> updateUsersHistoryForIssue(Issue issue) {
 
-    if (!issue.getEstimate().isPresent()) {
+    if (issue.getEstimate().isEmpty()) {
       log.debug(String.format("Issue with id %d is not estimated. Skipping...", issue.getId()));
       return Collections.emptySet();
     }
 
     Set<UserHistory> issueUserHistories = new HashSet<>();
     Set<Vote> votes = issue.getVotes();
-    Map<String, Integer> cardLevelsMap = cardInternalService.getCardLevelsMapForIssue(issue);
+    Map<String, Integer> cardLevelsMap = deckInternalService
+        .getCardLevelsMapForDeck(issue.getPlanning().getDeck());
     Integer estimateLevel = cardLevelsMap.get(issue.getEstimate().get());
 
     for (Vote vote : votes) {

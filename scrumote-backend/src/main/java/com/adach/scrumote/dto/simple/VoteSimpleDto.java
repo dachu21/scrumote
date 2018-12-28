@@ -11,18 +11,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class VoteSimpleDto extends AbstractSimpleDto {
-
-  @NotNull
-  private Long issueId;
-
-  @NotNull
-  private Long userId;
 
   @NotNull
   private Integer iteration;
 
   @NotNull
   private String value;
+
+  private Long userId;
 }

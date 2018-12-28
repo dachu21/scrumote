@@ -18,8 +18,8 @@ export class AuthenticationService {
       authorization: 'Basic ' + btoa(username + ':' + password)
     } : {});
 
-    this.http.get<LoggedUser>('/api/login', {headers: headers}).subscribe((response: LoggedUser) => {
-      this.authenticated = !!response.name;
+    this.http.get<SessionInfo>('/api/login', {headers: headers}).subscribe((response: SessionInfo) => {
+      this.authenticated = !!response.id;
       return callback && callback();
     });
   }

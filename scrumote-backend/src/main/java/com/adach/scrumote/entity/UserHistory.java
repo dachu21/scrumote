@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class UserHistory extends AbstractEntity {
 
   public static UserHistory createEmpty(User user) {
@@ -26,6 +26,7 @@ public class UserHistory extends AbstractEntity {
     userHistory.user = user;
     userHistory.plannings = 0;
     userHistory.issues = 0;
+    userHistory.votes = 0;
     userHistory.firstVotesBelowEstimate = 0;
     userHistory.firstVotesAboveEstimate = 0;
     userHistory.firstVotesEqualEstimate = 0;
@@ -68,10 +69,7 @@ public class UserHistory extends AbstractEntity {
   private Double averageFirstVoteLevelDifference;
   //endregion
 
-  public Integer getFirstVotes() {
-    return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
-  }
-
+  //region Methods
   public void incrementPlannings() {
     plannings++;
   }
@@ -96,6 +94,10 @@ public class UserHistory extends AbstractEntity {
     averageFirstVoteLevelDifference = totalLevelDifference / (getFirstVotes() + 1);
   }
 
+  private Integer getFirstVotes() {
+    return firstVotesBelowEstimate + firstVotesAboveEstimate + firstVotesEqualEstimate;
+  }
+
   private void incrementFirstVotesCount(int levelDifference) {
     if (levelDifference < 0) {
       firstVotesBelowEstimate++;
@@ -105,4 +107,5 @@ public class UserHistory extends AbstractEntity {
       firstVotesEqualEstimate++;
     }
   }
+  //endregion
 }

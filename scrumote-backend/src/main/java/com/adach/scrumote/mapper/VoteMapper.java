@@ -5,12 +5,14 @@ import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.dto.simple.VoteSimpleDto;
 import com.adach.scrumote.entity.Vote;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @MandatoryTransactions
 public class VoteMapper extends AbstractSimpleDtoMapper<Vote, VoteSimpleDto> {
 
+  @Autowired
   public VoteMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap) {
     super(modelMapper, simpleDtoTypeMap);
   }

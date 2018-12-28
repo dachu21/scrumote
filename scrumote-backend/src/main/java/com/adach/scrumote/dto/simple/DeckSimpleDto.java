@@ -1,5 +1,7 @@
 package com.adach.scrumote.dto.simple;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,9 +13,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class DeckSimpleDto extends AbstractSimpleDto {
 
   @NotNull
   private String name;
+
+  @NotNull
+  private Set<Long> cards = new LinkedHashSet<>();
 }
