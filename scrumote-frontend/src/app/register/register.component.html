@@ -1,38 +1,49 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <h2>{{'headers.register' | translate}}</h2>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate *ngIf="errorMessageResources">
-  <mz-input-container class="col s12 m6">
-    <input mz-input mz-validation required
-           id="username" formControlName="username" type="text"
-           [errorMessageResource]="errorMessageResources.username"
-           [label]="labels.username"/>
-  </mz-input-container>
-  <mz-input-container class="col s12 m6">
-    <input mz-input mz-validation required
-           id="password" formControlName="password" type="password"
-           [errorMessageResource]="errorMessageResources.password"
-           [label]="labels.password"/>
-  </mz-input-container>
-  <mz-input-container class="col s12 m6">
-    <input mz-input mz-validation required
-           id="email" formControlName="email" type="text"
-           [errorMessageResource]="errorMessageResources.email"
-           [label]="labels.email"/>
-  </mz-input-container>
-  <mz-input-container class="col s12 m6">
-    <input mz-input mz-validation
-           id="firstName" formControlName="firstName" type="text"
-           [errorMessageResource]="errorMessageResources.firstName"
-           [label]="labels.firstName"/>
-  </mz-input-container>
-  <mz-input-container class="col s12 m6">
-    <input mz-input mz-validation
-           id="lastName" formControlName="lastName" type="text"
-           [errorMessageResource]="errorMessageResources.lastName"
-           [label]="labels.lastName"/>
-  </mz-input-container>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-  <button mz-button [disabled]="!registerForm.valid" type="submit">Register</button>
-  <button mz-button [routerLink]="['/login']" type="button">Cancel</button>
+  <mat-form-field>
+    <input matInput required formControlName="username" type="text"/>
+    <mat-label>{{'labels.username' | translate}}</mat-label>
+    <mat-error *ngFor="let error of getErrorKeys('username')">
+      {{'validation.username.' + error | translate}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput required formControlName="password" type="password"/>
+    <mat-label>{{'labels.password' | translate}}</mat-label>
+    <mat-error *ngFor="let error of getErrorKeys('password')">
+      {{'validation.password.' + error | translate}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput required formControlName="email" type="text"/>
+    <mat-label>{{'labels.email' | translate}}</mat-label>
+    <mat-error *ngFor="let error of getErrorKeys('email')">
+      {{'validation.email.' + error | translate}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="firstName" type="text"/>
+    <mat-label>{{'labels.firstName' | translate}}</mat-label>
+    <mat-error *ngFor="let error of getErrorKeys('firstName')">
+      {{'validation.firstName.' + error | translate}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="lastName" type="text"/>
+    <mat-label>{{'labels.lastName' | translate}}</mat-label>
+    <mat-error *ngFor="let error of getErrorKeys('lastName')">
+      {{'validation.lastName.' + error | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" [disabled]="!registerForm.valid" type="submit">
+    {{'buttons.register' | translate}}
+  </button>
+  <button mat-flat-button color="accent" [routerLink]="['/login']" type="button">
+    {{'buttons.cancel' | translate}}
+  </button>
+
 </form>

@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AlertService, AuthenticationService, TranslationsService} from "../_services";
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {AlertService, AuthenticationService} from '../_services';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,9 @@ import {AlertService, AuthenticationService, TranslationsService} from "../_serv
 })
 export class LoginComponent {
 
-  labels: any;
-  errorMessageResources: any;
-
   loginForm: FormGroup;
-  loading: boolean = false;
-  submitted: boolean = false;
+  loading = false;
+  submitted = false;
 
   returnUrl: string;
 
@@ -25,16 +22,12 @@ export class LoginComponent {
       private router: Router,
       private route: ActivatedRoute,
       private alertService: AlertService,
-      private formBuilder: FormBuilder,
-      private translations: TranslationsService) {
+      private formBuilder: FormBuilder) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-    translations.labels.subscribe(value => this.labels = value);
-    translations.errorMessageResources.subscribe(value => this.errorMessageResources = value);
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -65,4 +58,10 @@ export class LoginComponent {
     //     });
   }
 
+  getErrorKeys(controlName: string) {
+    const errors: ValidationErrors | null = this.loginForm.controls[controlName].errors;
+    if (errors) {
+      return Object.keys(errors);
+    }
+  }
 }

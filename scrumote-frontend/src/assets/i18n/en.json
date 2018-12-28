@@ -6,7 +6,7 @@
     "firstName": "First name",
     "lastName": "Last name"
   },
-  "errorMessageResources": {
+  "validation": {
     "username": {
       "required": "Username is required."
     },
@@ -18,12 +18,16 @@
     "email": {
       "required": "E-mail is required.",
       "email": "E-mail address is not valid."
-    },
-    "firstName": {},
-    "lastName": {}
+    }
   },
   "headers": {
     "login": "Login",
     "register": "Register"
+  },
+  "buttons": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "cancel": "Cancel"
   }
 }

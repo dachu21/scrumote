@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AlertService, TranslationsService, UserService} from '../_services';
+import {AlertService, UserService} from '../_services';
 
 @Component({
   selector: 'app-register',
@@ -10,19 +10,15 @@ import {AlertService, TranslationsService, UserService} from '../_services';
 })
 export class RegisterComponent {
 
-  labels: any;
-  errorMessageResources: any;
-
   registerForm: FormGroup;
-  loading: boolean = false;
-  submitted: boolean = false;
+  loading = false;
+  submitted = false;
 
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
       private userService: UserService,
-      private alertService: AlertService,
-      private translations: TranslationsService) {
+      private alertService: AlertService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -31,9 +27,6 @@ export class RegisterComponent {
       firstName: [''],
       lastName: ['']
     });
-
-    translations.labels.subscribe(value => this.labels = value);
-    translations.errorMessageResources.subscribe(value => this.errorMessageResources = value);
   }
 
   onSubmit() {
@@ -55,5 +48,12 @@ export class RegisterComponent {
           this.alertService.error(error);
           this.loading = false;
         });
+  }
+
+  getErrorKeys(controlName: string) {
+    const errors: ValidationErrors | null = this.registerForm.controls[controlName].errors;
+    if (errors) {
+      return Object.keys(errors);
+    }
   }
 }

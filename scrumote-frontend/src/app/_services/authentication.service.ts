@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {finalize} from "rxjs/operators";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {finalize} from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
 
-  authenticated: boolean = false;
+  authenticated = false;
 
   constructor(private http: HttpClient,
               private router: Router) {

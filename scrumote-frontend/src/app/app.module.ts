@@ -11,18 +11,18 @@ import {
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CustomMaterializeModule} from "./custom-materialize/custom-materialize.module";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {CustomMaterialModule} from './custom-material/custom-material.module';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
-import {AlertService, AuthenticationService, TranslationsService, UserService} from "./_services";
-import {AlertComponent} from "./_directives";
+import {AlertService, AuthenticationService, UserService} from './_services';
+import {AlertComponent} from './_directives';
 
-import {environment as env} from "./environment";
+import {environment as env} from './environment';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -60,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CustomMaterializeModule,
+    CustomMaterialModule,
     RouterModule.forRoot(routes),
     TranslateModule.forRoot({
       loader: {
@@ -74,7 +74,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertService,
     UserService,
     AuthenticationService,
-    TranslationsService,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
