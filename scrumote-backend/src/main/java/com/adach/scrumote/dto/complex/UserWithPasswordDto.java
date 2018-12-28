@@ -14,8 +14,8 @@ import lombok.Setter;
 public class UserWithPasswordDto {
 
   @NotNull
-  private UserSimpleDto userSimpleDto;
+  private UserSimpleDto user;
 
   @NotNull
-  private PasswordDto passwordDto;
+  private PasswordDto password;
 }

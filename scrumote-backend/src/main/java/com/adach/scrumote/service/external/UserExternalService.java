@@ -51,9 +51,9 @@ public class UserExternalService {
   }
 
   private Long registerOrCreateUser(UserWithPasswordDto dto) {
-    User user = mapper.mapToEntity(dto.getUserSimpleDto());
+    User user = mapper.mapToEntity(dto.getUser());
 
-    String textPassword = dto.getPasswordDto().getNewPassword();
+    String textPassword = dto.getPassword().getNewPassword();
     passwordService.validateSatisfiesConditions(textPassword);
     String encodedPassword = passwordService.encode(textPassword);
     user.setPassword(encodedPassword);
