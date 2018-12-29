@@ -54,14 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.csrf()
         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .ignoringAntMatchers(AntMatchers.API_ANONYMOUS);
+        .ignoringAntMatchers(AntMatchers.CSRF_IGNORE);
 
     http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 
     http.authorizeRequests()
-        .antMatchers(AntMatchers.ROUTES_PERMIT_ALL).permitAll()
-        .antMatchers(AntMatchers.ROUTES_ANONYMOUS).hasAuthority("ROLE_ANONYMOUS")
-        .antMatchers(AntMatchers.API_ANONYMOUS).hasAnyAuthority("ROLE_ANONYMOUS", "swagger")
+        .antMatchers(AntMatchers.PERMIT_ALL).permitAll()
         .antMatchers(AntMatchers.SWAGGER).hasAuthority("swagger")
         .anyRequest().authenticated();
   }

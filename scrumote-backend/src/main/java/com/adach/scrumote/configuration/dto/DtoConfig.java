@@ -52,7 +52,6 @@ public class DtoConfig {
     typesMap.put(Card.class, CardSimpleDto.class);
     typesMap.put(Deck.class, DeckSimpleDto.class);
     typesMap.put(Issue.class, IssueSimpleDto.class);
-//    typesMap.put(Permission.class, PermissionSimpleDto.class); //TODO usunac lub przywrocic
     typesMap.put(Planning.class, PlanningSimpleDto.class);
     typesMap.put(Role.class, RoleSimpleDto.class);
     typesMap.put(UserHistory.class, UserHistorySimpleDto.class);
