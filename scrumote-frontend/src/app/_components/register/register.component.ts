@@ -16,7 +16,7 @@ export class RegisterComponent {
       private formBuilder: FormBuilder,
       private router: Router,
       private userService: UserService,
-      private alertService: AlertService) {
+      private alert: AlertService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -30,14 +30,10 @@ export class RegisterComponent {
   onSubmit() {
     this.userService.register(this.registerForm.value)
     .pipe(first())
-    .subscribe(
-        data => {
-          this.alertService.success('Registration successful');
-          this.router.navigate(['/login']);
-        },
-        error => {
-          this.alertService.error('Nie udalo sie');
-        });
+    .subscribe(data => {
+      this.alert.success('register.success');
+      this.router.navigate(['/login']);
+    });
   }
 
   getErrorKeys(controlName: string) {

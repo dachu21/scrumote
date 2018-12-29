@@ -27,6 +27,7 @@ import {
 
 import {environment as env} from './environment';
 import {ROUTES as routes} from './app.routes';
+import {ErrorInterceptor} from './_services/error-interceptor.service';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthenticationService,
     AuthorizationGuard,
     AuthenticationGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
