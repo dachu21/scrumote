@@ -34,8 +34,6 @@ export class LoginComponent {
 
   getErrorKeys(controlName: string) {
     const errors: ValidationErrors | null = this.loginForm.controls[controlName].errors;
-    if (errors) {
-      return Object.keys(errors);
-    }
+    return errors && Object.keys(errors);
   }
 }

@@ -1,48 +1,21 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Injectable, NgModule} from '@angular/core';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpClientModule,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest
-} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CustomMaterialModule} from './_modules';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
 import {HomeComponent, LoginComponent, RegisterComponent} from './_components';
-import {
-  AlertService,
-  AuthenticationGuard,
-  AuthenticationService,
-  AuthorizationGuard,
-  UserService
-} from './_services';
 
-import {environment as env} from './environment';
+import {CustomMaterialModule} from './_modules';
+import {ErrorInterceptor, XhrInterceptor} from './_interceptors';
+import {AuthenticationGuard, AuthorizationGuard} from './_guards';
+import {AlertService, AuthenticationService, UserService} from './_services';
+
 import {ROUTES as routes} from './app.routes';
-import {ErrorInterceptor} from './_services/error-interceptor.service';
-
-@Injectable()
-export class XhrInterceptor implements HttpInterceptor {
-
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const xhr = req.clone({
-      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-    });
-    return next.handle(xhr);
-  }
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, env.i18n, '.json');
-}
+import {httpLoaderFactory} from './_functions';
 
 @NgModule({
   declarations: [
@@ -62,19 +35,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: httpLoaderFactory,
         deps: [HttpClient]
       }
     }),
   ],
   providers: [
-    AlertService,
-    UserService,
-    AuthenticationService,
+    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AuthorizationGuard,
     AuthenticationGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    AuthenticationService,
+    AlertService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

@@ -8,14 +8,12 @@ import {SessionInfo} from '../_models';
 export class AuthenticationService {
 
   afterAuthenticateCall = false;
-  authorityGuardUrl?: string;
-  authenticationGuardUrl?: string;
+  guardUrl?: string;
 
   private authenticated = false;
   private sessionInfo = SessionInfo.createAnonymous();
 
-  constructor(private http: HttpClient,
-              private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   authenticate(username?: string, password?: string, path?: string) {
@@ -41,13 +39,9 @@ export class AuthenticationService {
       if (this.authenticated && path) {
         this.router.navigate([path]);
       }
-      if (this.authorityGuardUrl) {
-        this.router.navigate([this.authorityGuardUrl]);
-        this.authorityGuardUrl = undefined;
-      }
-      if (this.authenticationGuardUrl) {
-        this.router.navigate([this.authenticationGuardUrl]);
-        this.authenticationGuardUrl = undefined;
+      if (this.guardUrl) {
+        this.router.navigate([this.guardUrl]);
+        this.guardUrl = undefined;
       }
     });
   }

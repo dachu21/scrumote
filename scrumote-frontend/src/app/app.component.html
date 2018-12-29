@@ -1,8 +1,8 @@
-<div *ngIf="auth.isAuthenticated()" class="container">
-  <ul class="nav nav-pills">
-    <li><a routerLink="" (click)="auth.logout()">{{'buttons.logout' | translate}}</a></li>
-  </ul>
-</div>
 <div class="container mat-typography">
+  <div *ngIf="auth.isAuthenticated()">
+    <ul class="nav nav-pills">
+      <li><a routerLink="" (click)="auth.logout()">{{'buttons.logout' | translate}}</a></li>
+    </ul>
+  </div>
   <router-outlet></router-outlet>
 </div>
