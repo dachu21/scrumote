@@ -70,6 +70,5 @@ const MAT_MODULES = [
   imports: MAT_MODULES,
   exports: MAT_MODULES
 })
-
 export class CustomMaterialModule {
 }

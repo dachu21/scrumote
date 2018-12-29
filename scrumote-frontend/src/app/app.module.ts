@@ -11,14 +11,12 @@ import {
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CustomMaterialModule} from './custom-material/custom-material.module';
+import {CustomMaterialModule} from './_modules';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
-import {HomeComponent} from './home';
-import {LoginComponent} from './login';
-import {RegisterComponent} from './register';
+import {HomeComponent, LoginComponent, RegisterComponent} from './_components';
 import {
   AlertService,
   AuthenticationGuard,
@@ -26,7 +24,6 @@ import {
   AuthorizationGuard,
   UserService
 } from './_services';
-import {AlertComponent} from './_directives';
 
 import {environment as env} from './environment';
 import {ROUTES as routes} from './app.routes';
@@ -52,7 +49,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent
   ],
   imports: [
     BrowserModule,

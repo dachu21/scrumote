@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AlertService, UserService} from '../_services';
+import {AlertService, UserService} from '../../_services';
 
 @Component({
   selector: 'app-register',
@@ -11,8 +11,6 @@ import {AlertService, UserService} from '../_services';
 export class RegisterComponent {
 
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -30,23 +28,15 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    this.loading = true;
     this.userService.register(this.registerForm.value)
     .pipe(first())
     .subscribe(
         data => {
-          this.alertService.success('Registration successful', true);
+          this.alertService.success('Registration successful');
           this.router.navigate(['/login']);
         },
         error => {
-          this.alertService.error(error);
-          this.loading = false;
+          this.alertService.error('Nie udalo sie');
         });
   }
 
