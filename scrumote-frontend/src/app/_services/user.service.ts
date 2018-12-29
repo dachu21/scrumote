@@ -9,10 +9,10 @@ export class UserService {
   }
 
   register(registerForm: RegisterForm) {
-    const user: User = new User(null, null, registerForm.username, registerForm.email,
+    const user: User = User.create(registerForm.username, registerForm.email,
         registerForm.firstName, registerForm.lastName);
-    const password: Password = new Password(registerForm.password);
-    const userWithPassword: UserWithPassword = new UserWithPassword(user, password);
+    const password: Password = Password.create(registerForm.password);
+    const userWithPassword: UserWithPassword = UserWithPassword.create(user, password);
     return this.http.post('api/users/register', userWithPassword);
   }
 }

@@ -10,4 +10,8 @@ export class UserWithPassword {
     this.user = user;
     this.password = password;
   }
+
+  static create(user: User, password: Password) {
+    return new UserWithPassword(user, password);
+  }
 }

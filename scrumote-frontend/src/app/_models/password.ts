@@ -1,10 +1,14 @@
 ﻿export class Password {
 
   newPassword: string;
-  oldPassword: string | null | undefined;
+  oldPassword?: string;
 
-  constructor(newPassword: string, oldPassword?: string | null) {
+  constructor(newPassword: string, oldPassword?: string) {
     this.newPassword = newPassword;
     this.oldPassword = oldPassword;
+  }
+
+  static create(newPassword: string, oldPassword?: string) {
+    return new Password(newPassword, oldPassword);
   }
 }

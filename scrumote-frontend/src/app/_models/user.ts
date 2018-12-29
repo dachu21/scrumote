@@ -4,16 +4,20 @@
   version: number | null;
   username: string;
   email: string;
-  firstName: string | null | undefined;
-  lastName: string | null | undefined;
+  firstName?: string;
+  lastName?: string;
 
   constructor(id: number | null, version: number | null, username: string, email: string,
-              firstName?: string | null, lastName?: string | null) {
+              firstName?: string, lastName?: string) {
     this.id = id;
     this.version = version;
     this.username = username;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
+  }
+
+  static create(username: string, email: string, firstName?: string, lastName?: string) {
+    return new User(null, null, username, email, firstName, lastName);
   }
 }

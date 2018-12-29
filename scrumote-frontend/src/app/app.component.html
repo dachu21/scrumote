@@ -1,9 +1,9 @@
 <div class="container">
   <app-alert></app-alert>
 </div>
-<div *ngIf="authenticated()" class="container">
+<div *ngIf="auth.isAuthenticated()" class="container">
   <ul class="nav nav-pills">
-    <li><a routerLink="" (click)="logout()">{{'buttons.logout' | translate}}</a></li>
+    <li><a routerLink="" (click)="auth.logout()">{{'buttons.logout' | translate}}</a></li>
   </ul>
 </div>
 <div class="container mat-typography">

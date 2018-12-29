@@ -8,18 +8,10 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(private auth: AuthenticationService,
               private translateService: TranslateService) {
-    this.authenticationService.authenticate(undefined, undefined, undefined);
+    this.auth.authenticate();
     translateService.setDefaultLang('en');
     translateService.use('en');
-  }
-
-  authenticated() {
-    return this.authenticationService.authenticated;
-  }
-
-  logout() {
-    this.authenticationService.logout();
   }
 }

@@ -8,7 +8,7 @@ import {
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterialModule} from './custom-material/custom-material.module';
@@ -19,17 +19,17 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
-import {AlertService, AuthenticationService, UserService} from './_services';
+import {
+  AlertService,
+  AuthenticationGuard,
+  AuthenticationService,
+  AuthorizationGuard,
+  UserService
+} from './_services';
 import {AlertComponent} from './_directives';
 
 import {environment as env} from './environment';
-
-const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'home'},
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
-];
+import {ROUTES as routes} from './app.routes';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -74,6 +74,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertService,
     UserService,
     AuthenticationService,
+    AuthorizationGuard,
+    AuthenticationGuard,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

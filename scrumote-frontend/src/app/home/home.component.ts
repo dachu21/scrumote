@@ -7,11 +7,7 @@ import {AuthenticationService} from '../_services';
 })
 export class HomeComponent {
 
-  constructor(private authenticationService: AuthenticationService) {
-  }
-
-  authenticated() {
-    return this.authenticationService.authenticated;
+  constructor(private auth: AuthenticationService) {
   }
 
 }
