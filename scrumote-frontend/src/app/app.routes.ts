@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {HomeComponent, LoginComponent, RegisterComponent} from './_components';
+import {ErrorComponent, HomeComponent, LoginComponent, RegisterComponent} from './_components';
 import {AuthenticationGuard} from './_guards';
 
 export const ROUTES: Routes = [
@@ -13,8 +13,7 @@ export const ROUTES: Routes = [
     component: HomeComponent,
     canActivate: [AuthenticationGuard],
     data: {
-      authenticated: true,
-      fallbackUrl: '/login'
+      authenticated: true
     }
   },
   {
@@ -22,8 +21,7 @@ export const ROUTES: Routes = [
     component: LoginComponent,
     canActivate: [AuthenticationGuard],
     data: {
-      authenticated: false,
-      fallbackUrl: '/'
+      authenticated: false
     }
   },
   {
@@ -31,8 +29,20 @@ export const ROUTES: Routes = [
     component: RegisterComponent,
     canActivate: [AuthenticationGuard],
     data: {
-      authenticated: false,
-      fallbackUrl: '/'
+      authenticated: false
+    }
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
+    canActivate: [AuthenticationGuard],
+    data: {
+      authenticated: true,
+      error404: true
     }
   }
 ];

@@ -16,10 +16,15 @@ export class AuthorizationGuard implements CanActivate {
       return false;
     }
 
-    if (!this.auth.hasAuthority(route.data.requiredAuthority)) {
-      this.router.navigate(
-          [route.data.fallbackUrl],
-          {queryParams: {path: state.url}});
+    let redirectUrl;
+    if (!this.auth.isAuthenticated()) {
+      redirectUrl = '/login';
+    } else if (!this.auth.hasAuthority(route.data.requiredAuthority)) {
+      redirectUrl = '/error';
+    }
+
+    if (redirectUrl) {
+      this.router.navigate([redirectUrl], {queryParams: {path: state.url}});
       return false;
     }
 

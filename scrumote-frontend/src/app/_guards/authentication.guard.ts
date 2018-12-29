@@ -16,10 +16,15 @@ export class AuthenticationGuard implements CanActivate {
       return false;
     }
 
-    if (route.data.authenticated !== this.auth.isAuthenticated()) {
-      this.router.navigate(
-          [route.data.fallbackUrl],
-          {queryParams: {path: state.url}});
+    let redirectUrl;
+    if (route.data.authenticated === true && !this.auth.isAuthenticated()) {
+      redirectUrl = '/login';
+    } else if (route.data.authenticated === false && this.auth.isAuthenticated()) {
+      redirectUrl = '/error';
+    }
+
+    if (redirectUrl) {
+      this.router.navigate([redirectUrl], {queryParams: {path: state.url}});
       return false;
     }
 

@@ -7,7 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
 import {AppComponent} from './app.component';
-import {HomeComponent, LoginComponent, RegisterComponent} from './_components';
+import {ErrorComponent, HomeComponent, LoginComponent, RegisterComponent} from './_components';
 
 import {CustomMaterialModule} from './_modules';
 import {ErrorInterceptor, XhrInterceptor} from './_interceptors';
@@ -23,6 +23,7 @@ import {httpLoaderFactory} from './_functions';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
