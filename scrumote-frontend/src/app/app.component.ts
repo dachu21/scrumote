@@ -8,7 +8,8 @@ import {AuthenticationService} from './_services';
 })
 export class AppComponent {
 
-  constructor(private auth: AuthenticationService, private translateService: TranslateService) {
+
+  constructor(readonly auth: AuthenticationService, private translateService: TranslateService) {
     this.auth.authenticate();
     translateService.setDefaultLang('en');
     translateService.use('en');

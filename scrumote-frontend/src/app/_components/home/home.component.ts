@@ -7,7 +7,7 @@ import {AuthenticationService} from '../../_services';
 })
 export class HomeComponent {
 
-  constructor(private auth: AuthenticationService) {
+  constructor(readonly auth: AuthenticationService) {
   }
 
 }
