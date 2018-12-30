@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+.container {
+  padding: 16px;
+}
+
 .vertical {
   display: flex;
   flex-direction: column;
@@ -11,16 +15,13 @@ body {
   display: flex;
   flex-direction: row;
 }
-.container {
-  padding: 16px;
-}
+
 .fill-space {
   flex: 1 1 auto;
 }
 
 .center-500 {
   max-width: 500px;
-  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
