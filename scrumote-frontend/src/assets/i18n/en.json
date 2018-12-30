@@ -1,4 +1,10 @@
 {
+  "app": {
+    "navbar": {
+      "allPlannings": "All plannings",
+      "myPlannings": "My plannings"
+    }
+  },
   "login": {
     "header": "Login"
   },

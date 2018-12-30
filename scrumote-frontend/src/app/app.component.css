@@ -1,3 +1,20 @@
-.navbar-icon {
-  margin-bottom: 5px;
+.navbar-title {
+  font-size: 25px;
+}
+
+.navbar-logo {
+  margin: 0 25px 25px 10px;
+  font-size: 50px;
+}
+
+.navbar-menu-item {
+  font-size: 20px;
+}
+
+.navbar-expand-icon {
+  margin-left: 10px;
+}
+
+.router-outlet {
+  padding: 32px;
 }

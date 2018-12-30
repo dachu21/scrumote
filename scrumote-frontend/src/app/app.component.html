@@ -1,16 +1,33 @@
 <mat-toolbar color="primary">
-  <span>Scrumote</span>
+  <button mat-button routerLink="/home">
+    <span class="navbar-title">Scrumote</span>
+    <mat-icon class="navbar-logo">group</mat-icon>
+  </button>
+
+  <button mat-button class="navbar-menu-item"
+          routerLink="/all-plannings" *ngIf="auth.hasAuthority('getAllPlannings')">
+    {{'app.navbar.allPlannings' | translate}}
+  </button>
+  <button mat-button class="navbar-menu-item"
+          routerLink="/my-plannings" *ngIf="auth.hasAuthority('getMyPlannings')">
+    {{'app.navbar.myPlannings' | translate}}
+  </button>
+
   <span class="fill-space"></span>
-  <div *ngIf="auth.isAuthenticated()">
-    <span>{{auth.getUsername()}}</span>
-    <button mat-icon-button [matMenuTriggerFor]="userMenu">
-      <mat-icon class="navbar-icon">expand_more</mat-icon>
+
+  <span *ngIf="auth.isAuthenticated()">
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <span class="navbar-menu-item">{{auth.getUsername()}}</span>
+      <mat-icon class="navbar-expand-icon">expand_more</mat-icon>
     </button>
     <mat-menu #userMenu>
       <button mat-menu-item (click)="auth.logout()">
         <span>{{'buttons.logout' | translate}}</span>
       </button>
     </mat-menu>
-  </div>
+  </span>
 </mat-toolbar>
-<router-outlet></router-outlet>
+
+<div class="router-outlet">
+  <router-outlet></router-outlet>
+</div>

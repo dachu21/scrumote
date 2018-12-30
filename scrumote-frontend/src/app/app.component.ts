@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from './_services';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ import {AuthenticationService} from './_services';
 export class AppComponent {
 
 
-  constructor(readonly auth: AuthenticationService, private translateService: TranslateService) {
+  constructor(
+      readonly auth: AuthenticationService,
+      readonly router: Router,
+      private translateService: TranslateService
+  ) {
     this.auth.authenticate();
     translateService.setDefaultLang('en');
     translateService.use('en');
