@@ -6,20 +6,20 @@ export class Planning {
   code: string;
   name: string;
   deckId: string;
-  users: Array<number>;
+  users: number[];
   description?: string;
 
   finished: string | null;
   moderatorId: string | null;
 
   deckName: string | null;
-  moderatorName: string | null;
+  moderatorUsername: string | null;
 
   constructor(id: number | null, version: number | null,
-              code: string, name: string, deckId: string, users: Array<number>,
+              code: string, name: string, deckId: string, users: number[],
               description: string | undefined,
               finished: string | null, moderatorId: string | null,
-              deckName: string | null, moderatorName: string | null) {
+              deckName: string | null, moderatorUsername: string | null) {
     this.id = id;
     this.version = version;
     this.code = code;
@@ -30,10 +30,10 @@ export class Planning {
     this.finished = finished;
     this.moderatorId = moderatorId;
     this.deckName = deckName;
-    this.moderatorName = moderatorName;
+    this.moderatorUsername = moderatorUsername;
   }
 
-  static create(code: string, name: string, deckId: string, users: Array<number>,
+  static create(code: string, name: string, deckId: string, users: number[],
                 description?: string) {
     return new Planning(null, null, code, name, deckId, users, description,
         null, null, null, null);

@@ -1,9 +1,9 @@
 export class SessionInfo {
   id: number;
   username: string;
-  authorities: Array<string>;
+  authorities: string[];
 
-  constructor(id: number, username: string, authorities: Array<string>) {
+  constructor(id: number, username: string, authorities: string[]) {
     this.id = id;
     this.username = username;
     this.authorities = authorities;

@@ -29,3 +29,8 @@ body {
 .center-text {
   text-align: center;
 }
+
+table.mat-table, mat-paginator.mat-paginator {
+  width: 100%;
+  background: #fafafa;
+}

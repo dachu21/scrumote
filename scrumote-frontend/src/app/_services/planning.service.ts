@@ -9,6 +9,10 @@ export class PlanningService {
   }
 
   getAllPlannings() {
-    return this.http.get<Array<Planning>>('api/plannings');
+    return this.http.get<Planning[]>('api/plannings');
+  }
+
+  getMyPlannings() {
+    return this.http.get<Planning[]>('api/plannings/my');
   }
 }
