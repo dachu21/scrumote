@@ -30,7 +30,7 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.userService.register(this.registerForm.value)
+    this.userService.registerUser(this.registerForm.value)
     .subscribe(data => {
       this.alert.success('register.success');
       this.router.navigate(['/login']);

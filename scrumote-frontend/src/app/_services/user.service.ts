@@ -8,7 +8,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  register(registerForm: RegisterForm) {
+  registerUser(registerForm: RegisterForm) {
     const user: User = User.create(registerForm.username, registerForm.email,
         registerForm.firstName, registerForm.lastName);
     const password: Password = Password.create(registerForm.password);

@@ -34,4 +34,7 @@ public class PlanningSimpleDto extends AbstractSimpleDto {
 
   private Long moderatorId;
 
+  private String deckName;
+
+  private String moderatorUsername;
 }

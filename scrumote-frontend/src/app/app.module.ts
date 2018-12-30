@@ -8,12 +8,18 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppComponent} from './app.component';
-import {ErrorComponent, HomeComponent, LoginComponent, RegisterComponent} from './_components';
+import {
+  ErrorComponent,
+  HomeComponent,
+  LoginComponent,
+  PlanningListComponent,
+  RegisterComponent
+} from './_components';
 
 import {CustomMaterialModule} from './_modules';
 import {ErrorInterceptor, XhrInterceptor} from './_interceptors';
 import {AuthenticationGuard, AuthorizationGuard} from './_guards';
-import {AlertService, AuthenticationService, UserService} from './_services';
+import {AlertService, AuthenticationService, PlanningService, UserService} from './_services';
 
 import {ROUTES as routes} from './app.routes';
 import {httpLoaderFactory} from './_functions';
@@ -25,6 +31,7 @@ import {httpLoaderFactory} from './_functions';
     LoginComponent,
     RegisterComponent,
     ErrorComponent,
+    PlanningListComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +58,7 @@ import {httpLoaderFactory} from './_functions';
     AuthenticationService,
     AlertService,
     UserService,
+    PlanningService,
   ],
   bootstrap: [AppComponent]
 })

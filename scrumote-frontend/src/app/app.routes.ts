@@ -1,6 +1,12 @@
 import {Routes} from '@angular/router';
-import {ErrorComponent, HomeComponent, LoginComponent, RegisterComponent} from './_components';
-import {AuthenticationGuard} from './_guards';
+import {
+  ErrorComponent,
+  HomeComponent,
+  LoginComponent,
+  PlanningListComponent,
+  RegisterComponent
+} from './_components';
+import {AuthenticationGuard, AuthorizationGuard} from './_guards';
 
 export const ROUTES: Routes = [
   {
@@ -30,6 +36,30 @@ export const ROUTES: Routes = [
     canActivate: [AuthenticationGuard],
     data: {
       authenticated: false
+    }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [AuthenticationGuard],
+    data: {
+      authenticated: false
+    }
+  },
+  {
+    path: 'my-plannings',
+    component: PlanningListComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'getMyPlannings'
+    }
+  },
+  {
+    path: 'all-plannings',
+    component: PlanningListComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'getAllPlannings'
     }
   },
   {
