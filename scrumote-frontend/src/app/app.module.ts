@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppComponent} from './app.component';
 import {ErrorComponent, HomeComponent, LoginComponent, RegisterComponent} from './_components';
@@ -31,6 +32,7 @@ import {httpLoaderFactory} from './_functions';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     CustomMaterialModule,
     RouterModule.forRoot(routes),
     TranslateModule.forRoot({
