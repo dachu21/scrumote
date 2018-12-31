@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService, PlanningService} from '../../_services';
+import {AlertService, AuthenticationService, PlanningService} from '../../_services';
 import {Planning} from '../../_models';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 
@@ -19,7 +19,8 @@ export class PlanningListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(readonly auth: AuthenticationService, private router: Router,
-              private planningService: PlanningService, private route: ActivatedRoute) {
+              private planningService: PlanningService, private route: ActivatedRoute,
+              private alert: AlertService) {
     if (this.route.snapshot.url[0].path === 'all-plannings') {
       this.listType = 'all';
     } else if (this.route.snapshot.url[0].path === 'my-plannings') {
@@ -57,6 +58,7 @@ export class PlanningListComponent implements OnInit {
   deletePlanning(planning: Planning) {
     this.planningService.deletePlanning(planning).subscribe(() => {
       this.refreshDataSource();
+      this.alert.success('plannings.success.delete');
     });
   }
 }

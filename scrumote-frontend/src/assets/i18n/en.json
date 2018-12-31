@@ -16,6 +16,9 @@
     "headers": {
       "all": "All plannings",
       "my": "My plannings"
+    },
+    "success": {
+      "delete": "Planning deleted successfully."
     }
   },
   "labels": {
