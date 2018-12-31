@@ -5,6 +5,8 @@ import {Password, User, UserWithPassword} from '../_models';
 @Injectable()
 export class UserService {
 
+  private baseUrl = '/users';
+
   constructor(private http: HttpClient) {
   }
 
@@ -13,6 +15,7 @@ export class UserService {
         registerForm.firstName, registerForm.lastName);
     const password: Password = Password.create(registerForm.password);
     const userWithPassword: UserWithPassword = UserWithPassword.create(user, password);
-    return this.http.post('api/users/register', userWithPassword);
+
+    return this.http.post(this.baseUrl + '/register', userWithPassword);
   }
 }

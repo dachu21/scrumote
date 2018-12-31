@@ -31,7 +31,7 @@ export class RegisterComponent {
 
   onSubmit() {
     this.userService.registerUser(this.registerForm.value)
-    .subscribe(data => {
+    .subscribe(() => {
       this.alert.success('register.success');
       this.router.navigate(['/login']);
     });

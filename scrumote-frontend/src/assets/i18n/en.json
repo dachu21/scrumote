@@ -12,6 +12,12 @@
     "header": "Register",
     "success": "You have been successfully registered!"
   },
+  "plannings": {
+    "headers": {
+      "all": "All plannings",
+      "my": "My plannings"
+    }
+  },
   "labels": {
     "username": "Username",
     "password": "Password",
@@ -23,14 +29,18 @@
     "deckName": "Deck",
     "moderatorUsername": "Moderator",
     "description": "Description",
-    "finished": "Finished"
+    "finished": "Finished",
+    "actions": "Actions"
   },
   "buttons": {
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
     "cancel": "Cancel",
-    "home": "Home page"
+    "home": "Home page",
+    "open": "Open",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "error": {
     "header": "Error",

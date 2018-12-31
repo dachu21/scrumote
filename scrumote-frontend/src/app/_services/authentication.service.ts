@@ -23,7 +23,7 @@ export class AuthenticationService {
     } : {});
 
     this.http
-    .get<SessionInfo>('/api/login', {headers: headers})
+    .get<SessionInfo>('/login', {headers: headers})
     .subscribe((response: SessionInfo) => {
 
       if (!!response.id && !!response.username && !!response.authorities) {
@@ -47,7 +47,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.http.post('logout', {}).pipe(finalize(() => {
+    this.http.post('/logout', {}).pipe(finalize(() => {
       this.authenticated = false;
       this.router.navigateByUrl('/login');
     })).subscribe();

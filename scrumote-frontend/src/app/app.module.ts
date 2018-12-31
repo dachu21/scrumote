@@ -17,7 +17,7 @@ import {
 } from './_components';
 
 import {CustomMaterialModule} from './_modules';
-import {ErrorInterceptor, XhrInterceptor} from './_interceptors';
+import {ApiInterceptor, ErrorInterceptor, XhrInterceptor} from './_interceptors';
 import {AuthenticationGuard, AuthorizationGuard} from './_guards';
 import {AlertService, AuthenticationService, PlanningService, UserService} from './_services';
 
@@ -53,6 +53,7 @@ import {httpLoaderFactory} from './_functions';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
     AuthorizationGuard,
     AuthenticationGuard,
     AuthenticationService,

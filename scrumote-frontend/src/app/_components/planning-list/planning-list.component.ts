@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {PlanningService} from '../../_services';
+import {AuthenticationService, PlanningService} from '../../_services';
 import {Planning} from '../../_models';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 
@@ -11,30 +10,53 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 })
 export class PlanningListComponent implements OnInit {
 
-  displayedColumns: string[]
-      = ['code', 'name', 'description', 'deckName', 'moderatorUsername', 'finished'];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly listType!: string;
 
   dataSource = new MatTableDataSource<Planning>();
 
-  constructor(
-      private formBuilder: FormBuilder,
-      private router: Router,
-      private planningService: PlanningService,
-      private route: ActivatedRoute) {
+  displayedColumns: string[]
+      = ['code', 'name', 'description', 'deckName', 'moderatorUsername', 'finished', 'actions'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(readonly auth: AuthenticationService, private router: Router,
+              private planningService: PlanningService, private route: ActivatedRoute) {
+    if (this.route.snapshot.url[0].path === 'all-plannings') {
+      this.listType = 'all';
+    } else if (this.route.snapshot.url[0].path === 'my-plannings') {
+      this.listType = 'my';
+    }
   }
 
-  ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'all-plannings') {
+  private refreshDataSource() {
+    if (this.listType === 'all') {
       this.planningService.getAllPlannings().subscribe((response: Planning[]) => {
         this.dataSource.data = response;
       });
-    } else if (this.route.snapshot.url[0].path === 'my-plannings') {
+    } else if (this.listType === 'my') {
       this.planningService.getMyPlannings().subscribe((response: Planning[]) => {
         this.dataSource.data = response;
       });
     }
+  }
+
+  ngOnInit() {
+    this.refreshDataSource();
     this.dataSource.paginator = this.paginator;
   }
 
+  openPlanning(planning: Planning) {
+    this.planningService.planningToOpen = planning;
+    this.router.navigate(['/planning']);
+  }
+
+  editPlanning(planning: Planning) {
+    this.planningService.planningToEdit = planning;
+    this.router.navigate(['/edit-planning']);
+  }
+
+  deletePlanning(planning: Planning) {
+    this.planningService.deletePlanning(planning).subscribe(() => {
+      this.refreshDataSource();
+    });
+  }
 }
