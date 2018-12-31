@@ -1,6 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Password, User, UserWithPassword} from '../_models';
+import {ifMatchOptions} from '../_functions';
 
 @Injectable()
 export class UserService {
@@ -10,12 +11,57 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  registerUser(registerForm: RegisterForm) {
+  private convertToUserWithPassword(registerForm: RegisterForm) {
     const user: User = User.create(registerForm.username, registerForm.email,
         registerForm.firstName, registerForm.lastName);
     const password: Password = Password.create(registerForm.password);
-    const userWithPassword: UserWithPassword = UserWithPassword.create(user, password);
-
-    return this.http.post(this.baseUrl + '/register', userWithPassword);
+    return UserWithPassword.create(user, password);
   }
+
+  registerUser(registerForm: RegisterForm) {
+    return this.http.post(this.baseUrl + '/register',
+        this.convertToUserWithPassword(registerForm));
+  }
+
+  createUser(registerForm: RegisterForm) {
+    return this.http.post(this.baseUrl + '/create',
+        this.convertToUserWithPassword(registerForm));
+  }
+
+  getMyUser() {
+    return this.http.get(this.baseUrl + '/my');
+  }
+
+  getAnyUser(id: number) {
+    return this.http.get(this.baseUrl + '/' + id);
+  }
+
+  getAllUsers() {
+    return this.http.get(this.baseUrl);
+  }
+
+  getUsersForPlanning(planningId: number) {
+    return this.http.get('/plannings/' + planningId + this.baseUrl);
+  }
+
+  updateMyUser(user: User) {
+    return this.http.put(this.baseUrl + '/my',
+        user, ifMatchOptions(user.version));
+  }
+
+  updateAnyUser(user: User) {
+    return this.http.put(this.baseUrl + '/' + user.id,
+        user, ifMatchOptions(user.version));
+  }
+
+  updateMyUserPassword(user: User, password: Password) {
+    return this.http.put(this.baseUrl + '/my/password',
+        password, ifMatchOptions(user.version));
+  }
+
+  updateAnyUsersPassword(user: User, password: Password) {
+    return this.http.put(this.baseUrl + '/' + user.id + '/password',
+        password, ifMatchOptions(user.version));
+  }
+
 }
