@@ -34,3 +34,7 @@ table.mat-table, mat-paginator.mat-paginator {
   width: 100%;
   background: #fafafa;
 }
+
+div.mat-paginator-container {
+  justify-content: center !important;
+}

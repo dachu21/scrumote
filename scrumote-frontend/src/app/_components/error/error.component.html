@@ -1,11 +1,14 @@
-<h2>{{'error.header' | translate}}</h2>
+<div class="center-text">
+  <h2>{{'error.header' | translate}}</h2>
 
-<div *ngIf="error404">
-  {{'error.404' | translate}}
+  <div *ngIf="error404">
+    {{'error.404' | translate}}
+  </div>
+  <div *ngIf="!error404">
+    {{'error.unauthorized' | translate}}
+  </div>
+  <button mat-flat-button color="primary" routerLink="/home" type="button"
+          style="margin-top: 25px;">
+    {{'buttons.home' | translate}}
+  </button>
 </div>
-<div *ngIf="!error404">
-  {{'error.unauthorized' | translate}}
-</div>
-<button mat-flat-button color="primary" routerLink="/home" type="button">
-  {{'buttons.home' | translate}}
-</button>

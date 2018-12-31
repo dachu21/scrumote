@@ -1,4 +1,6 @@
-<h2>{{'plannings.headers.' + listType | translate}}</h2>
+<div class="center-text">
+  <h2>{{'plannings.headers.' + listType | translate}}</h2>
+</div>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
 
@@ -52,4 +54,3 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
   </mat-paginator>
-</div>

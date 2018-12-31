@@ -6,7 +6,8 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-planning-list',
-  templateUrl: 'planning-list.component.html'
+  templateUrl: 'planning-list.component.html',
+  styleUrls: ['./planning-list.component.css']
 })
 export class PlanningListComponent implements OnInit {
 
