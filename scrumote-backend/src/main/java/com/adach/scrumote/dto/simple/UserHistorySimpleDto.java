@@ -15,9 +15,6 @@ import lombok.Setter;
 public class UserHistorySimpleDto extends AbstractSimpleDto {
 
   @NotNull
-  private Long userId;
-
-  @NotNull
   private Integer plannings;
 
   @NotNull
