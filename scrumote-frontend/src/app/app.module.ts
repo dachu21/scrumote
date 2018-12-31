@@ -19,7 +19,17 @@ import {
 import {CustomMaterialModule} from './_modules';
 import {ApiInterceptor, ErrorInterceptor, XhrInterceptor} from './_interceptors';
 import {AuthenticationGuard, AuthorizationGuard} from './_guards';
-import {AlertService, AuthenticationService, PlanningService, UserService} from './_services';
+import {
+  AlertService,
+  AuthenticationService,
+  DeckService,
+  IssueService,
+  PlanningService,
+  SystemFeatureService,
+  UserHistoryService,
+  UserService,
+  VoteService
+} from './_services';
 
 import {ROUTES as routes} from './app.routes';
 import {httpLoaderFactory} from './_functions';
@@ -60,6 +70,11 @@ import {httpLoaderFactory} from './_functions';
     AlertService,
     UserService,
     PlanningService,
+    DeckService,
+    IssueService,
+    SystemFeatureService,
+    UserHistoryService,
+    VoteService
   ],
   bootstrap: [AppComponent]
 })

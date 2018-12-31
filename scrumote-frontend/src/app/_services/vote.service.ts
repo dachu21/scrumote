@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Vote} from '../_models';
 
 @Injectable()
-export class IssueService {
+export class VoteService {
 
   private planningBaseUrl = '/plannings/';
   private issueBaseUrl = '/issues/';
