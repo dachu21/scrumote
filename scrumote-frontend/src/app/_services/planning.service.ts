@@ -15,11 +15,11 @@ export class PlanningService {
   }
 
   createPlanning(planning: Planning) {
-    return this.http.post(this.baseUrl, planning);
+    return this.http.post<Planning>(this.baseUrl, planning);
   }
 
   getPlanning(id: number) {
-    return this.http.get(this.baseUrl + '/' + id);
+    return this.http.get<Planning>(this.baseUrl + '/' + id);
   }
 
   getAllPlannings() {
@@ -31,12 +31,12 @@ export class PlanningService {
   }
 
   updatePlanning(planning: Planning) {
-    return this.http.put(this.baseUrl + '/' + planning.id,
+    return this.http.put<Planning>(this.baseUrl + '/' + planning.id,
         planning, ifMatchOptions(planning.version));
   }
 
   finishPlanning(planning: Planning) {
-    return this.http.put(this.baseUrl + '/' + planning.id + '/finish',
+    return this.http.put<null>(this.baseUrl + '/' + planning.id + '/finish',
         null, ifMatchOptions(planning.version));
   }
 

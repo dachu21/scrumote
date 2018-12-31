@@ -34,7 +34,7 @@ insert into permission_t (id, version, name) values
 (22, 0, 'deleteDeck'),                          -- |  +  |    -    |  -
 
 (23, 0, 'getAllSystemFeatures'),                -- |  +  |    -    |  -
-(24, 0, 'updateSystemFeature'),                  -- |  +  |    -    |  -
+(24, 0, 'updateSystemFeature'),                 -- |  +  |    -    |  -
 
 (25, 0, 'createUser'),                          -- |  +  |    -    |  -
 (26, 0, 'getMyUser'),                           -- |  +  |    +    |  +
