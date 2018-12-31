@@ -35,6 +35,10 @@ public class DeckInternalService extends AbstractInternalService<Deck> {
         () -> new DeckNotFoundException(String.format("Deck with id %d does not exist.", id)));
   }
 
+  public List<Deck> findAll() {
+    return repository.findAll();
+  }
+
   public void delete(Deck deck) {
     repository.delete(deck);
   }

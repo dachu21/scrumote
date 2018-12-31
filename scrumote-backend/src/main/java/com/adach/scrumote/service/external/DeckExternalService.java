@@ -5,6 +5,8 @@ import com.adach.scrumote.dto.complex.DeckWithCardsDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.mapper.DeckMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,12 @@ public class DeckExternalService {
   public DeckWithCardsDto getDeckWithCards(Long deckId) {
     Deck deck = internalService.findById(deckId);
     return mapper.mapToDtoWithCards(deck);
+  }
+
+  @PreAuthorize("hasAnyAuthority('getAllDecks')")
+  public List<DeckWithCardsDto> getAllDecksWithCards() {
+    return internalService.findAll().stream().map(mapper::mapToDtoWithCards)
+        .collect(Collectors.toList());
   }
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")
