@@ -47,8 +47,8 @@ insert into permission_t (id, version, name) values
 (32, 0, 'updateMyUsersPassword'),               -- |  +  |    +    |  +
 (33, 0, 'updateAnyUsersPassword'),              -- |  +  |    -    |  -
 
-(34, 0, 'getMyUserHistory'),                    -- |  +  |    +    |  +
-(35, 0, 'getAnyUserHistory');                   -- |  +  |    -    |  -
+(34, 0, 'getMyUserStats'),                    -- |  +  |    +    |  +
+(35, 0, 'getAnyUserStats');                   -- |  +  |    -    |  -
 alter sequence permission_seq restart with 37;
 
 insert into role_permissions_t (role_id, permission_id) values
@@ -92,13 +92,13 @@ insert into user_t (id, version, active, password, username, email, first_name, 
 (5, 0, true, '$2a$10$4dA/YnrD2OhqYcN3KrnrZegKS7eJQRnwIkXhIkkOCBXCwNOnQ54vq', 'amod', 'amod@server.com', 'AMOD', 'Xyz');
 alter sequence user_seq restart with 6;
 
-insert into user_history_t(id, version, average_first_vote_level_difference, first_votes_above_estimate, first_votes_below_estimate, first_votes_equal_estimate, issues, plannings, votes, user_id) values
+insert into user_stats_t(id, version, average_first_vote_level_difference, first_votes_above_estimate, first_votes_below_estimate, first_votes_equal_estimate, issues, plannings, votes, user_id) values
 (1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
 (2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
 (3, 0, 0, 0, 0, 0, 0, 0, 0, 3),
 (4, 0, 0, 0, 0, 0, 0, 0, 0, 4),
 (5, 0, 0, 0, 0, 0, 0, 0, 0, 5);
-alter sequence user_history_seq restart with 6;
+alter sequence user_stats_seq restart with 6;
 
 insert into user_roles_t (user_id, role_id) values
 (1, 1),

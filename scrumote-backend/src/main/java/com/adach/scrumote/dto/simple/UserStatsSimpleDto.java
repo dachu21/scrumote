@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class UserHistorySimpleDto extends AbstractSimpleDto {
+public class UserStatsSimpleDto extends AbstractSimpleDto {
 
   @NotNull
   private Integer plannings;

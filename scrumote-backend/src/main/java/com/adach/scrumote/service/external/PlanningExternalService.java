@@ -8,8 +8,8 @@ import com.adach.scrumote.entity.User;
 import com.adach.scrumote.mapper.PlanningMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
-import com.adach.scrumote.service.internal.UserHistoryInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
+import com.adach.scrumote.service.internal.UserStatsInternalService;
 import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class PlanningExternalService {
   private final PlanningInternalService internalService;
   private final PlanningMapper mapper;
 
-  private final UserHistoryInternalService userHistoryInternalService;
+  private final UserStatsInternalService userStatsInternalService;
   private final DeckInternalService deckInternalService;
   private final UserInternalService userInternalService;
 
@@ -95,7 +95,7 @@ public class PlanningExternalService {
     validatePlanningForUpdateOrFinish(planning);
 
     planning.setFinished(true);
-    userHistoryInternalService.updateUsersHistoryForPlanning(planning);
+    userStatsInternalService.updateUsersStatsForPlanning(planning);
   }
 
   @PreAuthorize("hasAnyAuthority('deletePlanning')")

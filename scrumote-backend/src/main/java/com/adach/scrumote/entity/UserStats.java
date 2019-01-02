@@ -13,25 +13,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_history_t")
+@Table(name = "user_stats_t")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class UserHistory extends AbstractEntity {
+public class UserStats extends AbstractEntity {
 
-  public static UserHistory createEmpty(User user) {
-    UserHistory userHistory = new UserHistory();
-    userHistory.user = user;
-    userHistory.plannings = 0;
-    userHistory.issues = 0;
-    userHistory.votes = 0;
-    userHistory.firstVotesBelowEstimate = 0;
-    userHistory.firstVotesAboveEstimate = 0;
-    userHistory.firstVotesEqualEstimate = 0;
-    userHistory.averageFirstVoteLevelDifference = 0D;
-    return userHistory;
+  public static UserStats createEmpty(User user) {
+    UserStats userStats = new UserStats();
+    userStats.user = user;
+    userStats.plannings = 0;
+    userStats.issues = 0;
+    userStats.votes = 0;
+    userStats.firstVotesBelowEstimate = 0;
+    userStats.firstVotesAboveEstimate = 0;
+    userStats.firstVotesEqualEstimate = 0;
+    userStats.averageFirstVoteLevelDifference = 0D;
+    return userStats;
   }
 
   //region Data

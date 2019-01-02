@@ -39,7 +39,7 @@ public class User extends AbstractEntity {
     this.active = user.active;
     this.permissions = user.permissions;
     this.roles = user.roles;
-    this.userHistory = user.userHistory;
+    this.userStats = user.userStats;
   }
 
   @Column(nullable = false, unique = true)
@@ -69,7 +69,7 @@ public class User extends AbstractEntity {
   private boolean active;
 
   @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
-  private UserHistory userHistory;
+  private UserStats userStats;
 
   @ManyToMany
   @JoinTable(

@@ -2,18 +2,18 @@ package com.adach.scrumote.mapper;
 
 import com.adach.scrumote.configuration.dto.SimpleDtoTypeMap;
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
-import com.adach.scrumote.dto.simple.UserHistorySimpleDto;
-import com.adach.scrumote.entity.UserHistory;
+import com.adach.scrumote.dto.simple.UserStatsSimpleDto;
+import com.adach.scrumote.entity.UserStats;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @MandatoryTransactions
-public class UserHistoryMapper extends AbstractSimpleDtoMapper<UserHistory, UserHistorySimpleDto> {
+public class UserStatsMapper extends AbstractSimpleDtoMapper<UserStats, UserStatsSimpleDto> {
 
   @Autowired
-  public UserHistoryMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap) {
+  public UserStatsMapper(ModelMapper modelMapper, SimpleDtoTypeMap simpleDtoTypeMap) {
     super(modelMapper, simpleDtoTypeMap);
   }
 }

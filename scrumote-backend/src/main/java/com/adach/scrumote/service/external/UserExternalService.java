@@ -6,7 +6,7 @@ import com.adach.scrumote.dto.complex.UserWithPasswordDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
-import com.adach.scrumote.entity.UserHistory;
+import com.adach.scrumote.entity.UserStats;
 import com.adach.scrumote.exception.systemfeature.RegistrationDisabledException;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.service.internal.PlanningInternalService;
@@ -60,8 +60,8 @@ public class UserExternalService {
 
     user.getRoles().add(roleInternalService.findDeveloperRole());
 
-    UserHistory userHistory = UserHistory.createEmpty(user);
-    user.setUserHistory(userHistory);
+    UserStats userStats = UserStats.createEmpty(user);
+    user.setUserStats(userStats);
 
     user.setActive(true);
 
