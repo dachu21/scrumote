@@ -1,41 +1,5 @@
 {
-  "app": {
-    "navbar": {
-      "allPlannings": "All plannings",
-      "myPlannings": "My plannings"
-    }
-  },
-  "login": {
-    "header": "Login"
-  },
-  "register": {
-    "header": "Register",
-    "success": "You have been successfully registered!"
-  },
-  "plannings": {
-    "headers": {
-      "all": "All plannings",
-      "my": "My plannings"
-    },
-    "success": {
-      "delete": "Planning deleted successfully."
-    }
-  },
-  "labels": {
-    "username": "Username",
-    "password": "Password",
-    "email": "E-mail",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "code": "Code",
-    "name": "Name",
-    "deckName": "Deck",
-    "moderatorUsername": "Moderator",
-    "description": "Description",
-    "finished": "Finished",
-    "actions": "Actions"
-  },
-  "buttons": {
+  "common": {
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
@@ -43,12 +7,27 @@
     "home": "Home page",
     "open": "Open",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "actions": "Actions",
+    "save": "Save"
   },
-  "error": {
-    "header": "Error",
-    "404": "Page not found.",
-    "unauthorized": "You don't have access to this page."
+  "models": {
+    "user": {
+      "username": "Username",
+      "password": "Password",
+      "email": "E-mail",
+      "firstName": "First name",
+      "lastName": "Last name"
+    },
+    "planning": {
+      "code": "Code",
+      "name": "Name",
+      "deckName": "Deck",
+      "users": "Users",
+      "moderatorUsername": "Moderator",
+      "description": "Description",
+      "finished": "Finished"
+    }
   },
   "validation": {
     "username": {
@@ -62,23 +41,59 @@
     "email": {
       "required": "E-mail is required.",
       "email": "E-mail address is not valid."
+    },
+    "name": {
+      "required": "Name is required."
+    },
+    "code": {
+      "required": "Code is required."
     }
   },
-  "exception": {
-    "integrityViolation": "Data integrity has been violated.",
-    "password": {
-      "doesNotSatisfyConditions": "Provided password does not meet the requirements."
+  "app": {
+    "navbar": {
+      "appName": "Scrumote",
+      "allPlannings": "All plannings",
+      "myPlannings": "My plannings"
+    }
+  },
+  "error": {
+    "header": "Error",
+    "404": "Page not found.",
+    "unauthorized": "You don't have access to this page."
+  },
+  "login": {
+    "header": "Login"
+  },
+  "register": {
+    "header": "Register",
+    "success": "You have been successfully registered."
+  },
+  "planningList": {
+    "headers": {
+      "my": "My plannings",
+      "all": "All plannings"
+    },
+    "delete": {
+      "success": "Planning deleted successfully."
     }
   },
   "editPlanning": {
+    "headers": {
+      "edit": "Edit planning",
+      "create": "Create planning"
+    },
     "edit": {
-      "header": "Edit planning",
       "noPlanningLoaded": "No planning loaded to edit!",
-      "success": "Planning updated successfully!"
+      "success": "Planning updated successfully."
     },
     "create": {
-      "header": "Create planning",
-      "success": "Planning creates successfully!"
+      "success": "Planning created successfully."
+    }
+  },
+  "exception": {
+    "integrityViolation": "Data integrity has been violated!",
+    "password": {
+      "doesNotSatisfyConditions": "Provided password does not meet the requirements!"
     }
   }
 }
