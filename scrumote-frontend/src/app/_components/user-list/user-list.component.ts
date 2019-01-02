@@ -34,9 +34,12 @@ export class UserListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(readonly auth: AuthenticationService, private router: Router,
-              private userService: UserService, private route: ActivatedRoute,
-              private alert: AlertService, private userStatsService: UserStatsService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private alert: AlertService,
+              readonly auth: AuthenticationService,
+              private userService: UserService,
+              private userStatsService: UserStatsService) {
   }
 
   private refreshDataSource() {
@@ -52,7 +55,7 @@ export class UserListComponent implements OnInit {
 
   editUser(user: User) {
     this.userService.userToEdit = user;
-    this.router.navigate(['/edit-user']);
+    this.router.navigate(['/edit-any-user']);
   }
 
   onClickRow(element: User) {

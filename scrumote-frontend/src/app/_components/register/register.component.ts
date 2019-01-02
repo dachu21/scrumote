@@ -11,11 +11,10 @@ export class RegisterComponent {
 
   registerForm: FormGroup;
 
-  constructor(
-      private formBuilder: FormBuilder,
-      private router: Router,
-      private userService: UserService,
-      private alert: AlertService) {
+  constructor(private router: Router,
+              private formBuilder: FormBuilder,
+              private alert: AlertService,
+              private userService: UserService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],

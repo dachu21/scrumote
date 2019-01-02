@@ -1,19 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  AlertService,
-  AuthenticationService,
-  DeckService,
-  PlanningService,
-  UserService
-} from '../../_services';
+import {AlertService, DeckService, PlanningService, UserService} from '../../_services';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Deck, User} from '../../_models';
 
 @Component({
   selector: 'app-edit-planning',
-  templateUrl: 'edit-planning.component.html',
-  styleUrls: ['./edit-planning.component.css']
+  templateUrl: 'edit-planning.component.html'
 })
 export class EditPlanningComponent implements OnInit {
 
@@ -22,10 +15,13 @@ export class EditPlanningComponent implements OnInit {
   allDecks = new Map<string, number>();
   allUsers = new Map<string, number>();
 
-  constructor(readonly auth: AuthenticationService, private router: Router,
-              private planningService: PlanningService, private route: ActivatedRoute,
-              private alert: AlertService, private formBuilder: FormBuilder,
-              private deckService: DeckService, private userService: UserService) {
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private alert: AlertService,
+              private formBuilder: FormBuilder,
+              private planningService: PlanningService,
+              private deckService: DeckService,
+              private userService: UserService) {
 
     const planningToEdit = this.planningService.planningToEdit;
     this.planningService.planningToEdit = undefined;

@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {
   EditPlanningComponent,
+  EditUserComponent,
   ErrorComponent,
   HomeComponent,
   LoginComponent,
@@ -86,6 +87,22 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'getAllUsers'
+    }
+  },
+  {
+    path: 'edit-any-user',
+    component: EditUserComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updateAnyUser'
+    }
+  },
+  {
+    path: 'edit-my-user',
+    component: EditUserComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updateMyUser'
     }
   },
   {

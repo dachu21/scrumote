@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../_services';
 
@@ -13,12 +12,9 @@ export class LoginComponent {
   loginForm: FormGroup;
   readonly path: string;
 
-  constructor(
-      private auth: AuthenticationService,
-      private http: HttpClient,
-      private router: Router,
-      private route: ActivatedRoute,
-      private formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private auth: AuthenticationService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],

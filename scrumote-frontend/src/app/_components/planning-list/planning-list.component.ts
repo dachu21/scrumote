@@ -19,9 +19,11 @@ export class PlanningListComponent implements OnInit {
       = ['code', 'name', 'description', 'deckName', 'moderatorUsername', 'finished', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(readonly auth: AuthenticationService, private router: Router,
-              private planningService: PlanningService, private route: ActivatedRoute,
-              private alert: AlertService) {
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private alert: AlertService,
+              readonly auth: AuthenticationService,
+              private planningService: PlanningService) {
     if (this.route.snapshot.url[0].path === 'all-plannings') {
       this.listType = 'all';
     } else if (this.route.snapshot.url[0].path === 'my-plannings') {

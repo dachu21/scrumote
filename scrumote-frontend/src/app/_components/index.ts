@@ -5,3 +5,4 @@ export * from './error/error.component';
 export * from './planning-list/planning-list.component';
 export * from './edit-planning/edit-planning.component';
 export * from './user-list/user-list.component';
+export * from './edit-user/edit-user.component';

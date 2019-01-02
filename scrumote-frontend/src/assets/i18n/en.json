@@ -2,7 +2,6 @@
   "common": {
     "login": "Login",
     "register": "Register",
-    "logout": "Logout",
     "cancel": "Cancel",
     "home": "Home page",
     "open": "Open",
@@ -67,7 +66,11 @@
       "appName": "Scrumote",
       "myPlannings": "My plannings",
       "allPlannings": "All plannings",
-      "allUsers": "Users"
+      "allUsers": "All users"
+    },
+    "userMenu": {
+      "logout": "Logout",
+      "editMyUser": "Edit my user"
     }
   },
   "error": {
@@ -106,6 +109,14 @@
   },
   "userList": {
     "header": "Users"
+  },
+  "editUser": {
+    "headers": {
+      "my": "Edit my user",
+      "any": "Edit any user"
+    },
+    "noUserLoaded": "No user loaded to edit!",
+    "success": "User updated successfully!"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
