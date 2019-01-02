@@ -24,6 +24,10 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{'common.actions' | translate}}</th>
       <td mat-cell *matCellDef="let element">
+        <button *ngIf="auth.hasAuthority('getAnyUserStats')"
+                mat-flat-button color="primary" (click)="onClickRow(element)">
+          {{'common.stats' | translate}}
+        </button>
         <button *ngIf="auth.hasAuthority('updateAnyUser')"
                 mat-flat-button color="accent" (click)="editUser(element)">
           {{'common.edit' | translate}}
@@ -34,21 +38,57 @@
     <ng-container matColumnDef="userStats">
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
         <div class="expandable-element-inside"
-             [@expandTrigger]="element == expandedElement ? 'expanded' : 'collapsed'">
-          hello<br>
-          hello<br>
-          hello<br>
+             [@expandTrigger]="element == expandedUser ? 'expanded' : 'collapsed'">
+
+          <table mat-table [dataSource]="statsDataSource" class="fixed-width-table">
+            <ng-container matColumnDef="plannings">
+              <th mat-header-cell
+                  *matHeaderCellDef> {{'models.userStats.plannings' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.plannings}} </td>
+            </ng-container>
+            <ng-container matColumnDef="issues">
+              <th mat-header-cell *matHeaderCellDef> {{'models.userStats.issues' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.issues}} </td>
+            </ng-container>
+            <ng-container matColumnDef="votes">
+              <th mat-header-cell *matHeaderCellDef> {{'models.userStats.votes' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.votes}} </td>
+            </ng-container>
+            <ng-container matColumnDef="firstVotesBelowEstimate">
+              <th mat-header-cell
+                  *matHeaderCellDef> {{'models.userStats.firstVotesBelowEstimate' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.firstVotesBelowEstimate}} </td>
+            </ng-container>
+            <ng-container matColumnDef="firstVotesAboveEstimate">
+              <th mat-header-cell
+                  *matHeaderCellDef> {{'models.userStats.firstVotesAboveEstimate' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.firstVotesAboveEstimate}} </td>
+            </ng-container>
+            <ng-container matColumnDef="firstVotesEqualEstimate">
+              <th mat-header-cell
+                  *matHeaderCellDef> {{'models.userStats.firstVotesEqualEstimate' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.firstVotesEqualEstimate}} </td>
+            </ng-container>
+            <ng-container matColumnDef="averageFirstVoteLevelDifference">
+              <th mat-header-cell
+                  *matHeaderCellDef> {{'models.userStats.averageFirstVoteLevelDifference' | translate}}</th>
+              <td mat-cell *matCellDef="let stats"> {{stats.averageFirstVoteLevelDifference}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="statsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let stats; columns: statsDisplayedColumns;"></tr>
+          </table>
+
         </div>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-        class="expandable-element-row"
-        (click)="expandedElement = expandedElement === element ? null : element">
+        class="expandable-element-row">
     </tr>
     <tr mat-row *matRowDef="let element; columns: ['userStats']"
-        class="expandable-element-details"></tr>
+        class="expandable-element-details">
+    </tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>

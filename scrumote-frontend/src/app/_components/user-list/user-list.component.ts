@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, AuthenticationService, UserService} from '../../_services';
-import {User} from '../../_models';
+import {AlertService, AuthenticationService, UserService, UserStatsService} from '../../_services';
+import {User, UserStats} from '../../_models';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
@@ -21,16 +21,22 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class UserListComponent implements OnInit {
 
-  dataSource = new MatTableDataSource<User>();
-  expandedElement?: User;
+  expandedUser?: User | null;
 
+  dataSource = new MatTableDataSource<User>();
   displayedColumns: string[]
       = ['username', 'email', 'firstName', 'lastName', 'actions'];
+
+  statsDataSource = new MatTableDataSource<UserStats>();
+  statsDisplayedColumns: string[]
+      = ['plannings', 'issues', 'votes', 'firstVotesBelowEstimate', 'firstVotesAboveEstimate',
+    'firstVotesEqualEstimate', 'averageFirstVoteLevelDifference'];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(readonly auth: AuthenticationService, private router: Router,
               private userService: UserService, private route: ActivatedRoute,
-              private alert: AlertService) {
+              private alert: AlertService, private userStatsService: UserStatsService) {
   }
 
   private refreshDataSource() {
@@ -47,5 +53,16 @@ export class UserListComponent implements OnInit {
   editUser(user: User) {
     this.userService.userToEdit = user;
     this.router.navigate(['/edit-user']);
+  }
+
+  onClickRow(element: User) {
+    if (this.expandedUser !== element && element.id) {
+      this.userStatsService.getAnyUserStats(element.id).subscribe((response: UserStats) => {
+        this.expandedUser = element;
+        this.statsDataSource.data = [response];
+      });
+    } else {
+      this.expandedUser = null;
+    }
   }
 }
