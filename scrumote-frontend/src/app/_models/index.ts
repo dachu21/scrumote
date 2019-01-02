@@ -8,5 +8,5 @@ export * from './deck';
 export * from './issue';
 export * from './role';
 export * from './system-feature';
-export * from './user-history';
+export * from './user-stats';
 export * from './vote';

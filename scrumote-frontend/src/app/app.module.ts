@@ -14,7 +14,8 @@ import {
   HomeComponent,
   LoginComponent,
   PlanningListComponent,
-  RegisterComponent
+  RegisterComponent,
+  UserListComponent
 } from './_components';
 
 import {CustomMaterialModule} from './_modules';
@@ -27,8 +28,8 @@ import {
   IssueService,
   PlanningService,
   SystemFeatureService,
-  UserHistoryService,
   UserService,
+  UserStatsService,
   VoteService
 } from './_services';
 
@@ -43,7 +44,8 @@ import {httpLoaderFactory} from './_functions';
     RegisterComponent,
     ErrorComponent,
     PlanningListComponent,
-    EditPlanningComponent
+    EditPlanningComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,7 @@ import {httpLoaderFactory} from './_functions';
     DeckService,
     IssueService,
     SystemFeatureService,
-    UserHistoryService,
+    UserStatsService,
     VoteService
   ],
   bootstrap: [AppComponent]

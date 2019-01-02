@@ -55,8 +55,9 @@
   "app": {
     "navbar": {
       "appName": "Scrumote",
+      "myPlannings": "My plannings",
       "allPlannings": "All plannings",
-      "myPlannings": "My plannings"
+      "allUsers": "Users"
     }
   },
   "error": {
@@ -92,6 +93,9 @@
     "create": {
       "success": "Planning created successfully."
     }
+  },
+  "userList": {
+    "header": "Users"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",

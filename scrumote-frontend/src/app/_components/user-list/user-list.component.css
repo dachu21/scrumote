@@ -1,0 +1,22 @@
+th.mat-header-cell, td.mat-cell {
+  text-align: center !important;
+}
+
+tr.expandable-element-row:hover,
+tr.expandable-element-row:active {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.expandable-element-row td {
+  border-bottom-width: 0;
+}
+
+tr.expandable-element-details {
+  height: 0;
+}
+
+.expandable-element-inside {
+  overflow: hidden;
+  display: flex;
+}

@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/for
 import {Deck, User} from '../../_models';
 
 @Component({
-  selector: 'app-planning',
+  selector: 'app-edit-planning',
   templateUrl: 'edit-planning.component.html',
   styleUrls: ['./edit-planning.component.css']
 })

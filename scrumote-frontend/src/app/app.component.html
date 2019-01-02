@@ -5,12 +5,16 @@
   </button>
 
   <button mat-button class="navbar-menu-item"
+          routerLink="/my-plannings" *ngIf="auth.hasAuthority('getMyPlannings')">
+    {{'app.navbar.myPlannings' | translate}}
+  </button>
+  <button mat-button class="navbar-menu-item"
           routerLink="/all-plannings" *ngIf="auth.hasAuthority('getAllPlannings')">
     {{'app.navbar.allPlannings' | translate}}
   </button>
   <button mat-button class="navbar-menu-item"
-          routerLink="/my-plannings" *ngIf="auth.hasAuthority('getMyPlannings')">
-    {{'app.navbar.myPlannings' | translate}}
+          routerLink="/all-users" *ngIf="auth.hasAuthority('getAllUsers')">
+    {{'app.navbar.allUsers' | translate}}
   </button>
 
   <span class="fill-space"></span>

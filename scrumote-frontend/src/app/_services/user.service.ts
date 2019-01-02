@@ -9,6 +9,8 @@ export class UserService {
   private planningBaseUrl = '/plannings/';
   private baseUrl = '/users';
 
+  userToEdit?: User;
+
   constructor(private http: HttpClient) {
   }
 

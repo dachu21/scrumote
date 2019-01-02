@@ -5,5 +5,5 @@ export * from './planning.service';
 export * from './deck.service';
 export * from './issue.service';
 export * from './system-feature.service';
-export * from './user-history.service';
+export * from './user-stats.service';
 export * from './vote.service';

@@ -5,7 +5,8 @@ import {
   HomeComponent,
   LoginComponent,
   PlanningListComponent,
-  RegisterComponent
+  RegisterComponent,
+  UserListComponent,
 } from './_components';
 import {AuthenticationGuard, AuthorizationGuard} from './_guards';
 
@@ -77,6 +78,14 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'createPlanning'
+    }
+  },
+  {
+    path: 'all-users',
+    component: UserListComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'getAllUsers'
     }
   },
   {
