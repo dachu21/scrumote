@@ -19,17 +19,26 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput required formControlName="deckName" type="text"
-             [matAutocomplete]="deckAutocomplete"/>
+      <mat-select required formControlName="deckName" type="text">
+        <mat-option *ngFor="let deckName of allDecks.keys()" [value]="deckName">
+          {{deckName}}
+        </mat-option>
+      </mat-select>
       <mat-label>{{'models.planning.deckName' | translate}}</mat-label>
       <mat-error *ngFor="let error of getErrorKeys('deckName')">
         {{'validation.deck.' + error | translate}}
       </mat-error>
-      <mat-autocomplete #deckAutocomplete>
-        <mat-option *ngFor="let deckName of filteredDeckNames | async" [value]="deckName">
-          {{deckName}}
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="usersUsernames" type="text" multiple>
+        <mat-option *ngFor="let username of allUsers.keys()" [value]="username">
+          {{username}}
         </mat-option>
-      </mat-autocomplete>
+      </mat-select>
+      <mat-label>{{'models.planning.users' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('usersUsernames')">
+        {{'validation.users.' + error | translate}}
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput formControlName="description" type="text"/>

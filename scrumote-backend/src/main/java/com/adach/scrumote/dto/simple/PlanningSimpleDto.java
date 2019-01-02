@@ -37,4 +37,6 @@ public class PlanningSimpleDto extends AbstractSimpleDto {
   private String deckName;
 
   private String moderatorUsername;
+
+  private Set<String> usersUsernames = new LinkedHashSet<>();
 }

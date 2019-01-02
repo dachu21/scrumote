@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, AuthenticationService, DeckService, PlanningService} from '../../_services';
+import {
+  AlertService,
+  AuthenticationService,
+  DeckService,
+  PlanningService,
+  UserService
+} from '../../_services';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Deck} from '../../_models';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Deck, User} from '../../_models';
 
 @Component({
   selector: 'app-planning',
@@ -15,13 +19,13 @@ export class EditPlanningComponent implements OnInit {
 
   readonly planningType!: string;
   planningForm: FormGroup;
-  allDecks = new Map<string, Deck>();
-  filteredDeckNames?: Observable<string[]>;
+  allDecks = new Map<string, number>();
+  allUsers = new Map<string, number>();
 
   constructor(readonly auth: AuthenticationService, private router: Router,
               private planningService: PlanningService, private route: ActivatedRoute,
               private alert: AlertService, private formBuilder: FormBuilder,
-              private deckService: DeckService) {
+              private deckService: DeckService, private userService: UserService) {
 
     const planningToEdit = this.planningService.planningToEdit;
     this.planningService.planningToEdit = undefined;
@@ -40,10 +44,12 @@ export class EditPlanningComponent implements OnInit {
       id: [''],
       version: [''],
       deckId: [''],
+      users: [''],
 
       code: [planningToEdit && planningToEdit.code || '', Validators.required],
       name: [planningToEdit && planningToEdit.name || '', Validators.required],
       deckName: [planningToEdit && planningToEdit.deckName || '', [Validators.required]],
+      usersUsernames: [planningToEdit && planningToEdit.usersUsernames || ''],
       description: [planningToEdit && planningToEdit.description || ''],
     });
 
@@ -56,25 +62,35 @@ export class EditPlanningComponent implements OnInit {
   ngOnInit() {
     this.deckService.getAllDecks().subscribe((response: Deck[]) => {
       this.allDecks = response.reduce(function (deckMap, deck) {
-        deckMap.set(deck.name, deck);
+        if (deck.id) {
+          deckMap.set(deck.name, deck.id);
+        }
         return deckMap;
       }, this.allDecks);
-
-      this.filteredDeckNames = this.planningForm.controls['deckName'].valueChanges
-      .pipe(
-          startWith<string>(''),
-          map(deckName => this.filterDeckNames(deckName))
-      );
+    });
+    this.userService.getAllUsers().subscribe((response: User[]) => {
+      this.allUsers = response.reduce(function (userMap, user) {
+        if (user.id) {
+          userMap.set(user.username, user.id);
+        }
+        return userMap;
+      }, this.allUsers);
     });
   }
 
   onSubmit() {
 
-    const selectedDeck = this.allDecks.get(this.planningForm.controls['deckName'].value);
-    if (selectedDeck) {
+    const selectedDeckId = this.allDecks.get(this.planningForm.controls['deckName'].value);
+    if (selectedDeckId) {
       this.planningForm.controls['deckId']
-      .setValue(selectedDeck.id);
+      .setValue(selectedDeckId);
     }
+    const selectedUsernames = <string[]>this.planningForm.controls['usersUsernames'].value;
+    if (selectedUsernames) {
+      this.planningForm.controls['users']
+      .setValue(selectedUsernames.map(value => this.allUsers.get(value)));
+    }
+
 
     if (this.planningType === 'edit') {
       this.planningService.updatePlanning(this.planningForm.value)
@@ -94,12 +110,5 @@ export class EditPlanningComponent implements OnInit {
   getErrorKeys(controlName: string) {
     const errors: ValidationErrors | null = this.planningForm.controls[controlName].errors;
     return errors && Object.keys(errors);
-  }
-
-  private filterDeckNames(name: string): string[] {
-    const filterValue = name.toLowerCase();
-    return Array.from(this.allDecks.keys()).filter(
-        deckName => deckName.toLowerCase().includes(filterValue)
-    );
   }
 }
