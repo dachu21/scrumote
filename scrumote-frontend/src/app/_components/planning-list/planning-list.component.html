@@ -10,7 +10,7 @@
     </ng-container>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> {{'labels.name' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> {{'labels.description' | translate}}</th>
@@ -37,7 +37,7 @@
         <button mat-flat-button color="primary" (click)="openPlanning(element)">
           {{'buttons.open' | translate}}
         </button>
-        <button *ngIf="auth.hasAuthority('updatePlanning')"
+        <button *ngIf="auth.hasAuthority('updatePlanning') && auth.getId() === element.moderatorId"
                 mat-flat-button color="accent" (click)="editPlanning(element)">
           {{'buttons.edit' | translate}}
         </button>
@@ -54,3 +54,4 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
   </mat-paginator>
+</div>

@@ -61,6 +61,10 @@ export class AuthenticationService {
     return this.authenticated && this.sessionInfo.authorities.includes(authority);
   }
 
+  getId() {
+    return this.sessionInfo.id;
+  }
+
   getUsername() {
     return this.sessionInfo.username;
   }

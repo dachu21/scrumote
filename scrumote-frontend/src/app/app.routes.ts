@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {
+  EditPlanningComponent,
   ErrorComponent,
   HomeComponent,
   LoginComponent,
@@ -60,6 +61,22 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'getAllPlannings'
+    }
+  },
+  {
+    path: 'edit-planning',
+    component: EditPlanningComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updatePlanning'
+    }
+  },
+  {
+    path: 'create-planning',
+    component: EditPlanningComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'createPlanning'
     }
   },
   {

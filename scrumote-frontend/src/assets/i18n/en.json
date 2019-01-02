@@ -69,5 +69,16 @@
     "password": {
       "doesNotSatisfyConditions": "Provided password does not meet the requirements."
     }
+  },
+  "editPlanning": {
+    "edit": {
+      "header": "Edit planning",
+      "noPlanningLoaded": "No planning loaded to edit!",
+      "success": "Planning updated successfully!"
+    },
+    "create": {
+      "header": "Create planning",
+      "success": "Planning creates successfully!"
+    }
   }
 }
