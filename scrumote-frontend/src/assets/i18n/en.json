@@ -47,6 +47,9 @@
     },
     "code": {
       "required": "Code is required."
+    },
+    "deck": {
+      "required": "Deck is required."
     }
   },
   "app": {

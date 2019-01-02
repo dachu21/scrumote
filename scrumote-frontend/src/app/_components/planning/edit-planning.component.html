@@ -1,6 +1,6 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <div class="center-500 center-text">
-  <h2>{{'editPlanning.' + planningType + '.header' | translate}}</h2>
+  <h2>{{'editPlanning.headers.' + planningType | translate}}</h2>
 
   <form [formGroup]="planningForm" (ngSubmit)="onSubmit()" class="vertical">
 
@@ -19,11 +19,17 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput required formControlName="deckId" type="text"/>
+      <input matInput required formControlName="deckName" type="text"
+             [matAutocomplete]="deckAutocomplete"/>
       <mat-label>{{'models.planning.deckName' | translate}}</mat-label>
-      <mat-error *ngFor="let error of getErrorKeys('deckId')">
-        {{'validation.deckId.' + error | translate}}
+      <mat-error *ngFor="let error of getErrorKeys('deckName')">
+        {{'validation.deck.' + error | translate}}
       </mat-error>
+      <mat-autocomplete #deckAutocomplete>
+        <mat-option *ngFor="let deckName of allDecks.keys()" [value]="deckName">
+          {{deckName}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
       <input matInput formControlName="description" type="text"/>

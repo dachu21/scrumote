@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, AuthenticationService, PlanningService} from '../../_services';
+import {AlertService, AuthenticationService, DeckService, PlanningService} from '../../_services';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {Deck} from '../../_models';
 
 @Component({
   selector: 'app-planning',
@@ -12,10 +13,12 @@ export class EditPlanningComponent implements OnInit {
 
   readonly planningType!: string;
   planningForm: FormGroup;
+  allDecks = new Map<string, Deck>();
 
   constructor(readonly auth: AuthenticationService, private router: Router,
               private planningService: PlanningService, private route: ActivatedRoute,
-              private alert: AlertService, private formBuilder: FormBuilder) {
+              private alert: AlertService, private formBuilder: FormBuilder,
+              private deckService: DeckService) {
 
     const planningToEdit = this.planningService.planningToEdit;
     this.planningService.planningToEdit = undefined;
@@ -33,10 +36,11 @@ export class EditPlanningComponent implements OnInit {
     this.planningForm = this.formBuilder.group({
       id: [''],
       version: [''],
+      deckId: [''],
 
       code: [planningToEdit && planningToEdit.code || '', Validators.required],
       name: [planningToEdit && planningToEdit.name || '', Validators.required],
-      deckId: [planningToEdit && planningToEdit.deckId || '', [Validators.required]],
+      deckName: [planningToEdit && planningToEdit.deckName || '', [Validators.required]],
       description: [planningToEdit && planningToEdit.description || ''],
     });
 
@@ -47,9 +51,22 @@ export class EditPlanningComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deckService.getAllDecks().subscribe((response: Deck[]) => {
+      this.allDecks = response.reduce(function (deckMap, deck) {
+        deckMap.set(deck.name, deck);
+        return deckMap;
+      }, this.allDecks);
+    });
   }
 
   onSubmit() {
+
+    const selectedDeck = this.allDecks.get(this.planningForm.controls['deckName'].value);
+    if (selectedDeck) {
+      this.planningForm.controls['deckId']
+      .setValue(selectedDeck.id);
+    }
+
     if (this.planningType === 'edit') {
       this.planningService.updatePlanning(this.planningForm.value)
       .subscribe(() => {
