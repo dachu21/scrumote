@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, AuthenticationService, DeckService, PlanningService} from '../../_services';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Deck} from '../../_models';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-planning',
@@ -14,6 +16,7 @@ export class EditPlanningComponent implements OnInit {
   readonly planningType!: string;
   planningForm: FormGroup;
   allDecks = new Map<string, Deck>();
+  filteredDeckNames?: Observable<string[]>;
 
   constructor(readonly auth: AuthenticationService, private router: Router,
               private planningService: PlanningService, private route: ActivatedRoute,
@@ -56,6 +59,12 @@ export class EditPlanningComponent implements OnInit {
         deckMap.set(deck.name, deck);
         return deckMap;
       }, this.allDecks);
+
+      this.filteredDeckNames = this.planningForm.controls['deckName'].valueChanges
+      .pipe(
+          startWith<string>(''),
+          map(deckName => this.filterDeckNames(deckName))
+      );
     });
   }
 
@@ -85,5 +94,12 @@ export class EditPlanningComponent implements OnInit {
   getErrorKeys(controlName: string) {
     const errors: ValidationErrors | null = this.planningForm.controls[controlName].errors;
     return errors && Object.keys(errors);
+  }
+
+  private filterDeckNames(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return Array.from(this.allDecks.keys()).filter(
+        deckName => deckName.toLowerCase().includes(filterValue)
+    );
   }
 }
