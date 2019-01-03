@@ -1,20 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {AuthenticationService} from '../../_services';
+import {AuthenticationService, SystemFeatureService} from '../../_services';
+import {SystemFeature} from '../../_models';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  private REGISTRATION_FEATURE_CODE = 'REGISTRATION';
 
   loginForm: FormGroup;
+  registrationEnabled?: boolean;
   readonly path: string;
 
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private systemFeatureService: SystemFeatureService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -22,6 +27,14 @@ export class LoginComponent {
     });
 
     this.path = this.route.snapshot.queryParams['path'] || '/';
+  }
+
+  ngOnInit() {
+    this.systemFeatureService
+    .getSystemFeature(this.REGISTRATION_FEATURE_CODE)
+    .subscribe((response: SystemFeature) => {
+      this.registrationEnabled = response.enabled;
+    });
   }
 
   onSubmit() {

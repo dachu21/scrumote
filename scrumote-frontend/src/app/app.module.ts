@@ -23,7 +23,7 @@ import {
 
 import {CustomMaterialModule} from './_modules';
 import {ApiInterceptor, ErrorInterceptor, XhrInterceptor} from './_interceptors';
-import {AuthenticationGuard, AuthorizationGuard} from './_guards';
+import {AuthenticationGuard, AuthorizationGuard, SystemFeatureGuard} from './_guards';
 import {
   AlertService,
   AuthenticationService,
@@ -77,6 +77,7 @@ import {httpLoaderFactory} from './_functions';
     {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
     AuthorizationGuard,
     AuthenticationGuard,
+    SystemFeatureGuard,
     AuthenticationService,
     AlertService,
     UserService,

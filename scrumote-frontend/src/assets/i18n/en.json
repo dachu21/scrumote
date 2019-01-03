@@ -10,7 +10,8 @@
     "actions": "Actions",
     "save": "Save",
     "stats": "Statistics",
-    "close": "Close"
+    "close": "Close",
+    "create": "Create"
   },
   "models": {
     "user": {

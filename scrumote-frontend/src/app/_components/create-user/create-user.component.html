@@ -42,7 +42,7 @@
 
     <span>
       <button mat-flat-button color="primary" [disabled]="!newUserForm.valid" type="submit">
-        {{'common.register' | translate}}
+        {{'common.' + newUserType | translate}}
       </button>
       <button mat-flat-button color="accent" (click)="onClickCancel()" type="button">
         {{'common.cancel' | translate}}

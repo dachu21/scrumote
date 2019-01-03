@@ -23,7 +23,8 @@
       <button mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit">
         {{'common.login' | translate}}
       </button>
-      <button mat-flat-button color="accent" routerLink="/register" type="button">
+      <button mat-flat-button color="accent" *ngIf="registrationEnabled" type="button"
+              routerLink="/register">
         {{'common.register' | translate}}
       </button>
     </span>

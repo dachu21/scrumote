@@ -11,7 +11,7 @@ import {
   PlanningListComponent,
   UserListComponent,
 } from './_components';
-import {AuthenticationGuard, AuthorizationGuard} from './_guards';
+import {AuthenticationGuard, AuthorizationGuard, SystemFeatureGuard} from './_guards';
 
 export const ROUTES: Routes = [
   {
@@ -38,9 +38,10 @@ export const ROUTES: Routes = [
   {
     path: 'register',
     component: CreateUserComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard, SystemFeatureGuard],
     data: {
-      authenticated: false
+      authenticated: false,
+      systemFeature: 'REGISTRATION'
     }
   },
   {
