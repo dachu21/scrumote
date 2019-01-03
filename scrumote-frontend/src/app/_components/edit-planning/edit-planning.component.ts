@@ -29,7 +29,7 @@ export class EditPlanningComponent implements OnInit {
     if (this.route.snapshot.url[0].path === 'edit-planning') {
       this.planningType = 'edit';
       if (!planningToEdit) {
-        this.alert.error('editPlanning.edit.noPlanningLoaded');
+        this.alert.error('editDeck.edit.noPlanningLoaded');
         this.router.navigate(['/all-plannings']);
       }
     } else if (this.route.snapshot.url[0].path === 'create-planning') {
@@ -91,13 +91,13 @@ export class EditPlanningComponent implements OnInit {
     if (this.planningType === 'edit') {
       this.planningService.updatePlanning(this.planningForm.value)
       .subscribe(() => {
-        this.alert.success('editPlanning.edit.success');
+        this.alert.success('editDeck.edit.success');
         this.router.navigate(['/all-plannings']);
       });
     } else if (this.planningType === 'create') {
       this.planningService.createPlanning(this.planningForm.value)
       .subscribe(() => {
-        this.alert.success('editPlanning.create.success');
+        this.alert.success('editDeck.create.success');
         this.router.navigate(['/all-plannings']);
       });
     }

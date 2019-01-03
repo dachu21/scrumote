@@ -1,0 +1,50 @@
+<ul class="center-text">
+  <li>
+    <h2>{{'deckList.header' | translate}}</h2>
+  </li>
+  <li>
+    <button *ngIf="auth.hasAuthority('createDeck')"
+            mat-flat-button color="primary" routerLink="/create-deck">
+      {{'deckList.createDeck' | translate}}
+    </button>
+  </li>
+</ul>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> {{'models.deck.name' | translate}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="cards">
+      <th mat-header-cell *matHeaderCellDef> {{'models.deck.cards' | translate}}</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngFor="let card of element.cards">
+           [{{card.value}}]
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef style="width: 300px;">
+        {{'common.actions' | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="auth.hasAuthority('updateDeck')"
+                mat-flat-button color="accent" (click)="editDeck(element)">
+          {{'common.edit' | translate}}
+        </button>
+        <button *ngIf="auth.hasAuthority('deleteDeck')"
+                mat-flat-button color="warn" (click)="deletePlanning(element)">
+          {{'common.delete' | translate}}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  </mat-paginator>
+</div>

@@ -61,7 +61,7 @@ export class PlanningListComponent implements OnInit {
   deletePlanning(planning: Planning) {
     this.planningService.deletePlanning(planning).subscribe(() => {
       this.refreshDataSource();
-      this.alert.success('plannings.success.delete');
+      this.alert.success('planningList.delete.success');
     });
   }
 }

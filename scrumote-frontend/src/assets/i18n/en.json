@@ -43,6 +43,10 @@
       "oldPassword": "Old password",
       "newPassword": " New Password",
       "newPasswordRepeated": "Repeated new password"
+    },
+    "deck": {
+      "name": "Name",
+      "cards": "Cards"
     }
   },
   "validation": {
@@ -84,7 +88,8 @@
       "appName": "Scrumote",
       "myPlannings": "My plannings",
       "allPlannings": "All plannings",
-      "allUsers": "Users"
+      "allUsers": "Users",
+      "allDecks": "Decks"
     },
     "userMenu": {
       "logout": "Logout",
@@ -166,6 +171,10 @@
   },
   "myStats": {
     "header": "My statistics"
+  },
+  "deckList": {
+    "header": "Decks",
+    "createDeck": "Create deck"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",

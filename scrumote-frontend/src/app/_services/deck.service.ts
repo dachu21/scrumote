@@ -8,6 +8,8 @@ export class DeckService {
 
   private baseUrl = '/decks';
 
+  deckToEdit?: Deck;
+
   constructor(private http: HttpClient) {
   }
 
