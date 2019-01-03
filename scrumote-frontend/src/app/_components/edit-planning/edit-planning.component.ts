@@ -13,7 +13,7 @@ export class EditPlanningComponent implements OnInit {
   readonly planningType!: string;
   planningForm: FormGroup;
   allDecks = new Map<string, number>();
-  allUsers = new Map<string, number>();
+  allDevelopers = new Map<string, number>();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -64,13 +64,13 @@ export class EditPlanningComponent implements OnInit {
         return deckMap;
       }, this.allDecks);
     });
-    this.userService.getAllUsers().subscribe((response: User[]) => {
-      this.allUsers = response.reduce(function (userMap, user) {
+    this.userService.getAllDevelopers().subscribe((response: User[]) => {
+      this.allDevelopers = response.reduce(function (userMap, user) {
         if (user.id) {
           userMap.set(user.username, user.id);
         }
         return userMap;
-      }, this.allUsers);
+      }, this.allDevelopers);
     });
   }
 
@@ -84,7 +84,7 @@ export class EditPlanningComponent implements OnInit {
     const selectedUsernames = <string[]>this.planningForm.controls['usersUsernames'].value;
     if (selectedUsernames) {
       this.planningForm.controls['users']
-      .setValue(selectedUsernames.map(value => this.allUsers.get(value)));
+      .setValue(selectedUsernames.map(value => this.allDevelopers.get(value)));
     }
 
 

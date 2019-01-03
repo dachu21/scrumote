@@ -86,6 +86,14 @@ public class UserExternalService {
         .collect(Collectors.toList());
   }
 
+  @PreAuthorize("hasAnyAuthority('getAllDevelopers')")
+  public List<UserSimpleDto> getAllDevelopers() {
+    return internalService.findAllByRole(roleInternalService.findDeveloperRole())
+        .stream()
+        .map(mapper::mapToSimpleDto)
+        .collect(Collectors.toList());
+  }
+
   @PreAuthorize("hasAnyAuthority('getUsersForPlanning')")
   public List<UserSimpleDto> getUsersForPlanning(Long planningId) {
     Planning planning = planningInternalService.findById(planningId);

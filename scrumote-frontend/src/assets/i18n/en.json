@@ -9,7 +9,8 @@
     "delete": "Delete",
     "actions": "Actions",
     "save": "Save",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "close": "Close"
   },
   "models": {
     "user": {

@@ -43,6 +43,10 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl);
   }
 
+  getAllDevelopers() {
+    return this.http.get<User[]>(this.baseUrl + '/developers');
+  }
+
   getUsersForPlanning(planningId: number) {
     return this.http.get<User[]>(this.planningBaseUrl + planningId + this.baseUrl);
   }

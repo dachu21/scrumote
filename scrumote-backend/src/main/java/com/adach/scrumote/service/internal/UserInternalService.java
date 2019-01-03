@@ -1,6 +1,7 @@
 package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
+import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.exception.user.UserNotFoundException;
 import com.adach.scrumote.repository.UserRepository;
@@ -31,6 +32,10 @@ public class UserInternalService extends AbstractInternalService<User> {
 
   public List<User> findAll() {
     return repository.findAll();
+  }
+
+  public List<User> findAllByRole(Role role) {
+    return repository.findAllByRolesContains(role);
   }
 
   public List<User> findByIds(Set<Long> userIds) {

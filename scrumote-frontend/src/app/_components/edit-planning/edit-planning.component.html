@@ -31,7 +31,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-select formControlName="usersUsernames" type="text" multiple>
-        <mat-option *ngFor="let username of allUsers.keys()" [value]="username">
+        <mat-option *ngFor="let username of allDevelopers.keys()" [value]="username">
           {{username}}
         </mat-option>
       </mat-select>

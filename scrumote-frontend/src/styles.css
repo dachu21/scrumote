@@ -38,3 +38,21 @@ table.mat-table, mat-paginator.mat-paginator {
 div.mat-paginator-container {
   justify-content: center !important;
 }
+
+.mat-snack-bar-container.success-alert {
+  background-color: rgb(0, 150, 136);
+  color: white;
+}
+
+.success-alert button {
+  color: white;
+}
+
+.mat-snack-bar-container.error-alert {
+  background-color: rgb(244, 67, 54);
+  color: white;
+}
+
+.error-alert button {
+  color: white;
+}

@@ -71,6 +71,12 @@ public class UserController extends AbstractController {
     return userExternalService.getAllUsers();
   }
 
+  @PreAuthorize("hasAnyAuthority('getAllDevelopers')")
+  @GetMapping("/users/developers")
+  public List<UserSimpleDto> getAllDevelopers() {
+    return userExternalService.getAllDevelopers();
+  }
+
   @PreAuthorize("hasAnyAuthority('getUsersForPlanning')")
   @GetMapping("/plannings/{planningId}/users")
   public List<UserSimpleDto> getUsersForPlanning(@PathVariable Long planningId) {

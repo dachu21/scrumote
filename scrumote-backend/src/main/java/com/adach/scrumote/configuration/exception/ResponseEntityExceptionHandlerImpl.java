@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,6 +31,9 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
 
   private static final String HTTP_NOT_READABLE_ERROR_CODE = "exception.httpNotReadable";
   private static final HttpStatus HTTP_NOT_READABLE_ERROR_STATUS = HttpStatus.BAD_REQUEST;
+
+  private static final String HTTP_NOT_SUPPORTED_ERROR_CODE = "exception.httpMethodNotSupported";
+  private static final HttpStatus HTTP_NOT_SUPPORTED_ERROR_STATUS = HttpStatus.METHOD_NOT_ALLOWED;
 
   private static final String VALIDATION_ERROR_CODE = "exception.validation";
   private static final HttpStatus VALIDATION_ERROR_STATUS = HttpStatus.BAD_REQUEST;
@@ -78,6 +82,16 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
     log.error(e.getMessage(), e);
     ErrorResponse errorResponse = new ErrorResponse(HTTP_NOT_READABLE_ERROR_CODE);
     return new ResponseEntity<>(errorResponse, HTTP_NOT_READABLE_ERROR_STATUS);
+  }
+
+  @Override
+  @SuppressWarnings("NullableProblems")
+  public final ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+      HttpRequestMethodNotSupportedException e, HttpHeaders headers, HttpStatus status,
+      WebRequest request) {
+    log.error(e.getMessage(), e);
+    ErrorResponse errorResponse = new ErrorResponse(HTTP_NOT_SUPPORTED_ERROR_CODE);
+    return new ResponseEntity<>(errorResponse, HTTP_NOT_SUPPORTED_ERROR_STATUS);
   }
 
   @Override

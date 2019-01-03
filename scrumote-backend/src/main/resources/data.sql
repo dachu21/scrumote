@@ -41,6 +41,7 @@ insert into permission_t (id, version, name) values
 (26, 0, 'getMyUser'),                           -- |  +  |    +    |  +
 (27, 0, 'getAnyUser'),                          -- |  +  |    -    |  -
 (28, 0, 'getAllUsers'),                         -- |  +  |    +    |  -
+(37, 0, 'getAllDevelopers'),                    -- |  +  |    +    |  -
 (29, 0, 'getUsersForPlanning'),                 -- |  +  |    +    |  +
 (30, 0, 'updateMyUser'),                        -- |  +  |    +    |  +
 (31, 0, 'updateAnyUser'),                       -- |  +  |    -    |  -
@@ -49,7 +50,7 @@ insert into permission_t (id, version, name) values
 
 (34, 0, 'getMyUserStats'),                    -- |  +  |    +    |  +
 (35, 0, 'getAnyUserStats');                   -- |  +  |    -    |  -
-alter sequence permission_seq restart with 37;
+alter sequence permission_seq restart with 38;
 
 insert into role_permissions_t (role_id, permission_id) values
 -- ADMINISTRATOR
@@ -58,19 +59,19 @@ insert into role_permissions_t (role_id, permission_id) values
 (1, 18),
 (1, 19), (1, 20), (1, 36), (1, 21), (1, 22),
 (1, 23), (1, 24),
-(1, 25), (1, 26), (1, 27), (1, 28), (1, 29), (1, 30), (1, 31), (1, 32), (1, 33),
+(1, 25), (1, 26), (1, 27), (1, 28), (1, 37), (1, 29), (1, 30), (1, 31), (1, 32), (1, 33),
 (1, 34), (1, 35),
 -- SCRUM_MASTER
 (2, 2), (2, 3), (2, 4), (2, 5), (2, 7), (2, 8),
 (2, 10), (2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16),
 (2, 20), (2, 36),
-(2, 26), (2, 28), (2, 29), (2, 30), (2, 32),
+(2, 26), (2, 28), (2, 37), (2, 29), (2, 30), (2, 32),
 (2, 34),
 -- PRODUCT_OWNER
 (3, 2), (3, 3), (3, 4), (3, 5), (3, 7), (3, 8),
 (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16),
 (3, 20), (3, 36),
-(3, 26), (3, 28), (3, 29), (3, 30), (3, 32),
+(3, 26), (3, 28), (3, 37), (3, 29), (3, 30), (3, 32),
 (3, 34),
 -- DEVELOPER
 (4, 4), (4, 6),
