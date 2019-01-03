@@ -89,8 +89,14 @@
       "logout": "Logout",
       "editMyUser": "Edit my user",
       "editMyPassword": "Change password",
-      "myStats": "My statistics"
-    }
+      "myStats": "My statistics",
+      "language": {
+        "change": "Change language",
+        "polish": "Polish",
+        "english": "English"
+      }
+    },
+    "languageNotSupported": "Language is not supported!"
   },
   "error": {
     "header": "Error",

@@ -29,6 +29,7 @@ import {
   AuthenticationService,
   DeckService,
   IssueService,
+  LanguageService,
   PlanningService,
   SystemFeatureService,
   UserService,
@@ -84,7 +85,8 @@ import {httpLoaderFactory} from './_functions';
     IssueService,
     SystemFeatureService,
     UserStatsService,
-    VoteService
+    VoteService,
+    LanguageService
   ],
   bootstrap: [AppComponent]
 })

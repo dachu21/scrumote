@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from './_services';
+import {AuthenticationService, LanguageService} from './_services';
 import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
@@ -12,13 +11,12 @@ export class AppComponent implements OnInit {
 
 
   constructor(
+      private router: Router,
       readonly auth: AuthenticationService,
-      readonly router: Router,
-      private translateService: TranslateService
-  ) {
+      readonly language: LanguageService) {
+
     this.auth.authenticate();
-    translateService.setDefaultLang('en');
-    translateService.use('en');
+    this.language.init();
   }
 
   ngOnInit() {

@@ -34,8 +34,22 @@
       <button mat-menu-item routerLink="/edit-my-password">
         <span>{{'app.userMenu.editMyPassword' | translate}}</span>
       </button>
+      <button mat-menu-item [matMenuTriggerFor]="languages">
+        <span>{{'app.userMenu.language.change' | translate}}</span>
+      </button>
       <button mat-menu-item (click)="auth.logout()">
         <span>{{'app.userMenu.logout' | translate}}</span>
+      </button>
+    </mat-menu>
+
+    <mat-menu #languages>
+      <button mat-menu-item (click)="language.changeLanguage('pl')"
+              [disabled]="language.getCurrentLanguage() === 'pl'">
+        <span>{{'app.userMenu.language.polish' | translate}}</span>
+      </button>
+      <button mat-menu-item (click)="language.changeLanguage('en')"
+              [disabled]="language.getCurrentLanguage() === 'en'">
+        <span>{{'app.userMenu.language.english' | translate}}</span>
       </button>
     </mat-menu>
   </span>
