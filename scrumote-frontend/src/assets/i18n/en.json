@@ -98,7 +98,8 @@
     "unauthorized": "You don't have access to this page."
   },
   "login": {
-    "header": "Login"
+    "header": "Login",
+    "error": "Invalid username or password!"
   },
   "createUser": {
     "headers": {

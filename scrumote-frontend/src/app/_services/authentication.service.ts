@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {finalize} from 'rxjs/operators';
 import {SessionInfo} from '../_models';
+import {AlertService} from './alert.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +14,9 @@ export class AuthenticationService {
   private authenticated = false;
   private sessionInfo = SessionInfo.createAnonymous();
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private alert: AlertService) {
   }
 
   authenticate(username?: string, password?: string, path?: string) {
@@ -31,6 +34,10 @@ export class AuthenticationService {
         this.sessionInfo = response;
       } else {
         this.authenticated = false;
+      }
+    }, error => {
+      if (username && password) {
+        this.alert.error('login.error');
       }
     })
     .add(() => {

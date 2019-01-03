@@ -8,7 +8,8 @@ export class AlertService {
   private readonly successConfig: MatSnackBarConfig;
   private readonly errorConfig: MatSnackBarConfig;
 
-  constructor(private snackBar: MatSnackBar, private translate: TranslateService) {
+  constructor(private snackBar: MatSnackBar,
+              private translate: TranslateService) {
     this.successConfig = new MatSnackBarConfig();
     this.successConfig.panelClass = ['success-alert'];
     this.successConfig.duration = 10000;
