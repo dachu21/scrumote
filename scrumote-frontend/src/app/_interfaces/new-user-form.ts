@@ -1,4 +1,4 @@
-﻿interface RegisterForm {
+﻿interface NewUserForm {
 
   username: string;
   email: string;

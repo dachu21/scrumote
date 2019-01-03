@@ -18,3 +18,19 @@ tr.expandable-element-details {
 .fixed-width-table {
   table-layout: fixed;
 }
+
+ul.center-text {
+  display: grid;
+  grid-template-columns: 1fr repeat(1, auto) 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li:nth-child(1) {
+  grid-column-start: 2;
+}
+
+li:nth-child(2) {
+  margin-left: auto;
+}

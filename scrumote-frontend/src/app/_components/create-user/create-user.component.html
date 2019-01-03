@@ -1,8 +1,8 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <div class="center-500 center-text">
-  <h2>{{'register.header' | translate}}</h2>
+  <h2>{{'createUser.headers.' + newUserType | translate}}</h2>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="vertical">
+  <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()" class="vertical">
 
     <mat-form-field>
       <input matInput required formControlName="username" type="text"/>
@@ -41,10 +41,10 @@
     </mat-form-field>
 
     <span>
-      <button mat-flat-button color="primary" [disabled]="!registerForm.valid" type="submit">
+      <button mat-flat-button color="primary" [disabled]="!newUserForm.valid" type="submit">
         {{'common.register' | translate}}
       </button>
-      <button mat-flat-button color="accent" routerLink="/login">
+      <button mat-flat-button color="accent" (click)="onClickCancel()" type="button">
         {{'common.cancel' | translate}}
       </button>
     </span>

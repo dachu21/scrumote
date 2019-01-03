@@ -14,19 +14,19 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  private convertToUserWithPassword(registerForm: RegisterForm) {
+  private convertToUserWithPassword(registerForm: NewUserForm) {
     const user: User = User.create(registerForm.username, registerForm.email,
         registerForm.firstName, registerForm.lastName);
     const password: Password = Password.create(registerForm.password);
     return UserWithPassword.create(user, password);
   }
 
-  registerUser(registerForm: RegisterForm) {
+  registerUser(registerForm: NewUserForm) {
     return this.http.post<UserWithPassword>(this.baseUrl + '/register',
         this.convertToUserWithPassword(registerForm));
   }
 
-  createUser(registerForm: RegisterForm) {
+  createUser(registerForm: NewUserForm) {
     return this.http.post<UserWithPassword>(this.baseUrl + '/create',
         this.convertToUserWithPassword(registerForm));
   }

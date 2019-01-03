@@ -1,6 +1,14 @@
-<div class="center-text">
-  <h2>{{'planningList.headers.' + listType | translate}}</h2>
-</div>
+<ul class="center-text">
+  <li>
+    <h2>{{'planningList.headers.' + listType | translate}}</h2>
+  </li>
+  <li>
+    <button *ngIf="auth.hasAuthority('createPlanning')"
+            mat-flat-button color="primary" routerLink="/create-planning">
+      {{'planningList.createPlanning' | translate}}
+    </button>
+  </li>
+</ul>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
 

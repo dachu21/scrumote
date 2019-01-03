@@ -1,13 +1,14 @@
 import {Routes} from '@angular/router';
 import {
+  CreateUserComponent,
   EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
   ErrorComponent,
   HomeComponent,
-  LoginComponent, MyStatsComponent,
+  LoginComponent,
+  MyStatsComponent,
   PlanningListComponent,
-  RegisterComponent,
   UserListComponent,
 } from './_components';
 import {AuthenticationGuard, AuthorizationGuard} from './_guards';
@@ -36,18 +37,18 @@ export const ROUTES: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    component: CreateUserComponent,
     canActivate: [AuthenticationGuard],
     data: {
       authenticated: false
     }
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [AuthenticationGuard],
+    path: 'create-user',
+    component: CreateUserComponent,
+    canActivate: [AuthorizationGuard],
     data: {
-      authenticated: false
+      requiredAuthority: 'createUser'
     }
   },
   {

@@ -1,6 +1,14 @@
-<div class="center-text">
-  <h2>{{'userList.header' | translate}}</h2>
-</div>
+<ul class="center-text">
+  <li>
+    <h2>{{'userList.header' | translate}}</h2>
+  </li>
+  <li>
+    <button *ngIf="auth.hasAuthority('createUser')"
+            mat-flat-button color="primary" routerLink="/create-user">
+      {{'userList.createUser' | translate}}
+    </button>
+  </li>
+</ul>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
@@ -36,7 +44,7 @@
         </button>
         <button *ngIf="auth.hasAuthority('updateAnyUsersPassword')"
                 mat-flat-button color="warn" (click)="editUsersPassword(element)">
-          {{'common.editPassword' | translate}}
+          {{'userList.editPassword' | translate}}
         </button>
       </td>
     </ng-container>

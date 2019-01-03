@@ -9,8 +9,7 @@
     "delete": "Delete",
     "actions": "Actions",
     "save": "Save",
-    "stats": "Statistics",
-    "editPassword": "Change password"
+    "stats": "Statistics"
   },
   "models": {
     "user": {
@@ -83,7 +82,7 @@
       "appName": "Scrumote",
       "myPlannings": "My plannings",
       "allPlannings": "All plannings",
-      "allUsers": "All users"
+      "allUsers": "Users"
     },
     "userMenu": {
       "logout": "Logout",
@@ -100,9 +99,17 @@
   "login": {
     "header": "Login"
   },
-  "register": {
-    "header": "Register",
-    "success": "You have been successfully registered."
+  "createUser": {
+    "headers": {
+      "register": "Register",
+      "create": "Create user"
+    },
+    "create": {
+      "success": "User created successfully!"
+    },
+    "register": {
+      "success": "You have been successfully registered."
+    }
   },
   "planningList": {
     "headers": {
@@ -111,7 +118,8 @@
     },
     "delete": {
       "success": "Planning deleted successfully."
-    }
+    },
+    "createPlanning": "Create planning"
   },
   "editPlanning": {
     "headers": {
@@ -127,7 +135,9 @@
     }
   },
   "userList": {
-    "header": "Users"
+    "header": "Users",
+    "createUser": "Create user",
+    "editPassword": "Change password"
   },
   "editUser": {
     "headers": {
