@@ -5,7 +5,7 @@ import {
   EditUserComponent,
   ErrorComponent,
   HomeComponent,
-  LoginComponent,
+  LoginComponent, MyStatsComponent,
   PlanningListComponent,
   RegisterComponent,
   UserListComponent,
@@ -120,6 +120,14 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'updateMyUsersPassword'
+    }
+  },
+  {
+    path: 'my-stats',
+    component: MyStatsComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'getMyUserStats'
     }
   },
   {

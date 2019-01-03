@@ -15,6 +15,7 @@ import {
   ErrorComponent,
   HomeComponent,
   LoginComponent,
+  MyStatsComponent,
   PlanningListComponent,
   RegisterComponent,
   UserListComponent
@@ -49,7 +50,8 @@ import {httpLoaderFactory} from './_functions';
     EditPlanningComponent,
     UserListComponent,
     EditUserComponent,
-    EditPasswordComponent
+    EditPasswordComponent,
+    MyStatsComponent
   ],
   imports: [
     BrowserModule,

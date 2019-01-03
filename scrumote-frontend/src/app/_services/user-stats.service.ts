@@ -12,7 +12,7 @@ export class UserStatsService {
   }
 
   getMyUserStats() {
-    return this.http.get<UserStats>(this.usersBaseUrl + '/my' + this.baseUrl);
+    return this.http.get<UserStats>(this.usersBaseUrl + 'my' + this.baseUrl);
   }
 
   getAnyUserStats(userId: number) {

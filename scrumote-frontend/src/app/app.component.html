@@ -25,6 +25,9 @@
       <mat-icon class="navbar-expand-icon">expand_more</mat-icon>
     </button>
     <mat-menu #userMenu>
+      <button mat-menu-item routerLink="/my-stats">
+        <span>{{'app.userMenu.myStats' | translate}}</span>
+      </button>
       <button mat-menu-item routerLink="/edit-my-user">
         <span>{{'app.userMenu.editMyUser' | translate}}</span>
       </button>

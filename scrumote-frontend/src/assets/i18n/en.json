@@ -88,7 +88,8 @@
     "userMenu": {
       "logout": "Logout",
       "editMyUser": "Edit my user",
-      "editMyPassword": "Change password"
+      "editMyPassword": "Change password",
+      "myStats": "My statistics"
     }
   },
   "error": {
@@ -143,6 +144,9 @@
     },
     "noUserLoaded": "No user loaded to edit!",
     "success": "Password changed successfully!"
+  },
+  "myStats": {
+    "header": "My statistics"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
