@@ -11,6 +11,20 @@
         {{'validation.name.' + error | translate}}
       </mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <mat-chip-list #cardValues>
+        <mat-chip *ngFor="let card of cards" [selectable]="true"
+                  [removable]="true" (removed)="removeCard(card)">
+          {{card.value}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="{{'models.deck.cards' | translate}}"
+               [matChipInputFor]="cardValues"
+               [matChipInputSeparatorKeyCodes]="[ENTER_KEY]"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="addCard($event)">
+      </mat-chip-list>
+    </mat-form-field>
 
     <span>
       <button mat-flat-button color="primary" [disabled]="!deckForm.valid" type="submit">

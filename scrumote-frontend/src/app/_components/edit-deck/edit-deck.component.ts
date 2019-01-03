@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, DeckService} from '../../_services';
-import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {Card} from '../../_models';
+import {ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material';
 
 @Component({
   selector: 'app-edit-deck',
   templateUrl: 'edit-deck.component.html'
 })
-export class EditDeckComponent implements OnInit {
+export class EditDeckComponent {
 
+  readonly ENTER_KEY = ENTER;
   readonly deckType!: string;
   deckForm: FormGroup;
+  cards: Card[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -41,13 +46,13 @@ export class EditDeckComponent implements OnInit {
     if (deckToEdit) {
       this.deckForm.controls['id'].setValue(deckToEdit.id);
       this.deckForm.controls['version'].setValue(deckToEdit.version);
+      this.cards = deckToEdit.cards;
     }
   }
 
-  ngOnInit() {
-  }
-
   onSubmit() {
+    this.assignCardLevels();
+
     if (this.deckType === 'edit') {
       this.deckService.updateDeck(this.deckForm.value)
       .subscribe(() => {
@@ -63,8 +68,34 @@ export class EditDeckComponent implements OnInit {
     }
   }
 
+  private assignCardLevels() {
+    let i = 1;
+    for (const card of this.cards) {
+      card.level = i++;
+    }
+    this.deckForm.addControl('cards', new FormControl(this.cards));
+  }
+
   getErrorKeys(controlName: string) {
     const errors: ValidationErrors | null = this.deckForm.controls[controlName].errors;
     return errors && Object.keys(errors);
+  }
+
+  addCard(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.cards.push(Card.create(0, value.trim()));
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeCard(card: Card): void {
+    const index = this.cards.indexOf(card);
+    if (index >= 0) {
+      this.cards.splice(index, 1);
+    }
   }
 }
