@@ -9,3 +9,4 @@ export * from './edit-user/edit-user.component';
 export * from './edit-password/edit-password.component';
 export * from './my-stats/my-stats.component';
 export * from './deck-list/deck-list.component';
+export * from './edit-deck/edit-deck.component';

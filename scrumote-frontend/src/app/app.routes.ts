@@ -2,6 +2,7 @@ import {Routes} from '@angular/router';
 import {
   CreateUserComponent,
   DeckListComponent,
+  EditDeckComponent,
   EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
@@ -139,6 +140,22 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'getAllDecks'
+    }
+  },
+  {
+    path: 'create-deck',
+    component: EditDeckComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'createDeck'
+    }
+  },
+  {
+    path: 'edit-deck',
+    component: EditDeckComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updateDeck'
     }
   },
   {

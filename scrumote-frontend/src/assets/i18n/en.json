@@ -176,6 +176,19 @@
     "header": "Decks",
     "createDeck": "Create deck"
   },
+  "editDeck": {
+    "headers": {
+      "edit": "Edit deck",
+      "create": "Create deck"
+    },
+    "edit": {
+      "noDeckLoaded": "No deck loaded to edit!",
+      "success": "Deck updated successfully."
+    },
+    "create": {
+      "success": "Deck created successfully."
+    }
+  },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
     "password": {

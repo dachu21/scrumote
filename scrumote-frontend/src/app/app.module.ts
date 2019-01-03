@@ -11,6 +11,7 @@ import {AppComponent} from './app.component';
 import {
   CreateUserComponent,
   DeckListComponent,
+  EditDeckComponent,
   EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
@@ -54,7 +55,8 @@ import {httpLoaderFactory} from './_functions';
     EditUserComponent,
     EditPasswordComponent,
     MyStatsComponent,
-    DeckListComponent
+    DeckListComponent,
+    EditDeckComponent
   ],
   imports: [
     BrowserModule,
