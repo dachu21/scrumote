@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {
+  EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
   ErrorComponent,
@@ -103,6 +104,22 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthority: 'updateMyUser'
+    }
+  },
+  {
+    path: 'edit-any-password',
+    component: EditPasswordComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updateAnyUsersPassword'
+    }
+  },
+  {
+    path: 'edit-my-password',
+    component: EditPasswordComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthority: 'updateMyUsersPassword'
     }
   },
   {

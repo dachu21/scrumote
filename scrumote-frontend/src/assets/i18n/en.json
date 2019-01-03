@@ -9,7 +9,8 @@
     "delete": "Delete",
     "actions": "Actions",
     "save": "Save",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "editPassword": "Change password"
   },
   "models": {
     "user": {
@@ -36,6 +37,11 @@
       "firstVotesAboveEstimate": "First votes above estimate",
       "firstVotesEqualEstimate": "First votes equal to estimate",
       "averageFirstVoteLevelDifference": "Average first vote level difference"
+    },
+    "password": {
+      "oldPassword": "Old password",
+      "newPassword": " New Password",
+      "newPasswordRepeated": "Repeated new password"
     }
   },
   "validation": {
@@ -46,6 +52,17 @@
       "required": "Password is required.",
       "minlength": "Password must be at least 8 characters long.",
       "maxlength": "Password cannot be more than 64 characters long."
+    },
+    "newPassword": {
+      "required": "New password is required.",
+      "minlength": "New password must be at least 8 characters long.",
+      "maxlength": "New password cannot be more than 64 characters long."
+    },
+    "oldPassword": {
+      "required": "Old password is required."
+    },
+    "newPasswordRepeated": {
+      "mismatch": "Passwords don't match."
     },
     "email": {
       "required": "E-mail is required.",
@@ -70,7 +87,8 @@
     },
     "userMenu": {
       "logout": "Logout",
-      "editMyUser": "Edit my user"
+      "editMyUser": "Edit my user",
+      "editMyPassword": "Change password"
     }
   },
   "error": {
@@ -117,6 +135,14 @@
     },
     "noUserLoaded": "No user loaded to edit!",
     "success": "User updated successfully!"
+  },
+  "editPassword": {
+    "headers": {
+      "my": "Change my password",
+      "any": "Change any user's password"
+    },
+    "noUserLoaded": "No user loaded to edit!",
+    "success": "Password changed successfully!"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",

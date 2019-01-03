@@ -32,6 +32,10 @@
                 mat-flat-button color="accent" (click)="editUser(element)">
           {{'common.edit' | translate}}
         </button>
+        <button *ngIf="auth.hasAuthority('updateAnyUsersPassword')"
+                mat-flat-button color="warn" (click)="editUsersPassword(element)">
+          {{'common.editPassword' | translate}}
+        </button>
       </td>
     </ng-container>
 

@@ -9,6 +9,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppComponent} from './app.component';
 import {
+  EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
   ErrorComponent,
@@ -47,7 +48,8 @@ import {httpLoaderFactory} from './_functions';
     PlanningListComponent,
     EditPlanningComponent,
     UserListComponent,
-    EditUserComponent
+    EditUserComponent,
+    EditPasswordComponent
   ],
   imports: [
     BrowserModule,

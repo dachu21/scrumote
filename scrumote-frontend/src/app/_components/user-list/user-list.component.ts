@@ -58,6 +58,11 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/edit-any-user']);
   }
 
+  editUsersPassword(user: User) {
+    this.userService.userToEdit = user;
+    this.router.navigate(['/edit-any-password']);
+  }
+
   onClickRow(element: User) {
     if (this.expandedUser !== element && element.id) {
       this.userStatsService.getAnyUserStats(element.id).subscribe((response: UserStats) => {
