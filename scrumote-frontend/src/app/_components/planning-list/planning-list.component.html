@@ -50,7 +50,9 @@
                 mat-flat-button color="primary" (click)="openPlanning(element)">
           {{'common.open' | translate}}
         </button>
-        <button *ngIf="auth.hasAuthority('updatePlanning') && auth.getId() === element.moderatorId"
+        <button *ngIf="auth.hasAuthority('updatePlanning') &&
+                !element.finished &&
+                auth.getId() === element.moderatorId"
                 mat-flat-button color="accent" (click)="editPlanning(element)">
           {{'common.edit' | translate}}
         </button>

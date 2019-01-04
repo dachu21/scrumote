@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Issue} from '../_models';
+import {Issue, Planning} from '../_models';
 import {ifMatchOptions} from '../_functions';
 
 @Injectable()
@@ -8,6 +8,9 @@ export class IssueService {
 
   private planningBaseUrl = '/plannings/';
   private baseUrl = '/issues';
+
+  openedPlanning?: Planning;
+  issueToEdit?: Issue;
 
   constructor(private http: HttpClient) {
   }

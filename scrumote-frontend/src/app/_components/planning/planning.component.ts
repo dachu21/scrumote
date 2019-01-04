@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, PlanningService} from '../../_services';
-import {Planning} from '../../_models';
+import {AlertService, AuthenticationService, IssueService, PlanningService} from '../../_services';
+import {Issue, Planning} from '../../_models';
 
 @Component({
   selector: 'app-planning',
@@ -15,7 +15,9 @@ export class PlanningComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private alert: AlertService,
-              private planningService: PlanningService) {
+              readonly auth: AuthenticationService,
+              private planningService: PlanningService,
+              private issueService: IssueService) {
 
     const planningToOpen = this.planningService.planningToOpen;
     this.planningService.planningToEdit = undefined;
@@ -37,5 +39,23 @@ export class PlanningComponent implements OnInit {
         this.planning = response;
       });
     }
+  }
+
+  createIssue() {
+    this.issueService.openedPlanning = this.planning;
+    this.router.navigate(['/create-issue']);
+  }
+
+  finishPlanning() {
+    this.planningService.finishPlanning(this.planning).subscribe(() => {
+      this.alert.success('planning.finish.success');
+    });
+    this.refreshPlanning();
+  }
+
+  editIssue(issue: Issue) {
+    this.issueService.openedPlanning = this.planning;
+    this.issueService.issueToEdit = issue;
+    this.router.navigate(['/edit-issue']);
   }
 }

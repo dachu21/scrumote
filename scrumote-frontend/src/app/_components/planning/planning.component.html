@@ -1,4 +1,16 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<div class="center-text">
-  <h2>{{'planning.header' | translate}}: {{planning.name}}</h2>
-</div>
+<ul class="center-text">
+  <li>
+    <h2>{{'planning.header' | translate}}: {{planning.name}}</h2>
+  </li>
+  <li>
+    <button *ngIf="auth.hasAuthority('createIssue') && !planning.finished"
+            mat-flat-button color="primary" (click)="createIssue()">
+      {{'planning.createIssue' | translate}}
+    </button>
+    <button *ngIf="auth.hasAuthority('finishPlanning') && !planning.finished"
+            mat-flat-button color="warn" (click)="finishPlanning()">
+      {{'planning.finishPlanning' | translate}}
+    </button>
+  </li>
+</ul>
