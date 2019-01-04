@@ -51,7 +51,10 @@
     "issue": {
       "code": "Code",
       "name": "Name",
-      "description": "Description"
+      "description": "Description",
+      "finishedIterations": "Finished iterations",
+      "estimate": "Estimate",
+      "active": "In progress"
     }
   },
   "validation": {

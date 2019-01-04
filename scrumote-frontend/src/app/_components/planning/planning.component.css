@@ -1,3 +1,26 @@
+th.mat-header-cell, td.mat-cell {
+  text-align: center !important;
+}
+
+.expandable-element-row td {
+  border-bottom-width: 0;
+}
+
+tr.expandable-element-details {
+  height: 0;
+}
+
+.expandable-element-inside {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.expandable-element-row:hover,
+tr.expandable-element-row:active {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
 ul.center-text {
   display: grid;
   grid-template-columns: 1fr repeat(1, auto) 1fr;
