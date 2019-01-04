@@ -15,6 +15,8 @@ export class EditIssueComponent implements OnInit {
 
   openedPlanning!: Planning;
 
+  createNext?: boolean;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private alert: AlertService,
@@ -73,10 +75,19 @@ export class EditIssueComponent implements OnInit {
         this.issueService.createIssue(this.openedPlanning.id, this.issueForm.value)
         .subscribe(() => {
           this.alert.success('editIssue.create.success');
-          this.navigateToOpenedPlanning();
+          if (this.createNext) {
+            this.navigateToNextCreate();
+          } else {
+            this.navigateToOpenedPlanning();
+          }
         });
       }
     }
+  }
+
+  navigateToNextCreate() {
+    this.issueService.openedPlanning = this.openedPlanning;
+    this.router.navigate(['/create-issue']);
   }
 
   navigateToOpenedPlanning() {

@@ -56,3 +56,8 @@ div.mat-paginator-container {
 .error-alert button {
   color: white;
 }
+
+.mat-flat-button.primary-darker {
+  background-color: #004d40;
+  color: #ffffff;
+}
