@@ -5,21 +5,21 @@ export class Planning {
 
   code: string;
   name: string;
-  deckId: string;
+  deckId: number;
   users: number[];
   description?: string;
 
   finished: string | null;
-  moderatorId: string | null;
+  moderatorId: number | null;
 
   deckName: string | null;
   moderatorUsername: string | null;
   usersUsernames: string[] | null;
 
   constructor(id: number | null, version: number | null,
-              code: string, name: string, deckId: string, users: number[],
+              code: string, name: string, deckId: number, users: number[],
               description: string | undefined,
-              finished: string | null, moderatorId: string | null,
+              finished: string | null, moderatorId: number | null,
               deckName: string | null, moderatorUsername: string | null,
               usersUsernames: string[] | null) {
     this.id = id;
@@ -36,7 +36,7 @@ export class Planning {
     this.usersUsernames = usersUsernames;
   }
 
-  static create(code: string, name: string, deckId: string, users: number[],
+  static create(code: string, name: string, deckId: number, users: number[],
                 description?: string) {
     return new Planning(null, null, code, name, deckId, users, description,
         null, null, null, null, null);

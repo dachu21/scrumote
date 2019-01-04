@@ -4,7 +4,9 @@
     <h2>{{'planning.header' | translate}}: {{planning.name}}</h2>
   </li>
   <li>
-    <button *ngIf="auth.hasAuthority('createIssue') && !planning.finished"
+    <button *ngIf="auth.hasAuthority('createIssue') &&
+            !planning.finished &&
+            auth.getId() === planning.moderatorId"
             mat-flat-button color="primary" (click)="createIssue()">
       {{'planning.createIssue' | translate}}
     </button>
