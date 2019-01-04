@@ -90,6 +90,11 @@
         <div class="expandable-element-inside"
              [@expandTrigger]="issue == expandedIssue ? 'expanded' : 'collapsed'">
 
+          <mat-card *ngIf="expandedIssue && expandedIssue.description"
+                    class="description-card mat-elevation-z4">
+            {{expandedIssue.description}}
+          </mat-card>
+
           <table mat-table [dataSource]="usersDataSource" *ngIf="expandedIssue" class="auto-table">
             <ng-container matColumnDef="username">
               <th mat-header-cell *matHeaderCellDef style="width: 300px;">

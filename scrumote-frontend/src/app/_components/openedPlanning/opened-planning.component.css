@@ -11,8 +11,7 @@ tr.expandable-element-details {
 }
 
 .expandable-element-inside {
-  overflow: hidden;
-  display: flex;
+  display: block;
 }
 
 tr.expandable-element-row:hover,
@@ -39,9 +38,15 @@ li:nth-child(2) {
 
 table.auto-table {
   width: auto;
+  margin: auto;
 }
 
 tr.current-user-row {
   background: #ebebeb;
   font-weight: bold;
+}
+
+.mat-card.description-card {
+  background: #ebebeb;
+  border-radius: 0 !important;
 }
