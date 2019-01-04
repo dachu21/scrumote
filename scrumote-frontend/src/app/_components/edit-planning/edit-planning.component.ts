@@ -91,13 +91,13 @@ export class EditPlanningComponent implements OnInit {
     if (this.planningType === 'edit') {
       this.planningService.updatePlanning(this.planningForm.value)
       .subscribe(() => {
-        this.alert.success('editDeck.edit.success');
+        this.alert.success('editPlanning.edit.success');
         this.router.navigate(['/all-plannings']);
       });
     } else if (this.planningType === 'create') {
       this.planningService.createPlanning(this.planningForm.value)
       .subscribe(() => {
-        this.alert.success('editDeck.create.success');
+        this.alert.success('editPlanning.create.success');
         this.router.navigate(['/all-plannings']);
       });
     }

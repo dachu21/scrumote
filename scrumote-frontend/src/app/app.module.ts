@@ -12,6 +12,7 @@ import {
   CreateUserComponent,
   DeckListComponent,
   EditDeckComponent,
+  EditIssueComponent,
   EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
@@ -58,7 +59,8 @@ import {httpLoaderFactory} from './_functions';
     MyStatsComponent,
     DeckListComponent,
     EditDeckComponent,
-    PlanningComponent
+    PlanningComponent,
+    EditIssueComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import {
   CreateUserComponent,
   DeckListComponent,
   EditDeckComponent,
+  EditIssueComponent,
   EditPasswordComponent,
   EditPlanningComponent,
   EditUserComponent,
@@ -166,6 +167,22 @@ export const ROUTES: Routes = [
     data: {
       requiredAuthorities: ['getMyPlanning', 'getAnyPlanning'],
       useOr: true
+    }
+  },
+  {
+    path: 'create-issue',
+    component: EditIssueComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthorities: ['createIssue'],
+    }
+  },
+  {
+    path: 'edit-issue',
+    component: EditIssueComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthorities: ['updateIssue'],
     }
   },
   {
