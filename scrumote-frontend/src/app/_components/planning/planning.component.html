@@ -10,7 +10,9 @@
             mat-flat-button color="primary" (click)="createIssue()">
       {{'planning.createIssue' | translate}}
     </button>
-    <button *ngIf="auth.hasAuthority('finishPlanning') && !planning.finished"
+    <button *ngIf="auth.hasAuthority('finishPlanning') &&
+            !planning.finished &&
+            auth.getId() === planning.moderatorId"
             mat-flat-button color="warn" (click)="finishPlanning()">
       {{'planning.finishPlanning' | translate}}
     </button>
