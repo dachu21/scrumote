@@ -2,6 +2,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Password, User, UserWithPassword} from '../_models';
 import {ifMatchOptions} from '../_functions';
+import {NewUserForm} from '../_interfaces';
 
 @Injectable()
 export class UserService {
@@ -14,21 +15,21 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  private convertToUserWithPassword(registerForm: NewUserForm) {
-    const user: User = User.create(registerForm.username, registerForm.email,
-        registerForm.firstName, registerForm.lastName);
-    const password: Password = Password.create(registerForm.password);
+  private convertToUserWithPassword(newUserForm: NewUserForm) {
+    const user: User = User.create(newUserForm.username, newUserForm.email,
+        newUserForm.firstName, newUserForm.lastName);
+    const password: Password = Password.create(newUserForm.password);
     return UserWithPassword.create(user, password);
   }
 
-  registerUser(registerForm: NewUserForm) {
+  registerUser(newUserForm: NewUserForm) {
     return this.http.post<UserWithPassword>(this.baseUrl + '/register',
-        this.convertToUserWithPassword(registerForm));
+        this.convertToUserWithPassword(newUserForm));
   }
 
-  createUser(registerForm: NewUserForm) {
+  createUser(newUserForm: NewUserForm) {
     return this.http.post<UserWithPassword>(this.baseUrl + '/create',
-        this.convertToUserWithPassword(registerForm));
+        this.convertToUserWithPassword(newUserForm));
   }
 
   getMyUser() {

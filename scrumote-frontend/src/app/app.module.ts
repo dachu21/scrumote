@@ -22,7 +22,8 @@ import {
   MyStatsComponent,
   PlanningComponent,
   PlanningListComponent,
-  UserListComponent
+  UserListComponent,
+  VoteDialogComponent
 } from './_components';
 
 import {CustomMaterialModule} from './_modules';
@@ -60,7 +61,11 @@ import {httpLoaderFactory} from './_functions';
     DeckListComponent,
     EditDeckComponent,
     PlanningComponent,
-    EditIssueComponent
+    EditIssueComponent,
+    VoteDialogComponent
+  ],
+  entryComponents: [
+    VoteDialogComponent
   ],
   imports: [
     BrowserModule,

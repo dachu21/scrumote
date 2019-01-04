@@ -3,13 +3,16 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
   AlertService,
   AuthenticationService,
+  DeckService,
   IssueService,
   PlanningService,
   UserService
 } from '../../_services';
-import {Issue, Planning, User} from '../../_models';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {Deck, Issue, Planning, User} from '../../_models';
+import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+// noinspection TypeScriptPreferShortImport
+import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 
 @Component({
   selector: 'app-planning',
@@ -27,7 +30,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class PlanningComponent implements OnInit {
 
+  private DIALOG_WIDTH = '250px';
+
   openedPlanning!: Planning;
+  deck!: Deck;
 
   expandedIssue?: Issue | null;
   issuesDataSource = new MatTableDataSource<Issue>();
@@ -42,11 +48,13 @@ export class PlanningComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               private alert: AlertService,
               readonly auth: AuthenticationService,
               private planningService: PlanningService,
               private issueService: IssueService,
-              private userService: UserService) {
+              private userService: UserService,
+              private deckService: DeckService) {
 
     const planningToOpen = this.planningService.planningToOpen;
     this.planningService.planningToEdit = undefined;
@@ -62,6 +70,7 @@ export class PlanningComponent implements OnInit {
     this.refreshPlanning();
     this.refreshIssues();
     this.refreshUsers();
+    this.refreshDeck();
     this.issuesDataSource.paginator = this.paginator;
   }
 
@@ -87,6 +96,12 @@ export class PlanningComponent implements OnInit {
         this.usersDataSource.data = response;
       });
     }
+  }
+
+  refreshDeck() {
+    this.deckService.getDeck(this.openedPlanning.deckId).subscribe((response: Deck) => {
+      this.deck = response;
+    });
   }
 
   finishPlanning() {
@@ -117,12 +132,21 @@ export class PlanningComponent implements OnInit {
   }
 
   estimateIssue(issue: Issue) {
-    if (this.openedPlanning.id) {
-      this.issueService.estimateIssue(this.openedPlanning.id, issue, '80').subscribe(() => {
-        this.refreshIssues();
-        this.alert.success('openedPlanning.estimateIssue.success');
-      });
-    }
+    const dialogRef = this.dialog.open(VoteDialogComponent, {
+      width: this.DIALOG_WIDTH,
+      data: {
+        deck: this.deck,
+        i18nHeaderCode: 'openedPlanning.estimateIssue.header'
+      }
+    });
+    dialogRef.afterClosed().subscribe(cardValue => {
+      if (cardValue && this.openedPlanning.id) {
+        this.issueService.estimateIssue(this.openedPlanning.id, issue, cardValue).subscribe(() => {
+          this.refreshIssues();
+          this.alert.success('openedPlanning.estimateIssue.success');
+        });
+      }
+    });
   }
 
   deleteIssue(issue: Issue) {

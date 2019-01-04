@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{dialogData.i18nHeaderCode | translate}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="{{'common.select' | translate}}" [(value)]="cardValue">
+      <mat-option *ngFor="let card of dialogData.deck.cards" [value]="card.value">
+        {{card.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="cardValue">{{'common.ok' | translate}}</button>
+  <button mat-button (click)="cancel()">{{'common.cancel' | translate}}</button>
+</div>

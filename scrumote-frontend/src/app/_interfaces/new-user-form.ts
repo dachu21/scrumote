@@ -1,4 +1,4 @@
-﻿interface NewUserForm {
+﻿export interface NewUserForm {
 
   username: string;
   email: string;

@@ -13,7 +13,9 @@
     "close": "Close",
     "create": "Create",
     "activate": "Activate",
-    "estimate": "Estimate"
+    "estimate": "Estimate",
+    "ok": "OK",
+    "select": "Select..."
   },
   "models": {
     "user": {
