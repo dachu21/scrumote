@@ -11,7 +11,7 @@ import {
   HomeComponent,
   LoginComponent,
   MyStatsComponent,
-  PlanningComponent,
+  OpenedPlanningComponent,
   PlanningListComponent,
   UserListComponent,
 } from './_components';
@@ -162,7 +162,7 @@ export const ROUTES: Routes = [
   },
   {
     path: 'planning',
-    component: PlanningComponent,
+    component: OpenedPlanningComponent,
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthorities: ['getMyPlanning', 'getAnyPlanning'],

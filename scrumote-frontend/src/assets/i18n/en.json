@@ -235,6 +235,9 @@
       "success": "Issue deleted successfully."
     }
   },
+  "voteDialog": {
+    "selectCard": "Select card..."
+  },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
     "password": {

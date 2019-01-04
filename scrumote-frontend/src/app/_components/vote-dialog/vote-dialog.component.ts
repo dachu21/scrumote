@@ -5,6 +5,7 @@ import {VoteDialogData} from '../../_interfaces';
 @Component({
   selector: 'app-vote-dialog',
   templateUrl: 'vote-dialog.component.html',
+  styleUrls: ['./vote-dialog.component.css'],
 })
 export class VoteDialogComponent {
 

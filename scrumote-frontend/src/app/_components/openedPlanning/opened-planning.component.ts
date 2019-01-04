@@ -16,8 +16,8 @@ import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 
 @Component({
   selector: 'app-planning',
-  templateUrl: 'planning.component.html',
-  styleUrls: ['./planning.component.css'],
+  templateUrl: 'opened-planning.component.html',
+  styleUrls: ['./opened-planning.component.css'],
   animations: [
     trigger('expandTrigger', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
@@ -28,9 +28,9 @@ import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
     ]),
   ],
 })
-export class PlanningComponent implements OnInit {
+export class OpenedPlanningComponent implements OnInit {
 
-  private DIALOG_WIDTH = '400px';
+  private DIALOG_WIDTH = '300px';
 
   openedPlanning!: Planning;
   deck!: Deck;

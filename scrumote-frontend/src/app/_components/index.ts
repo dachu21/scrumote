@@ -10,6 +10,6 @@ export * from './edit-password/edit-password.component';
 export * from './my-stats/my-stats.component';
 export * from './deck-list/deck-list.component';
 export * from './edit-deck/edit-deck.component';
-export * from './planning/planning.component';
+export * from './openedPlanning/opened-planning.component';
 export * from './edit-issue/edit-issue.component';
 export * from './vote-dialog/vote-dialog.component';

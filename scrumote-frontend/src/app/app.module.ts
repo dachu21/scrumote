@@ -20,7 +20,7 @@ import {
   HomeComponent,
   LoginComponent,
   MyStatsComponent,
-  PlanningComponent,
+  OpenedPlanningComponent,
   PlanningListComponent,
   UserListComponent,
   VoteDialogComponent
@@ -60,7 +60,7 @@ import {httpLoaderFactory} from './_functions';
     MyStatsComponent,
     DeckListComponent,
     EditDeckComponent,
-    PlanningComponent,
+    OpenedPlanningComponent,
     EditIssueComponent,
     VoteDialogComponent
   ],
