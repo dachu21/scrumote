@@ -19,8 +19,21 @@ export class AuthorizationGuard implements CanActivate {
     let redirectUrl;
     if (!this.auth.isAuthenticated()) {
       redirectUrl = '/login';
-    } else if (!this.auth.hasAuthority(route.data.requiredAuthority)) {
+    } else if (route.data.useOr) {
       redirectUrl = '/error';
+      for (const authority of route.data.requiredAuthorities) {
+        if (this.auth.hasAuthority(authority)) {
+          redirectUrl = undefined;
+          break;
+        }
+      }
+    } else {
+      for (const authority of route.data.requiredAuthorities) {
+        if (!this.auth.hasAuthority(authority)) {
+          redirectUrl = '/error';
+          break;
+        }
+      }
     }
 
     if (redirectUrl) {

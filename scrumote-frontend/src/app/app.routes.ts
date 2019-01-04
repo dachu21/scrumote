@@ -10,6 +10,7 @@ import {
   HomeComponent,
   LoginComponent,
   MyStatsComponent,
+  PlanningComponent,
   PlanningListComponent,
   UserListComponent,
 } from './_components';
@@ -51,7 +52,7 @@ export const ROUTES: Routes = [
     component: CreateUserComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'createUser'
+      requiredAuthorities: ['createUser']
     }
   },
   {
@@ -59,7 +60,7 @@ export const ROUTES: Routes = [
     component: PlanningListComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'getMyPlannings'
+      requiredAuthorities: ['getMyPlannings']
     }
   },
   {
@@ -67,7 +68,7 @@ export const ROUTES: Routes = [
     component: PlanningListComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'getAllPlannings'
+      requiredAuthorities: ['getAllPlannings']
     }
   },
   {
@@ -75,7 +76,7 @@ export const ROUTES: Routes = [
     component: EditPlanningComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updatePlanning'
+      requiredAuthorities: ['updatePlanning']
     }
   },
   {
@@ -83,7 +84,7 @@ export const ROUTES: Routes = [
     component: EditPlanningComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'createPlanning'
+      requiredAuthorities: ['createPlanning']
     }
   },
   {
@@ -91,7 +92,7 @@ export const ROUTES: Routes = [
     component: UserListComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'getAllUsers'
+      requiredAuthorities: ['getAllUsers']
     }
   },
   {
@@ -99,7 +100,7 @@ export const ROUTES: Routes = [
     component: EditUserComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updateAnyUser'
+      requiredAuthorities: ['updateAnyUser']
     }
   },
   {
@@ -107,7 +108,7 @@ export const ROUTES: Routes = [
     component: EditUserComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updateMyUser'
+      requiredAuthorities: ['updateMyUser']
     }
   },
   {
@@ -115,7 +116,7 @@ export const ROUTES: Routes = [
     component: EditPasswordComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updateAnyUsersPassword'
+      requiredAuthorities: ['updateAnyUsersPassword']
     }
   },
   {
@@ -123,7 +124,7 @@ export const ROUTES: Routes = [
     component: EditPasswordComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updateMyUsersPassword'
+      requiredAuthorities: ['updateMyUsersPassword']
     }
   },
   {
@@ -131,7 +132,7 @@ export const ROUTES: Routes = [
     component: MyStatsComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'getMyUserStats'
+      requiredAuthorities: ['getMyUserStats']
     }
   },
   {
@@ -139,7 +140,7 @@ export const ROUTES: Routes = [
     component: DeckListComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'getAllDecks'
+      requiredAuthorities: ['getAllDecks']
     }
   },
   {
@@ -147,7 +148,7 @@ export const ROUTES: Routes = [
     component: EditDeckComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'createDeck'
+      requiredAuthorities: ['createDeck']
     }
   },
   {
@@ -155,7 +156,16 @@ export const ROUTES: Routes = [
     component: EditDeckComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      requiredAuthority: 'updateDeck'
+      requiredAuthorities: ['updateDeck']
+    }
+  },
+  {
+    path: 'planning',
+    component: PlanningComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthorities: ['getMyPlanning', 'getAnyPlanning'],
+      useOr: true
     }
   },
   {
