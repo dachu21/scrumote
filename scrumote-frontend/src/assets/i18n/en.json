@@ -11,7 +11,9 @@
     "save": "Save",
     "stats": "Statistics",
     "close": "Close",
-    "create": "Create"
+    "create": "Create",
+    "activate": "Activate",
+    "estimate": "Estimate"
   },
   "models": {
     "user": {
@@ -203,6 +205,7 @@
       "create": "Create issue"
     },
     "edit": {
+      "success": "Issue edited successfully.",
       "noPlanningLoaded": "No planning loaded!",
       "noIssueLoaded": "No issue loaded to edit!"
     },
@@ -210,6 +213,24 @@
       "success": "Issue created successfully."
     },
     "createNext": "Create next"
+  },
+  "openedPlanning": {
+    "header": "Planning",
+    "noPlanningLoaded": "No planning loaded!",
+    "createIssue": "Create issue",
+    "finishPlanning": "Finish",
+    "finish": {
+      "success": "Planning finished successfully."
+    },
+    "activateIssue": {
+      "success": "Issue activated successfully."
+    },
+    "estimateIssue": {
+      "success": "Issue estimated successfully."
+    },
+    "deleteIssue": {
+      "success": "Issue deleted successfully."
+    }
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
