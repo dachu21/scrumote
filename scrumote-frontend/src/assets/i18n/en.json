@@ -228,6 +228,7 @@
       "success": "Issue activated successfully."
     },
     "estimateIssue": {
+      "header": "Estimate issue",
       "success": "Issue estimated successfully."
     },
     "deleteIssue": {

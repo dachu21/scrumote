@@ -30,7 +30,7 @@ import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 })
 export class PlanningComponent implements OnInit {
 
-  private DIALOG_WIDTH = '250px';
+  private DIALOG_WIDTH = '400px';
 
   openedPlanning!: Planning;
   deck!: Deck;
