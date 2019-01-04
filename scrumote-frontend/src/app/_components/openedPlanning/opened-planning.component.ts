@@ -42,8 +42,8 @@ export class OpenedPlanningComponent implements OnInit {
       = ['code', 'name', 'finishedIterations', 'estimate', 'active', 'actions'];
 
   usersDataSource = new MatTableDataSource<User>();
-  usersDisplayedColumns: string[]
-      = [''];
+  usersDisplayedColumns: string[] = [];
+  finishedIterationsColumns: string[] = [];
 
   issueVotesMap = new Map<number, Map<number, string>>(); // <userId, <iteration, vote>>
 
@@ -131,6 +131,20 @@ export class OpenedPlanningComponent implements OnInit {
     }
   }
 
+  refreshExpandedIssueDisplayedColumns() {
+    this.usersDisplayedColumns = ['username'];
+    this.finishedIterationsColumns = [''];
+    if (this.expandedIssue && this.expandedIssue.finishedIterations) {
+      for (let i = 1; i <= this.expandedIssue.finishedIterations; i++) {
+        this.finishedIterationsColumns.push(i.toString());
+        this.usersDisplayedColumns.push(i.toString());
+      }
+    }
+    if (this.expandedIssue && this.expandedIssue.active) {
+      this.usersDisplayedColumns.push('currentIteration');
+    }
+  }
+
   // endregion
 
   finishPlanning() {
@@ -192,10 +206,14 @@ export class OpenedPlanningComponent implements OnInit {
     if (this.expandedIssue !== issue && issue.id) {
       this.expandedIssue = issue;
       this.refreshExpandedIssueVotesMap();
+      this.refreshExpandedIssueDisplayedColumns();
     } else {
       this.expandedIssue = null;
     }
   }
-
   // endregion
+
+  stringToNumber(str: string) {
+    return Number(str);
+  }
 }

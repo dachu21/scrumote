@@ -36,3 +36,12 @@ li:nth-child(1) {
 li:nth-child(2) {
   margin-left: auto;
 }
+
+table.auto-table {
+  width: auto;
+}
+
+tr.current-user-row {
+  background: #ebebeb;
+  font-weight: bold;
+}
