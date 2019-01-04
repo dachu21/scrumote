@@ -6,9 +6,10 @@ import {
   DeckService,
   IssueService,
   PlanningService,
-  UserService
+  UserService,
+  VoteService
 } from '../../_services';
-import {Deck, Issue, Planning, User} from '../../_models';
+import {Deck, Issue, Planning, User, Vote} from '../../_models';
 import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 // noinspection TypeScriptPreferShortImport
@@ -44,6 +45,8 @@ export class OpenedPlanningComponent implements OnInit {
   usersDisplayedColumns: string[]
       = [''];
 
+  issueVotesMap = new Map<number, Map<number, string>>(); // <userId, <iteration, vote>>
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private router: Router,
@@ -54,7 +57,8 @@ export class OpenedPlanningComponent implements OnInit {
               private planningService: PlanningService,
               private issueService: IssueService,
               private userService: UserService,
-              private deckService: DeckService) {
+              private deckService: DeckService,
+              private voteService: VoteService) {
 
     const planningToOpen = this.planningService.planningToOpen;
     this.planningService.planningToEdit = undefined;
@@ -74,6 +78,7 @@ export class OpenedPlanningComponent implements OnInit {
     this.issuesDataSource.paginator = this.paginator;
   }
 
+  // region Refresh data
   refreshPlanning() {
     if (this.openedPlanning.id) {
       this.planningService.getPlanning(this.openedPlanning.id).subscribe((response: Planning) => {
@@ -94,6 +99,12 @@ export class OpenedPlanningComponent implements OnInit {
     if (this.openedPlanning.id) {
       this.userService.getUsersForPlanning(this.openedPlanning.id).subscribe((response: User[]) => {
         this.usersDataSource.data = response;
+        this.issueVotesMap.clear();
+        for (const user of this.usersDataSource.data) {
+          if (user.id) {
+            this.issueVotesMap.set(user.id, new Map<number, string>());
+          }
+        }
       });
     }
   }
@@ -104,6 +115,24 @@ export class OpenedPlanningComponent implements OnInit {
     });
   }
 
+  refreshExpandedIssueVotesMap() {
+    if (this.openedPlanning.id && this.expandedIssue && this.expandedIssue.id) {
+      this.voteService.getVotesForIssue(this.openedPlanning.id, this.expandedIssue.id)
+      .subscribe((response: Vote[]) => {
+        for (const vote of response) {
+          if (vote.userId) {
+            const userVotesMap = this.issueVotesMap.get(vote.userId);
+            if (userVotesMap) {
+              userVotesMap.set(vote.iteration, vote.value);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // endregion
+
   finishPlanning() {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
@@ -111,6 +140,7 @@ export class OpenedPlanningComponent implements OnInit {
     this.refreshPlanning();
   }
 
+  // region Issue actions
   createIssue() {
     this.issueService.openedPlanning = this.openedPlanning;
     this.router.navigate(['/create-issue']);
@@ -161,8 +191,11 @@ export class OpenedPlanningComponent implements OnInit {
   expandIssue(issue: Issue) {
     if (this.expandedIssue !== issue && issue.id) {
       this.expandedIssue = issue;
+      this.refreshExpandedIssueVotesMap();
     } else {
       this.expandedIssue = null;
     }
   }
+
+  // endregion
 }
