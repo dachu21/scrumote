@@ -47,6 +47,11 @@
     "deck": {
       "name": "Name",
       "cards": "Cards"
+    },
+    "issue": {
+      "code": "Code",
+      "name": "Name",
+      "description": "Description"
     }
   },
   "validation": {
@@ -188,6 +193,20 @@
     "create": {
       "success": "Deck created successfully."
     }
+  },
+  "editIssue": {
+    "headers": {
+      "edit": "Edit issue",
+      "create": "Create issue"
+    },
+    "edit": {
+      "noPlanningLoaded": "No planning loaded!",
+      "noIssueLoaded": "No issue loaded to edit!"
+    },
+    "create": {
+      "success": "Issue created successfully."
+    },
+    "createNext": "Create next"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",
