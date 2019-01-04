@@ -116,6 +116,15 @@ export class PlanningComponent implements OnInit {
     }
   }
 
+  estimateIssue(issue: Issue) {
+    if (this.openedPlanning.id) {
+      this.issueService.estimateIssue(this.openedPlanning.id, issue, '80').subscribe(() => {
+        this.refreshIssues();
+        this.alert.success('openedPlanning.estimateIssue.success');
+      });
+    }
+  }
+
   deleteIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
