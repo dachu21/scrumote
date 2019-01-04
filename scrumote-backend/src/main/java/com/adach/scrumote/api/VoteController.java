@@ -6,6 +6,7 @@ import com.adach.scrumote.service.external.IssueExternalService;
 import com.adach.scrumote.service.external.VoteExternalService;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,11 @@ public class VoteController extends AbstractController {
   @PreAuthorize("hasAnyAuthority('getVotesForIssue')")
   @GetMapping("/plannings/{planningId}/issues/{issueId}/votes")
   public List<VoteSimpleDto> getVotesForIssue(@PathVariable Long planningId,
-      @PathVariable Long issueId, @RequestParam Integer iteration) {
-    return voteExternalService.getVotesForIssue(planningId, issueId, iteration);
+      @PathVariable Long issueId, @RequestParam @NotNull Integer iteration) {
+    if (iteration == 0) {
+      return voteExternalService.getAllVotesForIssue(planningId, issueId);
+    } else {
+      return voteExternalService.getVotesForIssueAndIteration(planningId, issueId, iteration);
+    }
   }
 }

@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface VoteRepository extends CustomJpaRepository<Vote, Long> {
 
   List<Vote> findAllByIssueAndIteration(Issue issue, Integer iteration);
+
+  List<Vote> findAllByIssueAndIterationNot(Issue issue, Integer iteration);
 }

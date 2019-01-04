@@ -19,6 +19,10 @@ export class VoteService {
 
   getVotesForIssue(planningId: number, issueId: number) {
     return this.http.get<Vote[]>(
-        this.planningBaseUrl + planningId + this.issueBaseUrl + issueId + this.baseUrl);
+        this.planningBaseUrl + planningId + this.issueBaseUrl + issueId + this.baseUrl, {
+          params: {
+            iteration: '0'
+          }
+        });
   }
 }

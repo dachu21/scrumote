@@ -52,7 +52,21 @@ public class VoteExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('getVotesForIssue')")
-  public List<VoteSimpleDto> getVotesForIssue(Long planningId, Long issueId, Integer iteration) {
+  public List<VoteSimpleDto> getAllVotesForIssue(Long planningId, Long issueId) {
+    Issue issue = issueInternalService.findById(issueId);
+    Planning planning = issue.getPlanning();
+
+    issueInternalService.validateBelongsToPlanningWithId(issue, planningId);
+    planningInternalService.validateContainsCurrentUserIfNotAuthorized(planning);
+
+    Integer currentIteration = issue.getFinishedIterations() + 1;
+    return internalService.findAllByIssueExcludingIteration(issue, currentIteration).stream()
+        .map(mapper::mapToSimpleDto).collect(Collectors.toList());
+  }
+
+  @PreAuthorize("hasAnyAuthority('getVotesForIssue')")
+  public List<VoteSimpleDto> getVotesForIssueAndIteration(Long planningId, Long issueId,
+      Integer iteration) {
     Issue issue = issueInternalService.findById(issueId);
     Planning planning = issue.getPlanning();
 

@@ -27,6 +27,10 @@ public class VoteInternalService extends AbstractInternalService<Vote> {
     return repository.findAllByIssueAndIteration(issue, iteration);
   }
 
+  public List<Vote> findAllByIssueExcludingIteration(Issue issue, Integer iteration) {
+    return repository.findAllByIssueAndIterationNot(issue, iteration);
+  }
+
   public Vote findById(Long id) {
     Optional<Vote> voteOpt = repository.findById(id);
     return voteOpt.orElseThrow(
