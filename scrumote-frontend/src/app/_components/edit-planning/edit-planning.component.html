@@ -20,7 +20,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-select required formControlName="deckName" type="text">
-        <mat-option *ngFor="let deckName of allDecks.keys()" [value]="deckName">
+        <mat-option *ngFor="let deckName of allDecksKeys" [value]="deckName">
           {{deckName}}
         </mat-option>
       </mat-select>
@@ -31,7 +31,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-select formControlName="usersUsernames" type="text" multiple>
-        <mat-option *ngFor="let username of allDevelopers.keys()" [value]="username">
+        <mat-option *ngFor="let username of allDevelopersKeys" [value]="username">
           {{username}}
         </mat-option>
       </mat-select>

@@ -13,7 +13,9 @@ export class EditPlanningComponent implements OnInit {
   readonly planningType!: string;
   planningForm: FormGroup;
   allDecks = new Map<string, number>();
+  allDecksKeys?: string[];
   allDevelopers = new Map<string, number>();
+  allDevelopersKeys?: string[];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -63,6 +65,7 @@ export class EditPlanningComponent implements OnInit {
         }
         return deckMap;
       }, this.allDecks);
+      this.allDecksKeys = Array.from(this.allDecks.keys());
     });
     this.userService.getAllDevelopers().subscribe((response: User[]) => {
       this.allDevelopers = response.reduce(function (userMap, user) {
@@ -71,6 +74,7 @@ export class EditPlanningComponent implements OnInit {
         }
         return userMap;
       }, this.allDevelopers);
+      this.allDevelopersKeys = Array.from(this.allDevelopers.keys());
     });
   }
 

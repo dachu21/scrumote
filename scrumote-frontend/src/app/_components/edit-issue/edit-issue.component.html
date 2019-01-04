@@ -27,8 +27,8 @@
     </mat-form-field>
 
     <span>
-      <button mat-flat-button [disabled]="!issueForm.valid" type="submit"
-              class="primary-darker"
+      <button mat-flat-button class="primary-darker" [disabled]="!issueForm.valid" type="submit"
+              *ngIf="issueType === 'create'"
               (click)="createNext = true">
         {{'editIssue.createNext' | translate}}
       </button>

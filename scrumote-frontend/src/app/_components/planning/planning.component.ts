@@ -136,6 +136,7 @@ export class PlanningComponent implements OnInit {
 
   expandIssue(issue: Issue) {
     if (this.expandedIssue !== issue && issue.id) {
+      this.expandedIssue = issue;
     } else {
       this.expandedIssue = null;
     }
