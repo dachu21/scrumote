@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {PropagationStopModule} from 'ngx-propagation-stop';
 
 import {AppComponent} from './app.component';
 import {
@@ -74,6 +75,7 @@ import {httpLoaderFactory} from './_functions';
     FormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    PropagationStopModule,
     CustomMaterialModule,
     RouterModule.forRoot(routes),
     TranslateModule.forRoot({
