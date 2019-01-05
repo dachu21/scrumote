@@ -2,6 +2,7 @@ package com.adach.scrumote.sse;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import java.io.IOException;
+import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class SseService {
     sseRepository.getEmitters().forEach(emitter -> {
       try {
         SseEventBuilder builder = SseEmitter.event()
+            .id(Instant.now().toString())
             .data(sseEvent)
             .name(sseEvent.getName())
             .reconnectTime(0L);
