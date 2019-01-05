@@ -74,7 +74,7 @@ export class EditPasswordComponent implements OnInit {
     } else if (this.userType === 'any') {
       if (!this.userService.userToEdit) {
         this.alert.error('editPassword.noUserLoaded');
-        this.router.navigate(['/all-users']);
+        this.router.navigate(['/users']);
       } else {
         this.initializeForm(this.userService.userToEdit);
         this.userService.userToEdit = undefined;
@@ -99,7 +99,7 @@ export class EditPasswordComponent implements OnInit {
       this.userService.updateAnyUsersPassword(this.userForm.value, this.userForm.value)
       .subscribe(() => {
         this.alert.success('editPassword.success');
-        this.router.navigate(['/all-users']);
+        this.router.navigate(['/users']);
       });
     }
   }
@@ -108,7 +108,7 @@ export class EditPasswordComponent implements OnInit {
     if (this.userType === 'my') {
       this.router.navigate(['/home']);
     } else if (this.userType === 'any') {
-      this.router.navigate(['/all-users']);
+      this.router.navigate(['/users']);
     }
   }
 

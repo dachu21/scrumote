@@ -44,7 +44,7 @@ export class EditUserComponent implements OnInit {
     } else if (this.userType === 'any') {
       if (!this.userService.userToEdit) {
         this.alert.error('editUser.noUserLoaded');
-        this.router.navigate(['/all-users']);
+        this.router.navigate(['/users']);
       } else {
         this.initializeForm(this.userService.userToEdit);
         this.userService.userToEdit = undefined;
@@ -73,7 +73,7 @@ export class EditUserComponent implements OnInit {
       this.userService.updateAnyUser(this.userForm.value)
       .subscribe(() => {
         this.alert.success('editUser.success');
-        this.router.navigate(['/all-users']);
+        this.router.navigate(['/users']);
       });
     }
   }
@@ -82,7 +82,7 @@ export class EditUserComponent implements OnInit {
     if (this.userType === 'my') {
       this.router.navigate(['/home']);
     } else if (this.userType === 'any') {
-      this.router.navigate(['/all-users']);
+      this.router.navigate(['/users']);
     }
   }
 

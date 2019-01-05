@@ -47,7 +47,7 @@ export class CreateUserComponent {
       this.userService.createUser(this.newUserForm.value)
       .subscribe(() => {
         this.alert.success('createUser.create.success');
-        this.router.navigate(['/all-users']);
+        this.router.navigate(['/users']);
       });
     }
   }
@@ -56,7 +56,7 @@ export class CreateUserComponent {
     if (this.newUserType === 'register') {
       this.router.navigate(['/login']);
     } else if (this.newUserType === 'create') {
-      this.router.navigate(['/all-users']);
+      this.router.navigate(['/users']);
     }
   }
 
