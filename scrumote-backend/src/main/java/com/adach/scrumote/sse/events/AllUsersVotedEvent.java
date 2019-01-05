@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AllUsersVotedEvent extends SseEvent {
 
-  private static final String NAME = "allUsersVotedEvent";
+  private static final String NAME = "allUsersVoted";
 
   private Long planningId;
   private Long issueId;
