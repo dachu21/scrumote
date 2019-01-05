@@ -15,7 +15,8 @@
     "activate": "Activate",
     "estimate": "Estimate",
     "ok": "OK",
-    "select": "Select..."
+    "select": "Select...",
+    "vote": "Vote"
   },
   "models": {
     "user": {
@@ -233,6 +234,10 @@
     },
     "deleteIssue": {
       "success": "Issue deleted successfully."
+    },
+    "vote": {
+      "header": "Vote",
+      "success": "You have voted successfully."
     }
   },
   "voteDialog": {

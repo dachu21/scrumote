@@ -211,6 +211,27 @@ export class OpenedPlanningComponent implements OnInit {
       this.expandedIssue = null;
     }
   }
+
+  createVote(issue: Issue) {
+    const dialogRef = this.dialog.open(VoteDialogComponent, {
+      width: this.DIALOG_WIDTH,
+      data: {
+        deck: this.deck,
+        i18nHeaderCode: 'openedPlanning.vote.header'
+      }
+    });
+    dialogRef.afterClosed().subscribe(cardValue => {
+      if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations) {
+        const vote = Vote.create(issue.finishedIterations + 1, cardValue);
+        this.voteService.createVote(this.openedPlanning.id, issue.id, vote).subscribe(() => {
+          this.refreshExpandedIssueVotesMap();
+          this.refreshExpandedIssueDisplayedColumns();
+          this.alert.success('openedPlanning.vote.success');
+        });
+      }
+    });
+  }
+
   // endregion
 
   stringToNumber(str: string) {

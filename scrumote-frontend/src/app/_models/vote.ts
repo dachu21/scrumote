@@ -9,4 +9,8 @@ export class Vote {
     this.value = value;
     this.userId = userId;
   }
+
+  static create(iteration: number, value: string) {
+    return new Vote(iteration, value, null);
+  }
 }

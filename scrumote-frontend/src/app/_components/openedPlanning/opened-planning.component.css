@@ -12,6 +12,7 @@ tr.expandable-element-details {
 
 .expandable-element-inside {
   display: block;
+  overflow: hidden;
 }
 
 tr.expandable-element-row:hover,
