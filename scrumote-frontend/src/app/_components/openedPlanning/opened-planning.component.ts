@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   AlertService,
@@ -15,7 +15,7 @@ import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
-import {AllUsersVotedEvent} from '../../_interfaces';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-planning',
@@ -31,14 +31,15 @@ import {AllUsersVotedEvent} from '../../_interfaces';
     ]),
   ],
 })
-export class OpenedPlanningComponent implements OnInit {
+export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
   private DIALOG_WIDTH = '300px';
+  private subscriptions = new Subscription();
 
   openedPlanning!: Planning;
   deck!: Deck;
+  expandedIssue: Issue | null = null;
 
-  expandedIssue?: Issue | null;
   issuesDataSource = new MatTableDataSource<Issue>();
   issuesDisplayedColumns: string[]
       = ['code', 'name', 'finishedIterations', 'estimate', 'active', 'actions'];
@@ -64,7 +65,7 @@ export class OpenedPlanningComponent implements OnInit {
               private notifications: NotificationsService) {
 
     const planningToOpen = this.planningService.planningToOpen;
-    this.planningService.planningToEdit = undefined;
+    this.planningService.planningToOpen = undefined;
     if (!planningToOpen) {
       this.alert.error('openedPlanning.noPlanningLoaded');
       this.router.navigate(['/home']);
@@ -74,7 +75,8 @@ export class OpenedPlanningComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.addNotificationsListeners();
+    console.log('ON INIT');
+    this.subscribeNotifications();
 
     this.refreshPlanning();
     this.refreshIssues();
@@ -84,22 +86,31 @@ export class OpenedPlanningComponent implements OnInit {
     this.issuesDataSource.paginator = this.paginator;
   }
 
-  // region Notifications listeners
-  private addNotificationsListeners() {
-    if (this.notifications.eventSource) {
-      this.notifications.eventSource.addEventListener('allUsersVoted', message => {
-        console.log('Event received');
-        let event: AllUsersVotedEvent;
-        event = JSON.parse((<any>message).data);
-        if (this.expandedIssue && this.expandedIssue.finishedIterations &&
-            this.openedPlanning.id === event.planningId &&
-            this.expandedIssue.id === event.issueId &&
-            this.expandedIssue.finishedIterations + 1 === event.iteration) {
-          this.refreshExpandedIssueVotesMap();
-          this.alert.success('openedPlanning.allUsersVoted');
-        }
-      });
-    }
+  ngOnDestroy(): void {
+    console.log('ON DESTROY');
+    this.unsubscribeNotifications();
+  }
+
+  // region Notifications
+  private subscribeNotifications() {
+
+    this.subscriptions.add(this.notifications.allUsersVotedEvent.subscribe(event => {
+      console.log('allUsersVoted event read.');
+      if (this.expandedIssue && this.expandedIssue.finishedIterations &&
+          this.openedPlanning.id === event.planningId &&
+          this.expandedIssue.id === event.issueId &&
+          this.expandedIssue.finishedIterations + 1 === event.iteration) {
+        this.refreshIssues();
+        this.refreshExpandedIssueVotesMap();
+        this.refreshExpandedIssueDisplayedColumns();
+        this.alert.success('openedPlanning.allUsersVoted');
+        console.log('all users voted success.');
+      }
+    }));
+  }
+
+  private unsubscribeNotifications() {
+    this.subscriptions.unsubscribe();
   }
 
   // endregion
