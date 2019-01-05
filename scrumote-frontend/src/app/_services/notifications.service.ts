@@ -6,7 +6,7 @@ import {AllUsersVotedEvent} from '../_interfaces';
 export class NotificationsService {
 
   private readonly URL = '/notifications';
-  private eventSource!: EventSource;
+  private eventSource?: EventSource;
 
   allUsersVotedEvent = new Subject<AllUsersVotedEvent>();
 
@@ -33,10 +33,12 @@ export class NotificationsService {
   }
 
   private addEventListeners() {
-    this.eventSource.addEventListener('allUsersVoted', message => {
-      console.log('allUsersVoted event received.');
-      const event = JSON.parse((<any>message).data);
-      this.allUsersVotedEvent.next(event);
-    });
+    if (this.eventSource) {
+      this.eventSource.addEventListener('allUsersVoted', message => {
+        console.log('allUsersVoted event received.');
+        const event = JSON.parse((<any>message).data);
+        this.allUsersVotedEvent.next(event);
+      });
+    }
   }
 }

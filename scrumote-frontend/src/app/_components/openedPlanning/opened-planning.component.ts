@@ -16,6 +16,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 import {Subscription} from 'rxjs';
+import {AllUsersVotedEvent} from '../../_interfaces';
 
 @Component({
   selector: 'app-planning',
@@ -94,23 +95,26 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   // region Notifications
   private subscribeNotifications() {
 
-    this.subscriptions.add(this.notifications.allUsersVotedEvent.subscribe(event => {
-      console.log('allUsersVoted event read.');
-      if (this.expandedIssue && this.expandedIssue.finishedIterations &&
-          this.openedPlanning.id === event.planningId &&
-          this.expandedIssue.id === event.issueId &&
-          this.expandedIssue.finishedIterations + 1 === event.iteration) {
-        this.refreshIssues();
-        this.refreshExpandedIssueVotesMap();
-        this.refreshExpandedIssueDisplayedColumns();
-        this.alert.success('openedPlanning.allUsersVoted');
-        console.log('all users voted success.');
-      }
-    }));
+    this.subscriptions.add(this.notifications.allUsersVotedEvent.subscribe(
+        event => this.allUsersVotedEventHandler(event)));
   }
 
   private unsubscribeNotifications() {
     this.subscriptions.unsubscribe();
+  }
+
+  private allUsersVotedEventHandler(event: AllUsersVotedEvent) {
+    console.log('allUsersVoted event read.');
+    if (this.expandedIssue && this.expandedIssue.finishedIterations &&
+        this.openedPlanning.id === event.planningId &&
+        this.expandedIssue.id === event.issueId &&
+        this.expandedIssue.finishedIterations + 1 === event.iteration) {
+      this.refreshIssues();
+      this.refreshExpandedIssueVotesMap();
+      this.refreshExpandedIssueDisplayedColumns();
+      this.alert.success('openedPlanning.allUsersVoted');
+      console.log('all users voted success.');
+    }
   }
 
   // endregion
