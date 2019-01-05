@@ -221,7 +221,7 @@ export class OpenedPlanningComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(cardValue => {
-      if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations) {
+      if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations != null) {
         const vote = Vote.create(issue.finishedIterations + 1, cardValue);
         this.voteService.createVote(this.openedPlanning.id, issue.id, vote).subscribe(() => {
           this.refreshExpandedIssueVotesMap();
