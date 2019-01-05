@@ -8,3 +8,4 @@ export * from './system-feature.service';
 export * from './user-stats.service';
 export * from './vote.service';
 export * from './language.service';
+export * from './notifications.service';

@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {finalize} from 'rxjs/operators';
 import {SessionInfo} from '../_models';
 import {AlertService} from './alert.service';
+import {NotificationsService} from './notifications.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -16,7 +17,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private alert: AlertService) {
+              private alert: AlertService,
+              private notifications: NotificationsService) {
   }
 
   authenticate(username?: string, password?: string, path?: string) {
@@ -35,6 +37,8 @@ export class AuthenticationService {
       } else {
         this.authenticated = false;
       }
+
+      this.notifications.connect();
     }, error => {
       if (username && password) {
         this.alert.error('login.error');

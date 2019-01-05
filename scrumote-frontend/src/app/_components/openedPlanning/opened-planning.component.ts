@@ -5,6 +5,7 @@ import {
   AuthenticationService,
   DeckService,
   IssueService,
+  NotificationsService,
   PlanningService,
   UserService,
   VoteService
@@ -14,6 +15,7 @@ import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
+import {AllUsersVotedEvent} from '../../_interfaces';
 
 @Component({
   selector: 'app-planning',
@@ -58,7 +60,8 @@ export class OpenedPlanningComponent implements OnInit {
               private issueService: IssueService,
               private userService: UserService,
               private deckService: DeckService,
-              private voteService: VoteService) {
+              private voteService: VoteService,
+              private notifications: NotificationsService) {
 
     const planningToOpen = this.planningService.planningToOpen;
     this.planningService.planningToEdit = undefined;
@@ -71,15 +74,38 @@ export class OpenedPlanningComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addNotificationsListeners();
+
     this.refreshPlanning();
     this.refreshIssues();
     this.refreshUsers();
     this.refreshDeck();
+
     this.issuesDataSource.paginator = this.paginator;
   }
 
+  // region Notifications listeners
+  private addNotificationsListeners() {
+    if (this.notifications.eventSource) {
+      this.notifications.eventSource.addEventListener('allUsersVoted', message => {
+        console.log('Event received');
+        let event: AllUsersVotedEvent;
+        event = JSON.parse((<any>message).data);
+        if (this.expandedIssue && this.expandedIssue.finishedIterations &&
+            this.openedPlanning.id === event.planningId &&
+            this.expandedIssue.id === event.issueId &&
+            this.expandedIssue.finishedIterations + 1 === event.iteration) {
+          this.refreshExpandedIssueVotesMap();
+          this.alert.success('openedPlanning.allUsersVoted');
+        }
+      });
+    }
+  }
+
+  // endregion
+
   // region Refresh data
-  refreshPlanning() {
+  private refreshPlanning() {
     if (this.openedPlanning.id) {
       this.planningService.getPlanning(this.openedPlanning.id).subscribe((response: Planning) => {
         this.openedPlanning = response;
@@ -87,7 +113,7 @@ export class OpenedPlanningComponent implements OnInit {
     }
   }
 
-  refreshIssues() {
+  private refreshIssues() {
     if (this.openedPlanning.id) {
       this.issueService.getIssuesForPlanning(this.openedPlanning.id).subscribe((response: Issue[]) => {
         this.issuesDataSource.data = response;
@@ -95,7 +121,7 @@ export class OpenedPlanningComponent implements OnInit {
     }
   }
 
-  refreshUsers() {
+  private refreshUsers() {
     if (this.openedPlanning.id) {
       this.userService.getUsersForPlanning(this.openedPlanning.id).subscribe((response: User[]) => {
         this.usersDataSource.data = response;
@@ -109,13 +135,13 @@ export class OpenedPlanningComponent implements OnInit {
     }
   }
 
-  refreshDeck() {
+  private refreshDeck() {
     this.deckService.getDeck(this.openedPlanning.deckId).subscribe((response: Deck) => {
       this.deck = response;
     });
   }
 
-  refreshExpandedIssueVotesMap() {
+  private refreshExpandedIssueVotesMap() {
     if (this.openedPlanning.id && this.expandedIssue && this.expandedIssue.id) {
       this.voteService.getVotesForIssue(this.openedPlanning.id, this.expandedIssue.id)
       .subscribe((response: Vote[]) => {
@@ -131,7 +157,7 @@ export class OpenedPlanningComponent implements OnInit {
     }
   }
 
-  refreshExpandedIssueDisplayedColumns() {
+  private refreshExpandedIssueDisplayedColumns() {
     this.usersDisplayedColumns = ['username'];
     this.finishedIterationsColumns = [''];
     if (this.expandedIssue && this.expandedIssue.finishedIterations) {
@@ -147,12 +173,15 @@ export class OpenedPlanningComponent implements OnInit {
 
   // endregion
 
+  // region Planning actions
   finishPlanning() {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
     });
     this.refreshPlanning();
   }
+
+  // endregion
 
   // region Issue actions
   createIssue() {

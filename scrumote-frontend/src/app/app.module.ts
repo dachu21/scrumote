@@ -36,6 +36,7 @@ import {
   DeckService,
   IssueService,
   LanguageService,
+  NotificationsService,
   PlanningService,
   SystemFeatureService,
   UserService,
@@ -102,7 +103,8 @@ import {httpLoaderFactory} from './_functions';
     SystemFeatureService,
     UserStatsService,
     VoteService,
-    LanguageService
+    LanguageService,
+    NotificationsService
   ],
   bootstrap: [AppComponent]
 })

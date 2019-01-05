@@ -9,7 +9,6 @@ import {NavigationEnd, Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-
   constructor(
       private router: Router,
       readonly auth: AuthenticationService,
