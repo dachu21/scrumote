@@ -109,7 +109,7 @@ public class PlanningExternalService {
 
   private void validatePlanningForUpdateOrFinish(Planning planning) {
     internalService.validateHasModerator(planning, sessionService.getCurrentUser());
-    internalService.validateHasZeroActiveIssues(planning);
+    internalService.validateHasOnlyNewAndEstimatedIssues(planning);
     internalService.validateNotFinished(planning);
   }
 
