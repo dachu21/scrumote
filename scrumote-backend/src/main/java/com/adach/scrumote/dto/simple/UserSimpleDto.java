@@ -30,4 +30,6 @@ public class UserSimpleDto extends AbstractSimpleDto {
 
   @Size(max = 32)
   private String lastName;
+
+  private boolean active;
 }

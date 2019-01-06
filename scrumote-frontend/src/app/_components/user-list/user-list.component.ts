@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
 
   dataSource = new MatTableDataSource<User>();
   displayedColumns: string[]
-      = ['username', 'email', 'firstName', 'lastName', 'actions'];
+      = ['username', 'email', 'firstName', 'lastName', 'active', 'actions'];
 
   statsDataSource = new MatTableDataSource<UserStats>();
   statsDisplayedColumns: string[]

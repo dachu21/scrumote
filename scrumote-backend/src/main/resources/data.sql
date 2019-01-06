@@ -49,7 +49,7 @@ insert into permission_t (id, version, name) values
 (33, 0, 'updateAnyUsersPassword'),              -- |  +  |    -    |  -
 
 (34, 0, 'getMyUserStats'),                    -- |  +  |    +    |  +
-(35, 0, 'getAnyUserStats');                   -- |  +  |    -    |  -
+(35, 0, 'getAnyUserStats');                   -- |  +  |    +    |  -
 alter sequence permission_seq restart with 38;
 
 insert into role_permissions_t (role_id, permission_id) values
@@ -66,13 +66,13 @@ insert into role_permissions_t (role_id, permission_id) values
 (2, 10), (2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16),
 (2, 20), (2, 36),
 (2, 26), (2, 28), (2, 37), (2, 29), (2, 30), (2, 32),
-(2, 34),
+(2, 34), (2, 35),
 -- PRODUCT_OWNER
 (3, 2), (3, 3), (3, 5), (3, 7), (3, 8),
 (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16),
 (3, 20), (3, 36),
 (3, 26), (3, 28), (3, 37), (3, 29), (3, 30), (3, 32),
-(3, 34),
+(3, 34), (3, 35),
 -- DEVELOPER
 (4, 4), (4, 6),
 (4, 11), (4, 12),
