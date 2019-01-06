@@ -114,7 +114,7 @@
                 {{iteration}}
               </th>
               <td mat-cell *matCellDef="let user">
-                {{issueVotesMap.get(user.id).get(stringToNumber(iteration))}}
+                {{expandedIssueVotesMap.get(user.id).get(stringToNumber(iteration))}}
               </td>
             </ng-container>
             <ng-container matColumnDef="currentIteration">

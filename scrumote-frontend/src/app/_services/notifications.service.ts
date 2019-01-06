@@ -17,10 +17,10 @@ export class NotificationsService {
     this.eventSource = new EventSource(this.URL);
 
     this.eventSource.addEventListener('open', message => {
-      console.log('Connection opened.');
+      console.log('SSE connection opened!');
     });
     this.eventSource.addEventListener('error', message => {
-      console.log('Connection lost.');
+      console.log('SSE connection lost!');
     });
 
     this.addEventListeners();
@@ -35,7 +35,7 @@ export class NotificationsService {
   private addEventListeners() {
     if (this.eventSource) {
       this.eventSource.addEventListener('allUsersVoted', message => {
-        console.log('allUsersVoted event received.');
+        console.log('event RECEIVED');
         const event = JSON.parse((<any>message).data);
         this.allUsersVotedEvent.next(event);
       });

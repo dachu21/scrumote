@@ -28,4 +28,15 @@ export class Issue {
   static create(code: string, name: string, description?: string) {
     return new Issue(null, null, code, name, description, null, null, null);
   }
+
+  static overwrite(to: Issue, from: Issue) {
+    to.id = from.id;
+    to.version = from.version;
+    to.code = from.code;
+    to.name = from.name;
+    to.description = from.description;
+    to.finishedIterations = from.finishedIterations;
+    to.estimate = from.estimate;
+    to.active = from.active;
+  }
 }

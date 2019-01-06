@@ -1,5 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Subscription} from 'rxjs';
 import {
   AlertService,
   AuthenticationService,
@@ -11,12 +14,9 @@ import {
   VoteService
 } from '../../_services';
 import {Deck, Issue, Planning, User, Vote} from '../../_models';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AllUsersVotedEvent} from '../../_interfaces';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
-import {Subscription} from 'rxjs';
-import {AllUsersVotedEvent} from '../../_interfaces';
 
 @Component({
   selector: 'app-planning',
@@ -34,25 +34,28 @@ import {AllUsersVotedEvent} from '../../_interfaces';
 })
 export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
+  // region Data
   private DIALOG_WIDTH = '300px';
   private subscriptions = new Subscription();
 
   openedPlanning!: Planning;
   deck!: Deck;
-  expandedIssue: Issue | null = null;
-
+  usersDataSource = new MatTableDataSource<User>();
   issuesDataSource = new MatTableDataSource<Issue>();
+
+  expandedIssue: Issue | null = null;
+  expandedIssueVotesMap = new Map<number, Map<number, string>>(); // <userId, <iteration, vote>>
+
   issuesDisplayedColumns: string[]
       = ['code', 'name', 'finishedIterations', 'estimate', 'active', 'actions'];
-
-  usersDataSource = new MatTableDataSource<User>();
   usersDisplayedColumns: string[] = [];
   finishedIterationsColumns: string[] = [];
 
-  issueVotesMap = new Map<number, Map<number, string>>(); // <userId, <iteration, vote>>
+  @ViewChild(MatPaginator) issuesPaginator!: MatPaginator;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // endregion
 
+  // region Constructor
   constructor(private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -69,22 +72,30 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.planningService.planningToOpen = undefined;
     if (!planningToOpen) {
       this.alert.error('openedPlanning.noPlanningLoaded');
-      this.router.navigate(['/home']);
+      const url = this.auth.hasAuthority('getAllPlannings') ?
+          '/all-plannings' : '/my-plannings';
+      this.router.navigate([url]);
     } else {
       this.openedPlanning = planningToOpen;
     }
   }
 
+  // endregion
+
+  // region Init & Destroy
   ngOnInit() {
     console.log('ON INIT');
     this.subscribeNotifications();
+    this.initData();
+    this.issuesDataSource.paginator = this.issuesPaginator;
+  }
 
-    this.refreshPlanning();
-    this.refreshIssues();
-    this.refreshUsers();
-    this.refreshDeck();
-
-    this.issuesDataSource.paginator = this.paginator;
+  private initData() {
+    this.loadPlanning();
+    this.loadDeck();
+    this.loadUsers();
+    this.loadAllIssues();
+    this.expandedIssue = null;
   }
 
   ngOnDestroy(): void {
@@ -92,9 +103,10 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.unsubscribeNotifications();
   }
 
+  // endregion
+
   // region Notifications
   private subscribeNotifications() {
-
     this.subscriptions.add(this.notifications.allUsersVotedEvent.subscribe(
         event => this.allUsersVotedEventHandler(event)));
   }
@@ -104,75 +116,108 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   }
 
   private allUsersVotedEventHandler(event: AllUsersVotedEvent) {
-    console.log('allUsersVoted event read.');
-    if (this.expandedIssue && this.expandedIssue.finishedIterations &&
-        this.openedPlanning.id === event.planningId &&
-        this.expandedIssue.id === event.issueId &&
-        this.expandedIssue.finishedIterations + 1 === event.iteration) {
-      this.refreshIssues();
-      this.refreshExpandedIssueVotesMap();
-      this.refreshExpandedIssueDisplayedColumns();
-      this.alert.success('openedPlanning.allUsersVoted');
-      console.log('all users voted success.');
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
+        console.log('handler <<EXPANDED>>');
+        this.reloadIssue(this.expandedIssue);
+        this.alert.success('openedPlanning.allUsersVoted');
+      } else {
+        console.log('handler <<ALL>>');
+        this.loadAllIssues();
+        this.expandedIssue = null;
+        this.alert.success('openedPlanning.allUsersVoted'); // TODO param?
+      }
     }
+    console.log('handler STOP');
   }
 
   // endregion
 
-  // region Refresh data
-  private refreshPlanning() {
+  // region Load and assign data
+  private loadPlanning() {
     if (this.openedPlanning.id) {
-      this.planningService.getPlanning(this.openedPlanning.id).subscribe((response: Planning) => {
-        this.openedPlanning = response;
-      });
+      this.planningService.getPlanning(this.openedPlanning.id).subscribe(
+          response => this.assignPlanning(response));
     }
   }
 
-  private refreshIssues() {
+  private assignPlanning(response: Planning) {
+    this.openedPlanning = response;
+  }
+
+  private loadDeck() {
+    this.deckService.getDeck(this.openedPlanning.deckId).subscribe(
+        response => this.assignDeck(response));
+  }
+
+  private assignDeck(response: Deck) {
+    this.deck = response;
+  }
+
+  private loadUsers() {
     if (this.openedPlanning.id) {
-      this.issueService.getIssuesForPlanning(this.openedPlanning.id).subscribe((response: Issue[]) => {
-        this.issuesDataSource.data = response;
-      });
+      this.userService.getUsersForPlanning(this.openedPlanning.id).subscribe(
+          response => this.assignUsers(response));
     }
   }
 
-  private refreshUsers() {
-    if (this.openedPlanning.id) {
-      this.userService.getUsersForPlanning(this.openedPlanning.id).subscribe((response: User[]) => {
-        this.usersDataSource.data = response;
-        this.issueVotesMap.clear();
-        for (const user of this.usersDataSource.data) {
-          if (user.id) {
-            this.issueVotesMap.set(user.id, new Map<number, string>());
-          }
-        }
-      });
+  private assignUsers(response: User[]) {
+    this.usersDataSource.data = response;
+    this.expandedIssueVotesMap.clear();
+    for (const user of this.usersDataSource.data) {
+      if (user.id) {
+        this.expandedIssueVotesMap.set(user.id, new Map<number, string>());
+      }
     }
   }
 
-  private refreshDeck() {
-    this.deckService.getDeck(this.openedPlanning.deckId).subscribe((response: Deck) => {
-      this.deck = response;
-    });
+  private loadAllIssues() {
+    if (this.openedPlanning.id) {
+      this.issueService.getIssuesForPlanning(this.openedPlanning.id).subscribe(
+          response => this.assignAllIssues(response));
+    }
   }
 
-  private refreshExpandedIssueVotesMap() {
+  private assignAllIssues(response: Issue[]) {
+    this.issuesDataSource.data = response;
+  }
+
+  private reloadIssue(issue: Issue) {
+    if (this.openedPlanning.id && issue.id) {
+      this.issueService.getIssue(this.openedPlanning.id, issue.id).subscribe(
+          response => this.overwriteIssue(issue, response));
+    }
+  }
+
+  private overwriteIssue(issue: Issue, response: Issue) {
+    Issue.overwrite(issue, response);
+    if (this.expandedIssue && this.expandedIssue.id === issue.id) {
+      this.reloadExpandedIssueContent();
+      this.setExpandedIssueDisplayedColumns();
+    }
+  }
+
+  private reloadExpandedIssueContent() {
     if (this.openedPlanning.id && this.expandedIssue && this.expandedIssue.id) {
-      this.voteService.getVotesForIssue(this.openedPlanning.id, this.expandedIssue.id)
-      .subscribe((response: Vote[]) => {
-        for (const vote of response) {
-          if (vote.userId) {
-            const userVotesMap = this.issueVotesMap.get(vote.userId);
-            if (userVotesMap) {
-              userVotesMap.set(vote.iteration, vote.value);
-            }
-          }
+      this.voteService.getVotesForIssue(this.openedPlanning.id, this.expandedIssue.id).subscribe(
+          response => this.assignExpandedIssueVotes(response));
+    }
+    this.setExpandedIssueDisplayedColumns();
+  }
+
+  private assignExpandedIssueVotes(response: Vote[]) {
+    for (const vote of response) {
+      if (vote.userId) {
+        const userVotesMap = this.expandedIssueVotesMap.get(vote.userId);
+        if (userVotesMap) {
+          userVotesMap.set(vote.iteration, vote.value);
         }
-      });
+      }
     }
   }
 
-  private refreshExpandedIssueDisplayedColumns() {
+  private setExpandedIssueDisplayedColumns() {
     this.usersDisplayedColumns = ['username'];
     this.finishedIterationsColumns = [''];
     if (this.expandedIssue && this.expandedIssue.finishedIterations) {
@@ -193,7 +238,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
     });
-    this.refreshPlanning();
+    this.refreshPage();
   }
 
   // endregion
@@ -213,24 +258,18 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   activateIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.activateIssue(this.openedPlanning.id, issue).subscribe(() => {
-        this.refreshIssues();
+        this.reloadIssue(issue);
         this.alert.success('openedPlanning.activateIssue.success');
       });
     }
   }
 
   estimateIssue(issue: Issue) {
-    const dialogRef = this.dialog.open(VoteDialogComponent, {
-      width: this.DIALOG_WIDTH,
-      data: {
-        deck: this.deck,
-        i18nHeaderCode: 'openedPlanning.estimateIssue.header'
-      }
-    });
+    const dialogRef = this.openVoteDialog('openedPlanning.estimateIssue.header');
     dialogRef.afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id) {
         this.issueService.estimateIssue(this.openedPlanning.id, issue, cardValue).subscribe(() => {
-          this.refreshIssues();
+          this.reloadIssue(issue);
           this.alert.success('openedPlanning.estimateIssue.success');
         });
       }
@@ -240,7 +279,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   deleteIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
-        this.refreshIssues();
+        this.loadAllIssues();
+        this.expandedIssue = null;
         this.alert.success('openedPlanning.deleteIssue.success');
       });
     }
@@ -249,27 +289,19 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   expandIssue(issue: Issue) {
     if (this.expandedIssue !== issue && issue.id) {
       this.expandedIssue = issue;
-      this.refreshExpandedIssueVotesMap();
-      this.refreshExpandedIssueDisplayedColumns();
+      this.reloadExpandedIssueContent();
     } else {
       this.expandedIssue = null;
     }
   }
 
   createVote(issue: Issue) {
-    const dialogRef = this.dialog.open(VoteDialogComponent, {
-      width: this.DIALOG_WIDTH,
-      data: {
-        deck: this.deck,
-        i18nHeaderCode: 'openedPlanning.vote.header'
-      }
-    });
+    const dialogRef = this.openVoteDialog('openedPlanning.vote.header');
     dialogRef.afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations != null) {
         const vote = Vote.create(issue.finishedIterations + 1, cardValue);
         this.voteService.createVote(this.openedPlanning.id, issue.id, vote).subscribe(() => {
-          this.refreshExpandedIssueVotesMap();
-          this.refreshExpandedIssueDisplayedColumns();
+          this.reloadExpandedIssueContent();
           this.alert.success('openedPlanning.vote.success');
         });
       }
@@ -278,7 +310,25 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
   // endregion
 
+  // region Utils
+  openVoteDialog(i18nHeaderCode: string) {
+    return this.dialog.open(VoteDialogComponent, {
+      width: this.DIALOG_WIDTH,
+      data: {
+        deck: this.deck,
+        i18nHeaderCode: i18nHeaderCode
+      }
+    });
+  }
+
   stringToNumber(str: string) {
     return Number(str);
   }
+
+  refreshPage() {
+    this.planningService.planningToOpen = this.openedPlanning;
+    this.router.navigate(['/planning']);
+  }
+
+  // endregion
 }
