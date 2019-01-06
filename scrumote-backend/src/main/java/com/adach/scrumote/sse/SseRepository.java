@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Repository
 @Slf4j
-public class SseRepository {
+class SseRepository {
 
   private final List<SseEmitter> emitters = Collections.synchronizedList(new ArrayList<>());
 

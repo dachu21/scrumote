@@ -36,7 +36,7 @@ public class UserController extends AbstractController {
         .toUri();
   }
 
-  @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
+  @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   @PostMapping("/users/register")
   public ResponseEntity<?> registerUser(@RequestBody @Valid UserWithPasswordDto dto) {
     Long newUserId = userExternalService.registerUser(dto);
