@@ -23,6 +23,7 @@ public class DeckExternalService {
   @PreAuthorize("hasAnyAuthority('createDeck')")
   public Long createDeck(DeckWithCardsDto dto) {
     Deck deck = mapper.mapToEntity(dto);
+    internalService.validateNameNotExists(dto.getName());
     internalService.validateCardsHaveValidLevels(deck);
     return internalService.save(deck).getId();
   }
@@ -42,6 +43,7 @@ public class DeckExternalService {
   @PreAuthorize("hasAnyAuthority('updateDeck')")
   public void updateDeck(Long deckId, Long version, DeckWithCardsDto dto) {
     Deck deck = internalService.findById(deckId);
+    internalService.validateNameNotExists(dto.getName());
     internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 

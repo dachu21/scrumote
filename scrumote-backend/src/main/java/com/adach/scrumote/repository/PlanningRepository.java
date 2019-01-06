@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface PlanningRepository extends CustomJpaRepository<Planning, Long> {
 
   List<Planning> findAllByUsersContains(User user);
+
+  boolean existsByName(String name);
 }

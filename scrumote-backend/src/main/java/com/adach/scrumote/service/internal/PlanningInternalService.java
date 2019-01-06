@@ -6,6 +6,7 @@ import com.adach.scrumote.entity.User;
 import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
 import com.adach.scrumote.exception.planning.PlanningForbiddenException;
 import com.adach.scrumote.exception.planning.PlanningHasIssuesInProgressException;
+import com.adach.scrumote.exception.planning.PlanningNameAlreadyExistsException;
 import com.adach.scrumote.exception.planning.PlanningNotFinishedException;
 import com.adach.scrumote.exception.planning.PlanningNotFoundException;
 import com.adach.scrumote.repository.PlanningRepository;
@@ -50,6 +51,13 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   //endregion
 
   //region Validation methods
+  public void validateNameNotExists(String name) {
+    if (repository.existsByName(name)) {
+      throw new PlanningNameAlreadyExistsException(
+          String.format("Planning with name %s already exists.", name));
+    }
+  }
+
   public void validateContainsCurrentUser(Planning planning) {
     if (!planning.containsUser(sessionService.getCurrentUser())) {
       throw new PlanningForbiddenException(

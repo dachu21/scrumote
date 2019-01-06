@@ -4,6 +4,7 @@ import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.Card;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.exception.deck.CardNotFoundInDeckException;
+import com.adach.scrumote.exception.deck.DeckNameAlreadyExistsException;
 import com.adach.scrumote.exception.deck.DeckNotFoundException;
 import com.adach.scrumote.exception.deck.DeckUsedInPlanningsException;
 import com.adach.scrumote.exception.deck.InvalidCardsLevelsInDeckException;
@@ -45,10 +46,17 @@ public class DeckInternalService extends AbstractInternalService<Deck> {
   //endregion
 
   //region Validation methods
+  public void validateNameNotExists(String name) {
+    if (repository.existsByName(name)) {
+      throw new DeckNameAlreadyExistsException(
+          String.format("Deck with name %s already exists.", name));
+    }
+  }
+
   public void validateContainsCardWithValue(Deck deck, String cardValue) {
     if (!deck.containsCardWithValue(cardValue)) {
       throw new CardNotFoundInDeckException(String
-          .format("Deck with id %d does not contain card with value %s", deck.getId(), cardValue));
+          .format("Deck with id %d does not contain card with value %s.", deck.getId(), cardValue));
     }
   }
 

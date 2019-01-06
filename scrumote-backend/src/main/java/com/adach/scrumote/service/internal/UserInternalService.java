@@ -3,7 +3,9 @@ package com.adach.scrumote.service.internal;
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
+import com.adach.scrumote.exception.user.EmailAlreadyExistsException;
 import com.adach.scrumote.exception.user.UserNotFoundException;
+import com.adach.scrumote.exception.user.UsernameAlreadyExistsException;
 import com.adach.scrumote.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,22 @@ public class UserInternalService extends AbstractInternalService<User> {
 
   public List<User> findByIds(Set<Long> userIds) {
     return repository.findAllById(userIds);
+  }
+  //endregion
+
+  //region Validation methods
+  public void validateUsernameNotExists(String username) {
+    if (repository.existsByUsername(username)) {
+      throw new UsernameAlreadyExistsException(
+          String.format("User with username %s already exists.", username));
+    }
+  }
+
+  public void validateEmailNotExists(String email) {
+    if (repository.existsByEmail(email)) {
+      throw new EmailAlreadyExistsException(
+          String.format("User with email %s already exists.", email));
+    }
   }
   //endregion
 }

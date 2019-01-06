@@ -52,6 +52,8 @@ public class UserExternalService {
 
   private Long registerOrCreateUser(UserWithPasswordDto dto) {
     User user = mapper.mapToEntity(dto.getUser());
+    internalService.validateUsernameNotExists(dto.getUser().getUsername());
+    internalService.validateEmailNotExists(dto.getUser().getEmail());
 
     String textPassword = dto.getPassword().getNewPassword();
     passwordService.validateSatisfiesConditions(textPassword);
@@ -107,6 +109,8 @@ public class UserExternalService {
   public void updateMyUser(Long version, UserSimpleDto dto) {
     User currentUser = sessionService.getCurrentUser();
     internalService.validateVersion(currentUser, version);
+    internalService.validateUsernameNotExists(dto.getUsername());
+    internalService.validateEmailNotExists(dto.getEmail());
     updateUserFields(currentUser, dto);
   }
 
@@ -114,6 +118,8 @@ public class UserExternalService {
   public void updateAnyUser(Long userId, Long version, UserSimpleDto dto) {
     User user = internalService.findById(userId);
     internalService.validateVersion(user, version);
+    internalService.validateUsernameNotExists(dto.getUsername());
+    internalService.validateEmailNotExists(dto.getEmail());
     updateUserFields(user, dto);
   }
 

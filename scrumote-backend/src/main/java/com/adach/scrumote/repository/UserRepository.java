@@ -14,4 +14,8 @@ public interface UserRepository extends CustomJpaRepository<User, Long> {
   Optional<User> findByUsername(String username);
 
   List<User> findAllByRolesContains(Role role);
+
+  boolean existsByUsername(String username);
+
+  boolean existsByEmail(String email);
 }
