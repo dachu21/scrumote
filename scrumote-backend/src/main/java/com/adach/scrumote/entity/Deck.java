@@ -1,6 +1,5 @@
 package com.adach.scrumote.entity;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,7 +42,8 @@ public class Deck extends AbstractEntity {
   private Set<Card> cards = new LinkedHashSet<>();
 
   @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY)
-  private Set<Planning> plannings = new HashSet<>();
+  @OrderBy("id desc")
+  private Set<Planning> plannings = new LinkedHashSet<>();
   //endregion
 
   //region Methods

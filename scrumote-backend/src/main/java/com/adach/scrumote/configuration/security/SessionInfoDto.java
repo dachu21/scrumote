@@ -1,7 +1,7 @@
 package com.adach.scrumote.configuration.security;
 
 import com.adach.scrumote.entity.User;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,7 +18,7 @@ class SessionInfoDto {
 
   private final Long id;
   private final String username;
-  private final List<String> authorities;
+  private final Set<String> authorities;
 
   static SessionInfoDto get() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -26,9 +26,9 @@ class SessionInfoDto {
 
     Long id = user.getId();
     String username = user.getUsername();
-    List<String> authorities = authentication.getAuthorities().stream()
+    Set<String> authorities = authentication.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
 
     return new SessionInfoDto(id, username, authorities);
   }

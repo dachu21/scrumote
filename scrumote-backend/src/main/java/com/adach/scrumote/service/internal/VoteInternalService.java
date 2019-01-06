@@ -24,11 +24,11 @@ public class VoteInternalService extends AbstractInternalService<Vote> {
   }
 
   public List<Vote> findAllByIssueAndIteration(Issue issue, Integer iteration) {
-    return repository.findAllByIssueAndIteration(issue, iteration, ID_DESC_SORT);
+    return repository.findAllByIssueAndIteration(issue, iteration);
   }
 
   public List<Vote> findAllByIssueExcludingIteration(Issue issue, Integer iteration) {
-    return repository.findAllByIssueAndIterationNot(issue, iteration, ID_DESC_SORT);
+    return repository.findAllByIssueAndIterationNot(issue, iteration);
   }
 
   public Vote findById(Long id) {

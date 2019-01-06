@@ -71,7 +71,7 @@ public class Planning extends AbstractEntity {
   private Set<User> users = new LinkedHashSet<>();
 
   @OneToMany(mappedBy = "planning", cascade = CascadeType.REMOVE)
-  @OrderBy("code asc")
+  @OrderBy("id desc")
   private Set<Issue> issues = new LinkedHashSet<>();
   //endregion
 
