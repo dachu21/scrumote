@@ -33,11 +33,11 @@ public class UserInternalService extends AbstractInternalService<User> {
   }
 
   public List<User> findAll() {
-    return repository.findAll();
+    return repository.findAll(ID_DESC_SORT);
   }
 
   public List<User> findAllByRole(Role role) {
-    return repository.findAllByRolesContains(role);
+    return repository.findAllByRolesContains(role, ID_DESC_SORT);
   }
 
   public List<User> findByIds(Set<Long> userIds) {

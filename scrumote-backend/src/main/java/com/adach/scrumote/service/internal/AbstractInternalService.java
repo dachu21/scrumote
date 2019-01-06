@@ -4,11 +4,14 @@ import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.AbstractEntity;
 import com.adach.scrumote.exception.optimisticlock.ManipulatedEntityVersionException;
 import com.adach.scrumote.exception.optimisticlock.OutdatedEntityVersionException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 @MandatoryTransactions
 public abstract class AbstractInternalService<T extends AbstractEntity> {
+
+  protected final Sort ID_DESC_SORT = new Sort(Sort.Direction.DESC, "id");
 
   public void validateVersion(T entity, Long version) {
     if (version < entity.getVersion()) {

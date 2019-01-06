@@ -38,11 +38,11 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   }
 
   public List<Planning> findAll() {
-    return repository.findAll();
+    return repository.findAll(ID_DESC_SORT);
   }
 
   public List<Planning> findAllByUser(User user) {
-    return repository.findAllByUsersContains(user);
+    return repository.findAllByUsersContains(user, ID_DESC_SORT);
   }
 
   public void delete(Planning planning) {

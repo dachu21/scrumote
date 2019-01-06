@@ -37,7 +37,7 @@ public class DeckInternalService extends AbstractInternalService<Deck> {
   }
 
   public List<Deck> findAll() {
-    return repository.findAll();
+    return repository.findAll(ID_DESC_SORT);
   }
 
   public void delete(Deck deck) {

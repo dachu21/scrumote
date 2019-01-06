@@ -25,7 +25,7 @@ public class SystemFeatureInternalService extends AbstractInternalService<System
   }
 
   public List<SystemFeature> findAll() {
-    return repository.findAll();
+    return repository.findAll(ID_DESC_SORT);
   }
 
   public SystemFeature findById(Long id) {
