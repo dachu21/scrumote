@@ -22,6 +22,7 @@ public class UserSimpleDto extends AbstractSimpleDto {
 
   @NotNull
   @Email
+  @Size(max = 64)
   private String email;
 
   @Size(max = 32)

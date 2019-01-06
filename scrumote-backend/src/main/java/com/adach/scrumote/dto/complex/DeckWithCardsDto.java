@@ -5,6 +5,7 @@ import com.adach.scrumote.dto.simple.CardSimpleDto;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 public class DeckWithCardsDto extends AbstractDto {
 
   @NotNull
+  @Size(min = 3, max = 32)
   private String name;
 
   @NotNull

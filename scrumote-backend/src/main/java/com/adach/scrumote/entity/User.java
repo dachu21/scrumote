@@ -42,26 +42,27 @@ public class User extends AbstractEntity {
     this.userStats = user.userStats;
   }
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 32)
   @NotNull
   @Size(min = 3, max = 32)
   private String username;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 60)
   @NotNull
-  @Size(min = 8, max = 64)
+  @Size(min = 60, max = 60)
   private String password;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 64)
   @NotNull
   @Email
+  @Size(max = 64)
   private String email;
 
-  @Column
+  @Column(length = 32)
   @Size(max = 32)
   private String firstName;
 
-  @Column
+  @Column(length = 32)
   @Size(max = 32)
   private String lastName;
 
