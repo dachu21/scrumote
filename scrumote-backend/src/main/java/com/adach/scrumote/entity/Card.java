@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true, of = "value")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Card extends AbstractEntity {
 
   //region Data
