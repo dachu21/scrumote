@@ -16,7 +16,8 @@
     "estimate": "Estimate",
     "ok": "OK",
     "select": "Select...",
-    "vote": "Vote"
+    "vote": "Vote",
+    "refresh": "Refresh"
   },
   "models": {
     "user": {

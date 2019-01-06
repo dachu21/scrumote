@@ -73,4 +73,8 @@ export class UserListComponent implements OnInit {
       this.expandedUser = null;
     }
   }
+
+  refreshPage() {
+    this.router.navigate(['/users']);
+  }
 }

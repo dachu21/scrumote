@@ -46,4 +46,8 @@ export class DeckListComponent implements OnInit {
       this.alert.success('deckList.delete.success');
     });
   }
+
+  refreshPage() {
+    this.router.navigate(['/decks']);
+  }
 }

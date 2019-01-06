@@ -30,10 +30,14 @@ ul.center-text {
 }
 
 li:nth-child(1) {
-  grid-column-start: 2;
+  margin-right: auto;
 }
 
 li:nth-child(2) {
+  grid-column-start: 2;
+}
+
+li:nth-child(3) {
   margin-left: auto;
 }
 

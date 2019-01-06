@@ -64,4 +64,12 @@ export class PlanningListComponent implements OnInit {
       this.alert.success('planningList.delete.success');
     });
   }
+
+  refreshPage() {
+    if (this.listType === 'all') {
+      this.router.navigate(['/all-plannings']);
+    } else if (this.listType === 'my') {
+      this.router.navigate(['/my-plannings']);
+    }
+  }
 }
