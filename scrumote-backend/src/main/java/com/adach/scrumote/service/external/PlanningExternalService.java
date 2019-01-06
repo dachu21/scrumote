@@ -11,6 +11,11 @@ import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
 import com.adach.scrumote.service.internal.UserStatsInternalService;
 import com.adach.scrumote.service.security.SessionService;
+import com.adach.scrumote.sse.SseService;
+import com.adach.scrumote.sse.events.planning.PlanningCreatedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningDeletedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningFinishedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningUpdatedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,7 @@ public class PlanningExternalService {
   private final UserInternalService userInternalService;
 
   private final SessionService sessionService;
+  private final SseService sseService;
 
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   public Long createPlanning(PlanningSimpleDto dto) {
@@ -47,6 +53,12 @@ public class PlanningExternalService {
     setDescriptionToNullIfBlank(planning);
 
     return internalService.save(planning).getId();
+  }
+
+  @PreAuthorize("hasAnyAuthority('createPlanning')")
+  public void sendPlanningCreatedEvent() {
+    PlanningCreatedEvent event = new PlanningCreatedEvent();
+    sseService.sendSseEvent(event);
   }
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
@@ -88,6 +100,12 @@ public class PlanningExternalService {
     setDescriptionToNullIfBlank(planning);
   }
 
+  @PreAuthorize("hasAnyAuthority('updatePlanning')")
+  public void sendPlanningUpdatedEvent(Long planningId) {
+    PlanningUpdatedEvent event = new PlanningUpdatedEvent(planningId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
   public void finishPlanning(Long planningId, Long version) {
     Planning planning = internalService.findById(planningId);
@@ -98,6 +116,12 @@ public class PlanningExternalService {
     userStatsInternalService.updateUsersStatsForPlanning(planning);
   }
 
+  @PreAuthorize("hasAnyAuthority('finishPlanning')")
+  public void sendPlanningFinishedEvent(Long planningId) {
+    PlanningFinishedEvent event = new PlanningFinishedEvent(planningId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('deletePlanning')")
   public void deletePlanning(Long planningId, Long version) {
     Planning planning = internalService.findById(planningId);
@@ -105,6 +129,12 @@ public class PlanningExternalService {
     internalService.validateFinished(planning);
 
     internalService.delete(planning);
+  }
+
+  @PreAuthorize("hasAnyAuthority('deletePlanning')")
+  public void sendPlanningDeletedEvent(Long planningId) {
+    PlanningDeletedEvent event = new PlanningDeletedEvent(planningId);
+    sseService.sendSseEvent(event);
   }
 
   private void validatePlanningForUpdateOrFinish(Planning planning) {

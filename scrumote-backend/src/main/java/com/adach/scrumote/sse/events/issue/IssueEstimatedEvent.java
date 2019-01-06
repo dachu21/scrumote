@@ -1,4 +1,4 @@
-package com.adach.scrumote.sse.events;
+package com.adach.scrumote.sse.events.issue;
 
 import com.adach.scrumote.sse.SseEvent;
 import lombok.Getter;

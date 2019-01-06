@@ -29,6 +29,7 @@ public class PlanningController extends AbstractController {
   public ResponseEntity<?> createPlanningWithUsers(@RequestBody @Valid PlanningSimpleDto dto) {
     Long newPlanningId = planningExternalService.createPlanning(dto);
     URI location = buildLocationUri(newPlanningId);
+    planningExternalService.sendPlanningCreatedEvent();
     return ResponseEntity.created(location).build();
   }
 
@@ -57,6 +58,7 @@ public class PlanningController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     planningExternalService.updatePlanning(planningId, version, dto);
+    planningExternalService.sendPlanningUpdatedEvent(planningId);
     return ResponseEntity.noContent().build();
   }
 
@@ -66,6 +68,7 @@ public class PlanningController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     planningExternalService.finishPlanning(planningId, version);
+    planningExternalService.sendPlanningFinishedEvent(planningId);
     return ResponseEntity.noContent().build();
   }
 
@@ -75,6 +78,7 @@ public class PlanningController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     planningExternalService.deletePlanning(planningId, version);
+    planningExternalService.sendPlanningDeletedEvent(planningId);
     return ResponseEntity.noContent().build();
   }
 }

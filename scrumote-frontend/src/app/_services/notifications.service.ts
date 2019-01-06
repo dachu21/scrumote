@@ -6,8 +6,12 @@ import {
   IssueCreatedEvent,
   IssueDeletedEvent,
   IssueEstimatedEvent,
-  IssueUpdatedEvent
-} from '../_interfaces';
+  IssueUpdatedEvent,
+  PlanningCreatedEvent,
+  PlanningDeletedEvent,
+  PlanningFinishedEvent,
+  PlanningUpdatedEvent
+} from '../_events';
 
 @Injectable()
 export class NotificationsService {
@@ -21,6 +25,11 @@ export class NotificationsService {
   issueUpdatedEvent = new Subject<IssueUpdatedEvent>();
   issueDeletedEvent = new Subject<IssueDeletedEvent>();
   issueCreatedEvent = new Subject<IssueCreatedEvent>();
+
+  planningFinishedEvent = new Subject<PlanningFinishedEvent>();
+  planningCreatedEvent = new Subject<PlanningCreatedEvent>();
+  planningUpdatedEvent = new Subject<PlanningUpdatedEvent>();
+  planningDeletedEvent = new Subject<PlanningDeletedEvent>();
 
   constructor() {
   }
@@ -69,6 +78,23 @@ export class NotificationsService {
       this.eventSource.addEventListener('issueCreated', message => {
         const event = JSON.parse((<any>message).data);
         this.issueCreatedEvent.next(event);
+      });
+
+      this.eventSource.addEventListener('planningFinished', message => {
+        const event = JSON.parse((<any>message).data);
+        this.planningFinishedEvent.next(event);
+      });
+      this.eventSource.addEventListener('planningCreated', message => {
+        const event = JSON.parse((<any>message).data);
+        this.planningCreatedEvent.next(event);
+      });
+      this.eventSource.addEventListener('planningUpdated', message => {
+        const event = JSON.parse((<any>message).data);
+        this.planningUpdatedEvent.next(event);
+      });
+      this.eventSource.addEventListener('planningDeleted', message => {
+        const event = JSON.parse((<any>message).data);
+        this.planningDeletedEvent.next(event);
       });
     }
   }

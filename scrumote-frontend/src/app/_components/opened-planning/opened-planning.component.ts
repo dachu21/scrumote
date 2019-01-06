@@ -20,8 +20,9 @@ import {
   IssueCreatedEvent,
   IssueDeletedEvent,
   IssueEstimatedEvent,
-  IssueUpdatedEvent
-} from '../../_interfaces';
+  IssueUpdatedEvent,
+  PlanningFinishedEvent
+} from '../../_events';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 
@@ -126,6 +127,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
         event => this.issueDeletedEventHandler(event)));
     this.subscriptions.add(this.notifications.issueCreatedEvent.subscribe(
         event => this.issueCreatedEventHandler(event)));
+    this.subscriptions.add(this.notifications.planningFinishedEvent.subscribe(
+        event => this.planningFinishedEventHandler(event)));
   }
 
   private unsubscribeNotifications() {
@@ -218,6 +221,16 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       this.loadAllIssues();
       this.expandedIssue = null;
       this.alert.success('openedPlanning.issueCreated');
+    }
+    console.log('handler STOP');
+  }
+
+  private planningFinishedEventHandler(event: PlanningFinishedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      console.log('handler <<ALL>>');
+      this.refreshPage();
+      this.alert.success('openedPlanning.planningFinished');
     }
     console.log('handler STOP');
   }
