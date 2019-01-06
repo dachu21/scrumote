@@ -30,6 +30,7 @@ public class IssueController extends AbstractController {
       @RequestBody @Valid IssueSimpleDto dto) {
     Long newIssueId = issueExternalService.createIssue(planningId, dto);
     URI location = buildLocationUri(newIssueId);
+    issueExternalService.sendIssueCreatedEvent(planningId);
     return ResponseEntity.created(location).build();
   }
 
@@ -52,6 +53,7 @@ public class IssueController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     issueExternalService.updateIssue(planningId, issueId, version, dto);
+    issueExternalService.sendIssueUpdatedEvent(planningId, issueId);
     return ResponseEntity.noContent().build();
   }
 
@@ -61,6 +63,7 @@ public class IssueController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     issueExternalService.activateIssue(planningId, issueId, version);
+    issueExternalService.sendIssueActivatedEvent(planningId, issueId);
     return ResponseEntity.noContent().build();
   }
 
@@ -70,6 +73,7 @@ public class IssueController extends AbstractController {
       @RequestBody String cardValue, @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     issueExternalService.estimateIssue(planningId, issueId, version, cardValue);
+    issueExternalService.sendIssueEstimatedEvent(planningId, issueId);
     return ResponseEntity.noContent().build();
   }
 
@@ -79,6 +83,7 @@ public class IssueController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     issueExternalService.deleteIssue(planningId, issueId, version);
+    issueExternalService.sendIssueDeletedEvent(planningId, issueId);
     return ResponseEntity.noContent().build();
   }
 }

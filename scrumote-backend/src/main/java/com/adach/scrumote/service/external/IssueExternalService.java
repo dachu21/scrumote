@@ -14,6 +14,11 @@ import com.adach.scrumote.service.internal.VoteInternalService;
 import com.adach.scrumote.service.security.SessionService;
 import com.adach.scrumote.sse.SseService;
 import com.adach.scrumote.sse.events.AllUsersVotedEvent;
+import com.adach.scrumote.sse.events.IssueActivatedEvent;
+import com.adach.scrumote.sse.events.IssueCreatedEvent;
+import com.adach.scrumote.sse.events.IssueDeletedEvent;
+import com.adach.scrumote.sse.events.IssueEstimatedEvent;
+import com.adach.scrumote.sse.events.IssueUpdatedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +57,12 @@ public class IssueExternalService {
     return internalService.save(issue).getId();
   }
 
+  @PreAuthorize("hasAnyAuthority('createIssue')")
+  public void sendIssueCreatedEvent(Long planningId) {
+    IssueCreatedEvent event = new IssueCreatedEvent(planningId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('getIssue')")
   public IssueSimpleDto getIssue(Long planningId, Long issueId) {
     Issue issue = internalService.findById(issueId);
@@ -82,6 +93,12 @@ public class IssueExternalService {
     setDescriptionToNullIfBlank(issue);
   }
 
+  @PreAuthorize("hasAnyAuthority('updateIssue')")
+  public void sendIssueUpdatedEvent(Long planningId, Long issueId) {
+    IssueUpdatedEvent event = new IssueUpdatedEvent(planningId, issueId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('activateIssue')")
   public void activateIssue(Long planningId, Long issueId, Long version) {
     Issue issue = findIssueAndValidateVersion(issueId, version);
@@ -89,6 +106,12 @@ public class IssueExternalService {
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     issue.setActive(true);
+  }
+
+  @PreAuthorize("hasAnyAuthority('activateIssue')")
+  public void sendIssueActivatedEvent(Long planningId, Long issueId) {
+    IssueActivatedEvent event = new IssueActivatedEvent(planningId, issueId);
+    sseService.sendSseEvent(event);
   }
 
   @PreAuthorize("hasAnyAuthority('estimateIssue')")
@@ -102,6 +125,12 @@ public class IssueExternalService {
     issue.setEstimate(cardValue);
   }
 
+  @PreAuthorize("hasAnyAuthority('estimateIssue')")
+  public void sendIssueEstimatedEvent(Long planningId, Long issueId) {
+    IssueEstimatedEvent event = new IssueEstimatedEvent(planningId, issueId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('deleteIssue')")
   public void deleteIssue(Long planningId, Long issueId, Long version) {
     Issue issue = findIssueAndValidateVersion(issueId, version);
@@ -109,6 +138,12 @@ public class IssueExternalService {
     validateIssueAndPlanningForUpdateOrDelete(issue, planning);
 
     internalService.delete(issue);
+  }
+
+  @PreAuthorize("hasAnyAuthority('deleteIssue')")
+  public void sendIssueDeletedEvent(Long planningId, Long issueId) {
+    IssueDeletedEvent event = new IssueDeletedEvent(planningId, issueId);
+    sseService.sendSseEvent(event);
   }
 
   @PreAuthorize("hasAnyAuthority('createVote')")
@@ -124,9 +159,14 @@ public class IssueExternalService {
       if (usersCount.equals(votesCount)) {
         issue.setActive(false);
         issue.setFinishedIterations(newVoteIteration);
-        sendAllUsersVotedEvent(issue);
+        sendAllUsersVotedEvent(issue.getPlanning().getId(), issue.getId());
       }
     }
+  }
+
+  private void sendAllUsersVotedEvent(Long planningId, Long issueId) {
+    AllUsersVotedEvent event = new AllUsersVotedEvent(planningId, issueId);
+    sseService.sendSseEvent(event);
   }
 
   private Issue findIssueAndValidateVersion(Long id, Long version) {
@@ -154,9 +194,4 @@ public class IssueExternalService {
     }
   }
 
-  private void sendAllUsersVotedEvent(Issue issue) {
-    AllUsersVotedEvent event = new AllUsersVotedEvent(
-        issue.getPlanning().getId(), issue.getId(), issue.getFinishedIterations());
-    sseService.sendSseEvent(event);
-  }
 }

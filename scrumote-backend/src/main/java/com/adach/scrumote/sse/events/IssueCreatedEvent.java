@@ -6,16 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AllUsersVotedEvent extends SseEvent {
+public class IssueCreatedEvent extends SseEvent {
 
-  private static final String NAME = "allUsersVoted";
+  private static final String NAME = "issueCreated";
 
   private Long planningId;
-  private Long issueId;
 
-  public AllUsersVotedEvent(Long planningId, Long issueId) {
+  public IssueCreatedEvent(Long planningId) {
     super(NAME);
     this.planningId = planningId;
-    this.issueId = issueId;
   }
 }

@@ -1,4 +1,4 @@
-export interface AllUsersVotedEvent {
+export interface IssueActivatedEvent {
 
   planningId: number;
   issueId: number;

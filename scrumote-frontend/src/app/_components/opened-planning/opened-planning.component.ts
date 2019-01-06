@@ -14,7 +14,14 @@ import {
   VoteService
 } from '../../_services';
 import {Deck, Issue, Planning, User, Vote} from '../../_models';
-import {AllUsersVotedEvent} from '../../_interfaces';
+import {
+  AllUsersVotedEvent,
+  IssueActivatedEvent,
+  IssueCreatedEvent,
+  IssueDeletedEvent,
+  IssueEstimatedEvent,
+  IssueUpdatedEvent
+} from '../../_interfaces';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 
@@ -109,6 +116,16 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   private subscribeNotifications() {
     this.subscriptions.add(this.notifications.allUsersVotedEvent.subscribe(
         event => this.allUsersVotedEventHandler(event)));
+    this.subscriptions.add(this.notifications.issueActivatedEvent.subscribe(
+        event => this.issueActivatedEventHandler(event)));
+    this.subscriptions.add(this.notifications.issueEstimatedEvent.subscribe(
+        event => this.issueEstimatedEventHandler(event)));
+    this.subscriptions.add(this.notifications.issueUpdatedEvent.subscribe(
+        event => this.issueUpdatedEventHandler(event)));
+    this.subscriptions.add(this.notifications.issueDeletedEvent.subscribe(
+        event => this.issueDeletedEventHandler(event)));
+    this.subscriptions.add(this.notifications.issueCreatedEvent.subscribe(
+        event => this.issueCreatedEventHandler(event)));
   }
 
   private unsubscribeNotifications() {
@@ -126,8 +143,81 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
         console.log('handler <<ALL>>');
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.success('openedPlanning.allUsersVoted'); // TODO param?
+        this.alert.success('openedPlanning.allUsersVoted');
       }
+    }
+    console.log('handler STOP');
+  }
+
+  private issueActivatedEventHandler(event: IssueActivatedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
+        console.log('handler <<EXPANDED>>');
+        this.reloadIssue(this.expandedIssue);
+        this.alert.success('openedPlanning.issueActivated');
+      } else {
+        console.log('handler <<ALL>>');
+        this.loadAllIssues();
+        this.expandedIssue = null;
+        this.alert.success('openedPlanning.issueActivated');
+      }
+    }
+    console.log('handler STOP');
+  }
+
+  private issueEstimatedEventHandler(event: IssueEstimatedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
+        console.log('handler <<EXPANDED>>');
+        this.reloadIssue(this.expandedIssue);
+        this.alert.success('openedPlanning.issueEstimated');
+      } else {
+        console.log('handler <<ALL>>');
+        this.loadAllIssues();
+        this.expandedIssue = null;
+        this.alert.success('openedPlanning.issueEstimated');
+      }
+    }
+    console.log('handler STOP');
+  }
+
+  private issueUpdatedEventHandler(event: IssueUpdatedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
+        console.log('handler <<EXPANDED>>');
+        this.reloadIssue(this.expandedIssue);
+        this.alert.success('openedPlanning.issueUpdated');
+      } else {
+        console.log('handler <<ALL>>');
+        this.loadAllIssues();
+        this.expandedIssue = null;
+        this.alert.success('openedPlanning.issueUpdated');
+      }
+    }
+    console.log('handler STOP');
+  }
+
+  private issueDeletedEventHandler(event: IssueDeletedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      console.log('handler <<ALL>>');
+      this.loadAllIssues();
+      this.expandedIssue = null;
+      this.alert.success('openedPlanning.issueDeleted');
+    }
+    console.log('handler STOP');
+  }
+
+  private issueCreatedEventHandler(event: IssueCreatedEvent) {
+    console.log('handler START');
+    if (this.openedPlanning.id === event.planningId) {
+      console.log('handler <<ALL>>');
+      this.loadAllIssues();
+      this.expandedIssue = null;
+      this.alert.success('openedPlanning.issueCreated');
     }
     console.log('handler STOP');
   }
