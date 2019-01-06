@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -41,7 +40,7 @@ public class Deck extends AbstractEntity {
   @OrderBy("level asc")
   private Set<Card> cards = new LinkedHashSet<>();
 
-  @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "deck")
   @OrderBy("id desc")
   private Set<Planning> plannings = new LinkedHashSet<>();
   //endregion
