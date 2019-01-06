@@ -21,7 +21,9 @@ import {
   IssueDeletedEvent,
   IssueEstimatedEvent,
   IssueUpdatedEvent,
-  PlanningFinishedEvent
+  PlanningDeletedEvent,
+  PlanningFinishedEvent,
+  PlanningUpdatedEvent
 } from '../../_events';
 // noinspection TypeScriptPreferShortImport
 import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
@@ -127,6 +129,10 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
         event => this.issueCreatedEventHandler(event)));
     this.subscriptions.add(this.notifications.planningFinishedEvent.subscribe(
         event => this.planningFinishedEventHandler(event)));
+    this.subscriptions.add(this.notifications.planningUpdatedEvent.subscribe(
+        event => this.planningUpdatedEventHandler(event)));
+    this.subscriptions.add(this.notifications.planningDeletedEvent.subscribe(
+        event => this.planningDeletedEventHandler(event)));
   }
 
   private unsubscribeNotifications() {
@@ -205,6 +211,22 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       this.loadPlanning();
       this.alert.success('openedPlanning.planningFinished');
+    }
+  }
+
+  private planningUpdatedEventHandler(event: PlanningUpdatedEvent) {
+    if (this.openedPlanning.id === event.planningId) {
+      this.loadPlanning();
+      this.alert.success('openedPlanning.planningUpdated');
+    }
+  }
+
+  private planningDeletedEventHandler(event: PlanningDeletedEvent) {
+    if (this.openedPlanning.id === event.planningId) {
+      this.alert.error('openedPlanning.planningDeleted');
+      const url = this.auth.hasAuthority('getAllPlannings') ?
+          '/all-plannings' : '/my-plannings';
+      this.router.navigate([url]);
     }
   }
 

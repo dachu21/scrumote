@@ -236,6 +236,7 @@
     "noPlanningLoaded": "No planning loaded!",
     "createIssue": "Create issue",
     "finishPlanning": "Finish",
+    "finished": "FINISHED",
     "finish": {
       "success": "Planning finished successfully."
     },

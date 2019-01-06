@@ -6,7 +6,10 @@
     </button>
   </li>
   <li>
-    <h2>{{'openedPlanning.header' | translate}}: {{openedPlanning.name}}</h2>
+    <h2>
+      {{'openedPlanning.header' | translate}}: {{openedPlanning.name}}
+      <span *ngIf="openedPlanning.finished">[{{'openedPlanning.finished' | translate}}]</span>
+    </h2>
   </li>
   <li>
     <button *ngIf="auth.hasAuthority('createIssue') &&
