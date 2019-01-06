@@ -65,7 +65,9 @@
   },
   "validation": {
     "username": {
-      "required": "Username is required."
+      "required": "Username is required.",
+      "minlength": "Username must be at least 3 characters long.",
+      "maxlength": "Username cannot be more than 32 characters long."
     },
     "password": {
       "required": "Password is required.",
@@ -85,17 +87,28 @@
     },
     "email": {
       "required": "E-mail is required.",
-      "email": "E-mail address is not valid."
+      "email": "E-mail is not valid.",
+      "maxlength": "E-mail cannot be more than 64 characters long."
     },
     "name": {
-      "required": "Name is required."
+      "required": "Name is required.",
+      "minlength": "Name must be at least 3 characters long.",
+      "maxlength": "Name cannot be more than 32 characters long."
     },
     "code": {
-      "required": "Code is required."
+      "required": "Code is required.",
+      "maxlength": "Code cannot be more than 32 characters long."
     },
-    "deck": {
+    "deckName": {
       "required": "Deck is required."
-    }
+    },
+    "firstName": {
+      "maxlength": "First name cannot be more than 32 characters long."
+    },
+    "lastName": {
+      "maxlength": "Last name cannot be more than 32 characters long."
+    },
+    "description": "Description cannot be more than 255 characters long."
   },
   "app": {
     "navbar": {

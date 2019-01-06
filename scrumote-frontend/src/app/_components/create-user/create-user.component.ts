@@ -25,14 +25,22 @@ export class CreateUserComponent {
     }
 
     this.newUserForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(32)]],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(64)]],
-      email: ['', [Validators.required, Validators.email]],
-      firstName: [''],
-      lastName: ['']
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(64)]],
+      firstName: ['',
+        Validators.maxLength(32)],
+      lastName: ['',
+        Validators.maxLength(32)]
     });
   }
 

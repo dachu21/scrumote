@@ -49,9 +49,15 @@ export class EditIssueComponent implements OnInit {
       id: [''],
       version: [''],
 
-      code: [issueToEdit && issueToEdit.code || '', Validators.required],
-      name: [issueToEdit && issueToEdit.name || '', Validators.required],
-      description: [issueToEdit && issueToEdit.description || '']
+      code: [issueToEdit && issueToEdit.code || '', [
+        Validators.required,
+        Validators.maxLength(32)]],
+      name: [issueToEdit && issueToEdit.name || '', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(32)]],
+      description: [issueToEdit && issueToEdit.description || '',
+        Validators.maxLength(255)]
     });
 
     if (issueToEdit) {

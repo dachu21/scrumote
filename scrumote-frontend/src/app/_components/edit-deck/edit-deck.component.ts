@@ -40,7 +40,10 @@ export class EditDeckComponent {
       id: [''],
       version: [''],
 
-      name: [deckToEdit && deckToEdit.name || '', Validators.required],
+      name: [deckToEdit && deckToEdit.name || '', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(32)]]
     });
 
     if (deckToEdit) {

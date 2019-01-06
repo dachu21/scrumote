@@ -44,11 +44,18 @@ export class EditPlanningComponent implements OnInit {
       deckId: [''],
       users: [''],
 
-      code: [planningToEdit && planningToEdit.code || '', Validators.required],
-      name: [planningToEdit && planningToEdit.name || '', Validators.required],
-      deckName: [planningToEdit && planningToEdit.deckName || '', [Validators.required]],
+      code: [planningToEdit && planningToEdit.code || '', [
+        Validators.required,
+        Validators.maxLength(32)]],
+      name: [planningToEdit && planningToEdit.name || '', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(32)]],
+      deckName: [planningToEdit && planningToEdit.deckName || '',
+        Validators.required],
       usersUsernames: [planningToEdit && planningToEdit.usersUsernames || ''],
-      description: [planningToEdit && planningToEdit.description || ''],
+      description: [planningToEdit && planningToEdit.description || '',
+        Validators.maxLength(255)],
     });
 
     if (planningToEdit) {

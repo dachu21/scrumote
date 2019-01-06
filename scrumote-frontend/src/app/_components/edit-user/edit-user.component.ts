@@ -29,10 +29,18 @@ export class EditUserComponent implements OnInit {
       id: [''],
       version: [''],
 
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      firstName: [''],
-      lastName: ['']
+      username: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(32)]],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(64)]],
+      firstName: ['',
+        Validators.maxLength(32)],
+      lastName: ['',
+        Validators.maxLength(32)]
     });
   }
 
