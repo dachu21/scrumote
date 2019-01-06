@@ -92,7 +92,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
   // region Init & Destroy
   ngOnInit() {
-    console.log('ON INIT');
     this.subscribeNotifications();
     this.initData();
     this.issuesDataSource.paginator = this.issuesPaginator;
@@ -106,8 +105,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.expandedIssue = null;
   }
 
-  ngOnDestroy(): void {
-    console.log('ON DESTROY');
+  ngOnDestroy() {
     this.unsubscribeNotifications();
   }
 
@@ -136,103 +134,78 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   }
 
   private allUsersVotedEventHandler(event: AllUsersVotedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
-        console.log('handler <<EXPANDED>>');
         this.reloadIssue(this.expandedIssue);
         this.alert.success('openedPlanning.allUsersVoted');
       } else {
-        console.log('handler <<ALL>>');
         this.loadAllIssues();
         this.expandedIssue = null;
         this.alert.success('openedPlanning.allUsersVoted');
       }
     }
-    console.log('handler STOP');
   }
 
   private issueActivatedEventHandler(event: IssueActivatedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
-        console.log('handler <<EXPANDED>>');
         this.reloadIssue(this.expandedIssue);
         this.alert.success('openedPlanning.issueActivated');
       } else {
-        console.log('handler <<ALL>>');
         this.loadAllIssues();
         this.expandedIssue = null;
         this.alert.success('openedPlanning.issueActivated');
       }
     }
-    console.log('handler STOP');
   }
 
   private issueEstimatedEventHandler(event: IssueEstimatedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
-        console.log('handler <<EXPANDED>>');
         this.reloadIssue(this.expandedIssue);
         this.alert.success('openedPlanning.issueEstimated');
       } else {
-        console.log('handler <<ALL>>');
         this.loadAllIssues();
         this.expandedIssue = null;
         this.alert.success('openedPlanning.issueEstimated');
       }
     }
-    console.log('handler STOP');
   }
 
   private issueUpdatedEventHandler(event: IssueUpdatedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
-        console.log('handler <<EXPANDED>>');
         this.reloadIssue(this.expandedIssue);
         this.alert.success('openedPlanning.issueUpdated');
       } else {
-        console.log('handler <<ALL>>');
         this.loadAllIssues();
         this.expandedIssue = null;
         this.alert.success('openedPlanning.issueUpdated');
       }
     }
-    console.log('handler STOP');
   }
 
   private issueDeletedEventHandler(event: IssueDeletedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
-      console.log('handler <<ALL>>');
       this.loadAllIssues();
       this.expandedIssue = null;
       this.alert.success('openedPlanning.issueDeleted');
     }
-    console.log('handler STOP');
   }
 
   private issueCreatedEventHandler(event: IssueCreatedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
-      console.log('handler <<ALL>>');
       this.loadAllIssues();
       this.expandedIssue = null;
       this.alert.success('openedPlanning.issueCreated');
     }
-    console.log('handler STOP');
   }
 
   private planningFinishedEventHandler(event: PlanningFinishedEvent) {
-    console.log('handler START');
     if (this.openedPlanning.id === event.planningId) {
-      console.log('handler <<ALL>>');
-      this.refreshPage();
+      this.loadPlanning();
       this.alert.success('openedPlanning.planningFinished');
     }
-    console.log('handler STOP');
   }
 
   // endregion
@@ -341,7 +314,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
     });
-    this.refreshPage();
+    this.loadPlanning();
   }
 
   // endregion
