@@ -1,4 +1,12 @@
 {
+  "paginator": {
+    "itemsPerPageLabel": "Items per page:",
+    "nextPageLabel": "Next page",
+    "previousPageLabel": "Previous page",
+    "firstPageLabel": "First page",
+    "lastPageLabel": "Last page",
+    "rangePageLabel": "of"
+  },
   "roles": {
     "DEVELOPER": "Developer",
     "SCRUM_MASTER": "Scrum Master",
@@ -151,13 +159,13 @@
     },
     "languageNotSupported": "Language is not supported!"
   },
-  "home": {
-    "appName": "Scrumote"
-  },
   "error": {
     "header": "Error",
     "404": "Page not found.",
     "unauthorized": "You don't have access to this page."
+  },
+  "home": {
+    "appName": "Scrumote"
   },
   "login": {
     "header": "Login",

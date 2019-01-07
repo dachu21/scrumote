@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatPaginatorIntl} from '@angular/material';
 import {PropagationStopModule} from 'ngx-propagation-stop';
 
 import {AppComponent} from './app.component';
@@ -30,6 +31,7 @@ import {
   VoteDialogComponent
 } from './_components';
 
+import {MatPaginatorIntlCustom} from './_other';
 import {CustomMaterialModule} from './_modules';
 import {ApiInterceptor, ErrorInterceptor, XhrInterceptor} from './_interceptors';
 import {AuthenticationGuard, AuthorizationGuard, SystemFeatureGuard} from './_guards';
@@ -100,6 +102,7 @@ import {httpLoaderFactory} from './_functions';
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlCustom},
     AuthorizationGuard,
     AuthenticationGuard,
     SystemFeatureGuard,
