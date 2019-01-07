@@ -316,7 +316,7 @@
     "optimisticLock": {
       "outdatedVersion": "Data is out of date! Refresh page and try again.",
       "missingVersion": "Version header is missing!",
-      "manipulatedVersion": "Data version has been manipulated!",
+      "manipulatedVersion": "Data version was manipulated!",
       "invalidVersionHeader": "Version header is invalid!"
     },
     "password": {
