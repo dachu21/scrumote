@@ -40,7 +40,7 @@
           {{'common.edit' | translate}}
         </button>
         <button *ngIf="auth.hasAuthority('deleteDeck')"
-                mat-flat-button color="warn" (click)="deletePlanning(element)">
+                mat-flat-button color="warn" (click)="deleteDeck(element)">
           {{'common.delete' | translate}}
         </button>
       </td>

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
   AlertService,
   AuthenticationService,
+  DialogService,
   NotificationsService,
   PlanningService
 } from '../../_services';
@@ -38,7 +39,8 @@ export class PlanningListComponent implements OnInit, OnDestroy {
               private alert: AlertService,
               readonly auth: AuthenticationService,
               private planningService: PlanningService,
-              private notifications: NotificationsService) {
+              private notifications: NotificationsService,
+              private dialogService: DialogService) {
     if (this.route.snapshot.url[0].path === 'all-plannings') {
       this.listType = 'all';
     } else if (this.route.snapshot.url[0].path === 'my-plannings') {
@@ -89,22 +91,22 @@ export class PlanningListComponent implements OnInit, OnDestroy {
 
   private planningCreatedEventHandler(event: PlanningCreatedEvent) {
     this.loadPlannings();
-    this.alert.success('planningList.planningCreated');
+    this.alert.event('planningList.planningCreated');
   }
 
   private planningFinishedEventHandler(event: PlanningFinishedEvent) {
     this.loadPlannings();
-    this.alert.success('planningList.planningFinished');
+    this.alert.event('planningList.planningFinished');
   }
 
   private planningUpdatedEventHandler(event: PlanningUpdatedEvent) {
     this.loadPlannings();
-    this.alert.success('planningList.planningUpdated');
+    this.alert.event('planningList.planningUpdated');
   }
 
   private planningDeletedEventHandler(event: PlanningDeletedEvent) {
     this.loadPlannings();
-    this.alert.success('planningList.planningDeleted');
+    this.alert.event('planningList.planningDeleted');
   }
 
   // endregion
@@ -120,9 +122,13 @@ export class PlanningListComponent implements OnInit, OnDestroy {
   }
 
   deletePlanning(planning: Planning) {
-    this.planningService.deletePlanning(planning).subscribe(() => {
-      this.loadPlannings();
-      this.alert.success('planningList.delete.success');
+    this.dialogService.openAreYouSureDialog().afterClosed().subscribe(value => {
+      if (value) {
+        this.planningService.deletePlanning(planning).subscribe(() => {
+          this.loadPlannings();
+          this.alert.success('planningList.delete.success');
+        });
+      }
     });
   }
 

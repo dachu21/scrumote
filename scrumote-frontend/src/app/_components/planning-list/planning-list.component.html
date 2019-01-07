@@ -61,7 +61,7 @@
                 mat-flat-button color="accent" (click)="editPlanning(element)">
           {{'common.edit' | translate}}
         </button>
-        <button *ngIf="auth.hasAuthority('deletePlanning') && element.finished"
+        <button *ngIf="auth.hasAuthority('deleteDeck') && element.finished"
                 mat-flat-button color="warn" (click)="deletePlanning(element)">
           {{'common.delete' | translate}}
         </button>

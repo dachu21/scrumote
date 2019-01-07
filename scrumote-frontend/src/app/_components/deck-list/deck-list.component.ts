@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, AuthenticationService, DeckService} from '../../_services';
-import {Deck} from '../../_models';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {AlertService, AuthenticationService, DeckService, DialogService} from '../../_services';
+import {Deck} from '../../_models';
+
 
 @Component({
   selector: 'app-deck-list',
@@ -21,7 +22,8 @@ export class DeckListComponent implements OnInit {
               private route: ActivatedRoute,
               private alert: AlertService,
               readonly auth: AuthenticationService,
-              private deckService: DeckService) {
+              private deckService: DeckService,
+              private dialogService: DialogService) {
   }
 
   private refreshDataSource() {
@@ -40,10 +42,14 @@ export class DeckListComponent implements OnInit {
     this.router.navigate(['/edit-deck']);
   }
 
-  deletePlanning(deck: Deck) {
-    this.deckService.deleteDeck(deck).subscribe(() => {
-      this.refreshDataSource();
-      this.alert.success('deckList.delete.success');
+  deleteDeck(deck: Deck) {
+    this.dialogService.openAreYouSureDialog().afterClosed().subscribe(value => {
+      if (value) {
+        this.deckService.deleteDeck(deck).subscribe(() => {
+          this.refreshDataSource();
+          this.alert.success('deckList.delete.success');
+        });
+      }
     });
   }
 

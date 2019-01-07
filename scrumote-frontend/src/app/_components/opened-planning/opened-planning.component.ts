@@ -350,8 +350,12 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
   // region Planning actions
   finishPlanning() {
-    this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
-      this.alert.success('openedPlanning.finish.success');
+    this.dialogService.openAreYouSureDialog().afterClosed().subscribe(value => {
+      if (value) {
+        this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
+          this.alert.success('openedPlanning.finish.success');
+        });
+      }
     });
   }
 
