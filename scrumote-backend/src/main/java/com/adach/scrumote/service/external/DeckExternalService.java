@@ -43,7 +43,9 @@ public class DeckExternalService {
   @PreAuthorize("hasAnyAuthority('updateDeck')")
   public void updateDeck(Long deckId, Long version, DeckWithCardsDto dto) {
     Deck deck = internalService.findById(deckId);
-    internalService.validateNameNotExists(dto.getName());
+    if (!deck.getName().equals(dto.getName())) {
+      internalService.validateNameNotExists(dto.getName());
+    }
     internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 

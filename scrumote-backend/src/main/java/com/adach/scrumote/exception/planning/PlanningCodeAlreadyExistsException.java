@@ -3,16 +3,16 @@ package com.adach.scrumote.exception.planning;
 import com.adach.scrumote.exception.ApplicationException;
 import org.springframework.http.HttpStatus;
 
-public class PlanningNameAlreadyExistsException extends ApplicationException {
+public class PlanningCodeAlreadyExistsException extends ApplicationException {
 
-  private static final String CODE = "exception.planning.nameExists";
+  private static final String CODE = "exception.planning.codeExists";
   private static final HttpStatus STATUS = HttpStatus.BAD_REQUEST;
 
-  public PlanningNameAlreadyExistsException(String message) {
+  public PlanningCodeAlreadyExistsException(String message) {
     super(message, CODE, STATUS);
   }
 
-  public PlanningNameAlreadyExistsException(String message, Throwable cause) {
+  public PlanningCodeAlreadyExistsException(String message, Throwable cause) {
     super(message, CODE, STATUS, cause);
   }
 }

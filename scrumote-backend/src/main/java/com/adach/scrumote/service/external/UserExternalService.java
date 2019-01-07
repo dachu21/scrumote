@@ -111,8 +111,8 @@ public class UserExternalService {
   public void updateMyUser(Long version, UserSimpleDto dto) {
     User currentUser = sessionService.getCurrentUser();
     internalService.validateVersion(currentUser, version);
-    internalService.validateUsernameNotExists(dto.getUsername());
-    internalService.validateEmailNotExists(dto.getEmail());
+    validateUserForUpdate(currentUser, dto);
+
     updateUserFields(currentUser, dto);
   }
 
@@ -120,9 +120,18 @@ public class UserExternalService {
   public void updateAnyUser(Long userId, Long version, UserSimpleDto dto) {
     User user = internalService.findById(userId);
     internalService.validateVersion(user, version);
-    internalService.validateUsernameNotExists(dto.getUsername());
-    internalService.validateEmailNotExists(dto.getEmail());
+    validateUserForUpdate(user, dto);
+
     updateUserFields(user, dto);
+  }
+
+  private void validateUserForUpdate(User user, UserSimpleDto dto) {
+    if (!user.getUsername().equals(dto.getUsername())) {
+      internalService.validateUsernameNotExists(dto.getUsername());
+    }
+    if (!user.getEmail().equals(dto.getEmail())) {
+      internalService.validateEmailNotExists(dto.getEmail());
+    }
   }
 
   private void updateUserFields(User user, UserSimpleDto dto) {

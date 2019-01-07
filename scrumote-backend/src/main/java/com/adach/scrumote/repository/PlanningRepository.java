@@ -13,5 +13,5 @@ public interface PlanningRepository extends CustomJpaRepository<Planning, Long> 
 
   List<Planning> findAllByUsersContains(User user, Sort sort);
 
-  boolean existsByName(String name);
+  boolean existsByCode(String code);
 }

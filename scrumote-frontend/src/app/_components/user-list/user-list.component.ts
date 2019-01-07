@@ -53,6 +53,11 @@ export class UserListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  manageUser(user: User) {
+    this.userService.userToEdit = user;
+    this.router.navigate(['/manage-any-user']);
+  }
+
   editUser(user: User) {
     this.userService.userToEdit = user;
     this.router.navigate(['/edit-any-user']);
@@ -64,13 +69,15 @@ export class UserListComponent implements OnInit {
   }
 
   onClickRow(element: User) {
-    if (this.expandedUser !== element && element.id) {
-      this.userStatsService.getAnyUserStats(element.id).subscribe((response: UserStats) => {
-        this.expandedUser = element;
-        this.statsDataSource.data = [response];
-      });
-    } else {
-      this.expandedUser = null;
+    if (this.auth.hasAuthority('getAnyUserStats')) {
+      if (this.expandedUser !== element && element.id) {
+        this.userStatsService.getAnyUserStats(element.id).subscribe((response: UserStats) => {
+          this.expandedUser = element;
+          this.statsDataSource.data = [response];
+        });
+      } else {
+        this.expandedUser = null;
+      }
     }
   }
 

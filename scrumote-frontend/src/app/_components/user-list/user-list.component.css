@@ -15,6 +15,12 @@ tr.expandable-element-details {
   display: flex;
 }
 
+tr.expandable-element-row:hover,
+tr.expandable-element-row:active {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
 .fixed-width-table {
   table-layout: fixed;
 }

@@ -39,6 +39,7 @@ import {
   LanguageService,
   NotificationsService,
   PlanningService,
+  RoleService,
   SystemFeatureService,
   UserService,
   UserStatsService,
@@ -105,8 +106,9 @@ import {httpLoaderFactory} from './_functions';
     SystemFeatureService,
     UserStatsService,
     VoteService,
+    RoleService,
     LanguageService,
-    NotificationsService
+    NotificationsService,
   ],
   bootstrap: [AppComponent]
 })

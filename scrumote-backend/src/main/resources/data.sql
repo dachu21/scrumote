@@ -47,12 +47,12 @@ insert into permission_t (id, version, name) values
 (31, 0, 'updateAnyUser'),                       -- |  +  |    -    |  -
 (32, 0, 'updateMyUsersPassword'),               -- |  +  |    +    |  +
 (33, 0, 'updateAnyUsersPassword'),              -- |  +  |    -    |  -
-(38, 0, 'manageAnyUser'),              			-- |  +  |    -    |  -
+(38, 0, 'manageAnyUser'),              			    -- |  +  |    -    |  -
 
 (34, 0, 'getMyUserStats'),                    	-- |  +  |    +    |  +
-(35, 0, 'getAnyUserStats');                   	-- |  +  |    +    |  -
+(35, 0, 'getAnyUserStats'),                   	-- |  +  |    +    |  -
 
-(39, 0, 'getAllRoles');                   		-- |  +  |    0    |  -
+(39, 0, 'getAllRoles');                   		  -- |  +  |    -    |  -
 alter sequence permission_seq restart with 40;
 
 insert into role_permissions_t (role_id, permission_id) values

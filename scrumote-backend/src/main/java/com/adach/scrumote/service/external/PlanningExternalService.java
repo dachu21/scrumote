@@ -41,7 +41,7 @@ public class PlanningExternalService {
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   public Long createPlanning(PlanningSimpleDto dto) {
     Planning planning = mapper.mapToEntity(dto);
-    internalService.validateNameNotExists(dto.getName());
+    internalService.validateCodeNotExists(dto.getName());
 
     User moderator = sessionService.getCurrentUser();
     Deck deck = deckInternalService.findById(dto.getDeckId());
@@ -86,7 +86,9 @@ public class PlanningExternalService {
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
   public void updatePlanning(Long planningId, Long version, PlanningSimpleDto dto) {
     Planning planning = internalService.findById(planningId);
-    internalService.validateNameNotExists(dto.getName());
+    if (!planning.getCode().equals(dto.getCode())) {
+      internalService.validateCodeNotExists(dto.getCode());
+    }
     internalService.validateVersion(planning, version);
     validatePlanningForUpdateOrFinish(planning);
 
