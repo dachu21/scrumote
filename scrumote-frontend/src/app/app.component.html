@@ -20,6 +20,10 @@
           routerLink="/decks" *ngIf="auth.hasAuthority('getAllDecks')">
     {{'app.navbar.allDecks' | translate}}
   </button>
+  <button mat-button class="navbar-menu-item"
+          routerLink="/system-features" *ngIf="auth.hasAuthority('getAllSystemFeatures')">
+    {{'app.navbar.systemFeatures' | translate}}
+  </button>
 
   <span class="fill-space"></span>
 

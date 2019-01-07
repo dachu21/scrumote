@@ -14,6 +14,7 @@ import {
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
+  SystemFeatureListComponent,
   UserListComponent,
 } from './_components';
 import {AuthenticationGuard, AuthorizationGuard, SystemFeatureGuard} from './_guards';
@@ -192,6 +193,14 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthorities: ['manageAnyUser']
+    }
+  },
+  {
+    path: 'system-features',
+    component: SystemFeatureListComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthorities: ['getAllSystemFeatures']
     }
   },
   {

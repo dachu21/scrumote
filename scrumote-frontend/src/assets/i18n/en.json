@@ -18,7 +18,9 @@
     "select": "Select...",
     "vote": "Vote",
     "refresh": "Refresh",
-    "manage": "Manage"
+    "manage": "Manage",
+    "enable": "Enable",
+    "disable": "Disable"
   },
   "models": {
     "user": {
@@ -64,6 +66,10 @@
       "finishedIterations": "Finished iterations",
       "estimate": "Estimate",
       "active": "In progress"
+    },
+    "systemFeature": {
+      "code": "Code",
+      "enabled": "Enabled"
     }
   },
   "validation": {
@@ -119,7 +125,8 @@
       "myPlannings": "My plannings",
       "allPlannings": "All plannings",
       "allUsers": "Users",
-      "allDecks": "Decks"
+      "allDecks": "Decks",
+      "systemFeatures": "System features"
     },
     "userMenu": {
       "logout": "Logout",
@@ -261,6 +268,10 @@
   "manageUser": {
     "header": "Manage any user",
     "noUserLoaded": "No user loaded to edit!"
+  },
+  "systemFeatureList": {
+    "header": "System features",
+    "success": "System feature updated successfully."
   },
   "voteDialog": {
     "selectCard": "Select card..."

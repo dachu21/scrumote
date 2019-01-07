@@ -24,6 +24,7 @@ import {
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
+  SystemFeatureListComponent,
   UserListComponent,
   VoteDialogComponent
 } from './_components';
@@ -67,7 +68,8 @@ import {httpLoaderFactory} from './_functions';
     OpenedPlanningComponent,
     EditIssueComponent,
     VoteDialogComponent,
-    ManageUserComponent
+    ManageUserComponent,
+    SystemFeatureListComponent
   ],
   entryComponents: [
     VoteDialogComponent
