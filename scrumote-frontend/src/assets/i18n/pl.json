@@ -283,7 +283,7 @@
       "success": "Zadanie aktywowane pomyślnie."
     },
     "estimateIssue": {
-      "header": "Wyceń zadanie.",
+      "header": "Wyceń zadanie",
       "success": "Zadanie wycenione pomyślnie."
     },
     "deleteIssue": {

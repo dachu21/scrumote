@@ -23,6 +23,6 @@ class SseRepository {
 
   void removeEmitter(SseEmitter emitter) {
     emitters.remove(emitter);
-    log.info("SSE Emitter removed.");
+    log.debug("SSE Emitter removed.");
   }
 }
