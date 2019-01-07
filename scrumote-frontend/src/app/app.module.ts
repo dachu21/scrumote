@@ -5,7 +5,6 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatPaginatorIntl} from '@angular/material';
 import {PropagationStopModule} from 'ngx-propagation-stop';
 
@@ -88,7 +87,6 @@ import {httpLoaderFactory} from './_functions';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     PropagationStopModule,
     CustomMaterialModule,
     RouterModule.forRoot(routes),
