@@ -354,7 +354,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
     });
-    // this.loadPlanning(); // TODO Delete: handled by incoming event
   }
 
   // endregion
@@ -374,7 +373,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   activateIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.activateIssue(this.openedPlanning.id, issue).subscribe(() => {
-        // this.reloadIssue(issue); // TODO Delete: handled by incoming event
         this.alert.success('openedPlanning.activateIssue.success');
       });
     }
@@ -385,7 +383,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id) {
         this.issueService.estimateIssue(this.openedPlanning.id, issue, cardValue).subscribe(() => {
-          // this.reloadIssue(issue); // TODO Delete: handled by incoming event
           this.alert.success('openedPlanning.estimateIssue.success');
         });
       }
@@ -395,8 +392,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   deleteIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
-        // this.loadAllIssues(); // TODO Delete: handled by incoming event
-        // this.expandedIssue = null;
         this.alert.success('openedPlanning.deleteIssue.success');
       });
     }
@@ -405,7 +400,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   expandIssue(issue: Issue) {
     if (this.expandedIssue !== issue && issue.id) {
       this.expandedIssue = issue;
-      // this.reloadIssue(issue); // TODO Delete: no need to reload
       this.reloadExpandedIssueContent();
       this.checkIfCanVote(issue);
     } else {
