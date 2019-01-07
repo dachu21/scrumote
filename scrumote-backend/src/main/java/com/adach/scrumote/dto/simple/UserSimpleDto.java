@@ -1,5 +1,7 @@
 package com.adach.scrumote.dto.simple;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,6 +24,7 @@ public class UserSimpleDto extends AbstractSimpleDto {
 
   @NotNull
   @Email
+  @Size(max = 64)
   private String email;
 
   @Size(max = 32)
@@ -29,4 +32,8 @@ public class UserSimpleDto extends AbstractSimpleDto {
 
   @Size(max = 32)
   private String lastName;
+
+  private boolean active;
+
+  private Set<String> roleNames = new LinkedHashSet<>();
 }

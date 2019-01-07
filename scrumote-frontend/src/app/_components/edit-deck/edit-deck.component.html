@@ -1,0 +1,38 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="center-500 center-text">
+  <h2>{{'editDeck.headers.' + deckType | translate}}</h2>
+
+  <form [formGroup]="deckForm" (ngSubmit)="onSubmit()" class="vertical">
+
+    <mat-form-field>
+      <input matInput required formControlName="name" type="text"/>
+      <mat-label>{{'models.deck.name' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('name')">
+        {{'validation.name.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-chip-list #cardValues>
+        <mat-chip *ngFor="let card of cards" [selectable]="true"
+                  [removable]="true" (removed)="removeCard(card)">
+          {{card.value}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="{{'models.deck.cards' | translate}}"
+               [matChipInputFor]="cardValues"
+               [matChipInputSeparatorKeyCodes]="[ENTER_KEY]"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="addCard($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <span>
+      <button mat-flat-button color="primary" [disabled]="!deckForm.valid" type="submit">
+        {{'common.save' | translate}}
+      </button>
+      <button mat-flat-button color="accent" routerLink="/decks" type="button">
+        {{'common.cancel' | translate}}
+      </button>
+    </span>
+  </form>
+</div>

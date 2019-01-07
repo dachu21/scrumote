@@ -1,6 +1,7 @@
 package com.adach.scrumote.dto.simple;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public class CardSimpleDto extends AbstractSimpleDto {
   private Integer level;
 
   @NotNull
+  @Size(max = 32)
   private String value;
 }

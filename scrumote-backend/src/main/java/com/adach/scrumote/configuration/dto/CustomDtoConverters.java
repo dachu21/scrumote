@@ -8,7 +8,7 @@ import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.SystemFeature;
 import com.adach.scrumote.entity.User;
-import com.adach.scrumote.entity.UserHistory;
+import com.adach.scrumote.entity.UserStats;
 import com.adach.scrumote.entity.Vote;
 import java.util.Optional;
 import lombok.AccessLevel;
@@ -83,10 +83,10 @@ class CustomDtoConverters {
         }
       };
 
-  static final Converter<UserHistory, Long> fromUserHistoryToLong =
+  static final Converter<UserStats, Long> fromUserStatsToLong =
       new AbstractConverter<>() {
         @Override
-        protected Long convert(UserHistory entity) {
+        protected Long convert(UserStats entity) {
           return entity.getId();
         }
       };

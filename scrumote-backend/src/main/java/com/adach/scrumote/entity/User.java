@@ -1,6 +1,7 @@
 package com.adach.scrumote.entity;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -39,29 +41,30 @@ public class User extends AbstractEntity {
     this.active = user.active;
     this.permissions = user.permissions;
     this.roles = user.roles;
-    this.userHistory = user.userHistory;
+    this.userStats = user.userStats;
   }
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 32)
   @NotNull
   @Size(min = 3, max = 32)
   private String username;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 60)
   @NotNull
-  @Size(min = 8, max = 64)
+  @Size(min = 60, max = 60)
   private String password;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 64)
   @NotNull
   @Email
+  @Size(max = 64)
   private String email;
 
-  @Column
+  @Column(length = 32)
   @Size(max = 32)
   private String firstName;
 
-  @Column
+  @Column(length = 32)
   @Size(max = 32)
   private String lastName;
 
@@ -69,7 +72,7 @@ public class User extends AbstractEntity {
   private boolean active;
 
   @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
-  private UserHistory userHistory;
+  private UserStats userStats;
 
   @ManyToMany
   @JoinTable(
@@ -85,5 +88,6 @@ public class User extends AbstractEntity {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"),
       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"}))
-  private Set<Role> roles = new HashSet<>();
+  @OrderBy("name asc")
+  private Set<Role> roles = new LinkedHashSet<>();
 }

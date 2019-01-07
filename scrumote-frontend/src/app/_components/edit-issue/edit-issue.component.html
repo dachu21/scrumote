@@ -1,0 +1,43 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="center-500 center-text">
+  <h2>{{'editIssue.headers.' + issueType | translate}}</h2>
+
+  <form [formGroup]="issueForm" (ngSubmit)="onSubmit(submitType)" class="vertical">
+
+    <mat-form-field>
+      <input matInput required formControlName="code" type="text"/>
+      <mat-label>{{'models.issue.code' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('code')">
+        {{'validation.code.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required formControlName="name" type="text"/>
+      <mat-label>{{'models.issue.name' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('name')">
+        {{'validation.name.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="description" type="text"/>
+      <mat-label>{{'models.issue.description' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('description')">
+        {{'validation.description.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <span>
+      <button mat-flat-button class="primary-darker" [disabled]="!issueForm.valid" type="submit"
+              *ngIf="issueType === 'create'"
+              (click)="createNext = true">
+        {{'editIssue.createNext' | translate}}
+      </button>
+      <button mat-flat-button color="primary" [disabled]="!issueForm.valid" type="submit">
+        {{'common.save' | translate}}
+      </button>
+      <button mat-flat-button color="accent" (click)="navigateToOpenedPlanning()" type="button">
+        {{'common.cancel' | translate}}
+      </button>
+    </span>
+  </form>
+</div>

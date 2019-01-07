@@ -8,9 +8,14 @@ import com.adach.scrumote.entity.User;
 import com.adach.scrumote.mapper.PlanningMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
-import com.adach.scrumote.service.internal.UserHistoryInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
+import com.adach.scrumote.service.internal.UserStatsInternalService;
 import com.adach.scrumote.service.security.SessionService;
+import com.adach.scrumote.sse.SseService;
+import com.adach.scrumote.sse.events.planning.PlanningCreatedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningDeletedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningFinishedEvent;
+import com.adach.scrumote.sse.events.planning.PlanningUpdatedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -26,15 +31,17 @@ public class PlanningExternalService {
   private final PlanningInternalService internalService;
   private final PlanningMapper mapper;
 
-  private final UserHistoryInternalService userHistoryInternalService;
+  private final UserStatsInternalService userStatsInternalService;
   private final DeckInternalService deckInternalService;
   private final UserInternalService userInternalService;
 
   private final SessionService sessionService;
+  private final SseService sseService;
 
   @PreAuthorize("hasAnyAuthority('createPlanning')")
   public Long createPlanning(PlanningSimpleDto dto) {
     Planning planning = mapper.mapToEntity(dto);
+    internalService.validateCodeNotExists(dto.getName());
 
     User moderator = sessionService.getCurrentUser();
     Deck deck = deckInternalService.findById(dto.getDeckId());
@@ -47,6 +54,12 @@ public class PlanningExternalService {
     setDescriptionToNullIfBlank(planning);
 
     return internalService.save(planning).getId();
+  }
+
+  @PreAuthorize("hasAnyAuthority('createPlanning')")
+  public void sendPlanningCreatedEvent() {
+    PlanningCreatedEvent event = new PlanningCreatedEvent();
+    sseService.sendSseEvent(event);
   }
 
   @PreAuthorize("hasAnyAuthority('getAnyPlanning', 'getMyPlanning')")
@@ -73,6 +86,9 @@ public class PlanningExternalService {
   @PreAuthorize("hasAnyAuthority('updatePlanning')")
   public void updatePlanning(Long planningId, Long version, PlanningSimpleDto dto) {
     Planning planning = internalService.findById(planningId);
+    if (!planning.getCode().equals(dto.getCode())) {
+      internalService.validateCodeNotExists(dto.getCode());
+    }
     internalService.validateVersion(planning, version);
     validatePlanningForUpdateOrFinish(planning);
 
@@ -88,6 +104,12 @@ public class PlanningExternalService {
     setDescriptionToNullIfBlank(planning);
   }
 
+  @PreAuthorize("hasAnyAuthority('updatePlanning')")
+  public void sendPlanningUpdatedEvent(Long planningId) {
+    PlanningUpdatedEvent event = new PlanningUpdatedEvent(planningId);
+    sseService.sendSseEvent(event);
+  }
+
   @PreAuthorize("hasAnyAuthority('finishPlanning')")
   public void finishPlanning(Long planningId, Long version) {
     Planning planning = internalService.findById(planningId);
@@ -95,7 +117,13 @@ public class PlanningExternalService {
     validatePlanningForUpdateOrFinish(planning);
 
     planning.setFinished(true);
-    userHistoryInternalService.updateUsersHistoryForPlanning(planning);
+    userStatsInternalService.updateUsersStatsForPlanning(planning);
+  }
+
+  @PreAuthorize("hasAnyAuthority('finishPlanning')")
+  public void sendPlanningFinishedEvent(Long planningId) {
+    PlanningFinishedEvent event = new PlanningFinishedEvent(planningId);
+    sseService.sendSseEvent(event);
   }
 
   @PreAuthorize("hasAnyAuthority('deletePlanning')")
@@ -107,9 +135,15 @@ public class PlanningExternalService {
     internalService.delete(planning);
   }
 
+  @PreAuthorize("hasAnyAuthority('deletePlanning')")
+  public void sendPlanningDeletedEvent(Long planningId) {
+    PlanningDeletedEvent event = new PlanningDeletedEvent(planningId);
+    sseService.sendSseEvent(event);
+  }
+
   private void validatePlanningForUpdateOrFinish(Planning planning) {
     internalService.validateHasModerator(planning, sessionService.getCurrentUser());
-    internalService.validateHasZeroActiveIssues(planning);
+    internalService.validateHasOnlyNewAndEstimatedIssues(planning);
     internalService.validateNotFinished(planning);
   }
 

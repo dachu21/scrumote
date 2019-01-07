@@ -35,7 +35,7 @@ public class IssueInternalService extends AbstractInternalService<Issue> {
   }
 
   public List<Issue> findAllByPlanning(Planning planning) {
-    return repository.findAllByPlanning(planning);
+    return repository.findAllByPlanning(planning, ID_DESC_SORT);
   }
 
   public void delete(Issue issue) {

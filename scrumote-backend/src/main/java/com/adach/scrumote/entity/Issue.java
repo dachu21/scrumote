@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,15 +34,18 @@ public class Issue extends AbstractEntity {
   @NotNull
   private Planning planning;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 32)
   @NotNull
+  @Size(max = 32)
   private String code;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 32)
   @NotNull
+  @Size(min = 3, max = 32)
   private String name;
 
   @Column
+  @Size(max = 255)
   private String description;
 
   @Column(nullable = false)

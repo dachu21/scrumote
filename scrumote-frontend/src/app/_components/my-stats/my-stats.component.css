@@ -1,0 +1,7 @@
+th.mat-header-cell, td.mat-cell {
+  text-align: center !important;
+}
+
+.fixed-width-table {
+  table-layout: fixed;
+}

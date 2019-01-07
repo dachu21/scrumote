@@ -1,0 +1,157 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<ul class="center-text">
+  <li>
+    <button mat-flat-button class="primary-darker" (click)="refreshPage()">
+      {{'common.refresh' | translate}}
+    </button>
+  </li>
+  <li>
+    <h2>
+      {{openedPlanning.name}}
+      <span *ngIf="openedPlanning.finished">[{{'openedPlanning.finished' | translate}}]</span>
+    </h2>
+  </li>
+  <li>
+    <button *ngIf="auth.hasAuthority('createIssue') &&
+            !openedPlanning.finished &&
+            auth.getId() === openedPlanning.moderatorId"
+            mat-flat-button color="primary" (click)="createIssue()">
+      {{'openedPlanning.createIssue' | translate}}
+    </button>
+    <button *ngIf="auth.hasAuthority('finishPlanning') &&
+            !openedPlanning.finished &&
+            auth.getId() === openedPlanning.moderatorId"
+            mat-flat-button color="warn" (click)="finishPlanning()">
+      {{'openedPlanning.finishPlanning' | translate}}
+    </button>
+  </li>
+</ul>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="issuesDataSource" multiTemplateDataRows>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> {{'models.issue.code' | translate}}</th>
+      <td mat-cell *matCellDef="let issue"> {{issue.code}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> {{'models.issue.name' | translate}}</th>
+      <td mat-cell *matCellDef="let issue"> {{issue.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="finishedIterations">
+      <th mat-header-cell *matHeaderCellDef> {{'models.issue.finishedIterations' | translate}}</th>
+      <td mat-cell *matCellDef="let issue"> {{issue.finishedIterations}} </td>
+    </ng-container>
+    <ng-container matColumnDef="estimate">
+      <th mat-header-cell *matHeaderCellDef> {{'models.issue.estimate' | translate}}</th>
+      <td mat-cell *matCellDef="let issue"> {{issue.estimate || '?'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef> {{'models.issue.active' | translate}}</th>
+      <td mat-cell *matCellDef="let issue">
+        <mat-checkbox [(ngModel)]="issue.active" [disabled]=true></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef style="width: 450px;">
+        {{'common.actions' | translate}}
+      </th>
+      <td mat-cell *matCellDef="let issue">
+        <button propagationStop *ngIf="auth.hasAuthority('activateIssue') &&
+                auth.getId() === openedPlanning.moderatorId &&
+                !openedPlanning.finished &&
+                !issue.estimate"
+                [disabled]="issue.active"
+                mat-flat-button class="primary-darker" (click)="activateIssue(issue)">
+          {{'common.activate' | translate}}
+        </button>
+        <button propagationStop *ngIf="auth.hasAuthority('estimateIssue') &&
+                auth.getId() === openedPlanning.moderatorId &&
+                !openedPlanning.finished &&
+                !issue.estimate"
+                [disabled]="issue.active"
+                mat-flat-button color="primary" (click)="estimateIssue(issue)">
+          {{'common.estimate' | translate}}
+        </button>
+        <button propagationStop *ngIf="auth.hasAuthority('updateIssue') &&
+                auth.getId() === openedPlanning.moderatorId &&
+                !openedPlanning.finished &&
+                !issue.estimate"
+                [disabled]="issue.active"
+                mat-flat-button color="accent" (click)="editIssue(issue)">
+          {{'common.edit' | translate}}
+        </button>
+        <button propagationStop *ngIf="auth.hasAuthority('deleteIssue') &&
+                auth.getId() === openedPlanning.moderatorId &&
+                !openedPlanning.finished &&
+                !issue.estimate"
+                [disabled]="issue.active"
+                mat-flat-button color="warn" (click)="deleteIssue(issue)">
+          {{'common.delete' | translate}}
+        </button>
+        <button propagationStop *ngIf="auth.hasAuthority('createVote') &&
+                !openedPlanning.finished &&
+                !issue.estimate"
+                [disabled]="issue !== expandedIssue || !issue.active || !canVote "
+                mat-flat-button class="primary-darker" (click)="createVote(issue)">
+          {{'common.vote' | translate}}
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="openedIssue">
+      <td mat-cell *matCellDef="let issue" [attr.colspan]="issuesDisplayedColumns.length">
+        <div class="expandable-element-inside"
+             [@expandTrigger]="issue == expandedIssue ? 'expanded' : 'collapsed'">
+
+          <mat-card *ngIf="expandedIssue" class="description-card mat-elevation-z4">
+            {{expandedIssue.description}}
+          </mat-card>
+
+          <table mat-table [dataSource]="usersDataSource" *ngIf="expandedIssue" class="auto-table">
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef style="width: 250px;">
+                {{'models.user.username' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+            </ng-container>
+            <ng-container [matColumnDef]="iteration"
+                          *ngFor="let iteration of finishedIterationsColumns">
+              <th mat-header-cell *matHeaderCellDef style="width: 60px;">
+                {{iteration}}
+              </th>
+              <td mat-cell *matCellDef="let user">
+                {{expandedIssueVotesMap.get(user.id).get(stringToNumber(iteration))}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="currentIteration">
+              <th mat-header-cell *matHeaderCellDef style="width: 60px;">
+                {{expandedIssue.finishedIterations + 1}}
+              </th>
+              <td mat-cell *matCellDef="let user">?</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="usersDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let user; columns: usersDisplayedColumns;"
+                [class.current-user-row]="user.id === auth.getId()">
+            </tr>
+          </table>
+
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="issuesDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let issue; columns: issuesDisplayedColumns;"
+        class="expandable-element-row"
+        (click)="expandIssue(issue)">
+    </tr>
+    <tr mat-row *matRowDef="let issue; columns: ['openedIssue']"
+        class="expandable-element-details">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons>
+  </mat-paginator>
+</div>

@@ -4,6 +4,7 @@ import com.adach.scrumote.configuration.api.PrefixedRestController;
 import com.adach.scrumote.dto.complex.DeckWithCardsDto;
 import com.adach.scrumote.service.external.DeckExternalService;
 import java.net.URI;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class DeckController extends AbstractController {
   @GetMapping("/decks/{deckId}")
   public DeckWithCardsDto getDeckWithCards(@PathVariable Long deckId) {
     return deckExternalService.getDeckWithCards(deckId);
+  }
+
+  @PreAuthorize("hasAnyAuthority('getAllDecks')")
+  @GetMapping("/decks")
+  public List<DeckWithCardsDto> getAllDecksWithCards() {
+    return deckExternalService.getAllDecksWithCards();
   }
 
   @PreAuthorize("hasAnyAuthority('updateDeck')")

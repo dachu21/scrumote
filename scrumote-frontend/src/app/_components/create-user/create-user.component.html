@@ -1,0 +1,52 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="center-500 center-text">
+  <h2>{{'createUser.headers.' + newUserType | translate}}</h2>
+
+  <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()" class="vertical">
+
+    <mat-form-field>
+      <input matInput required formControlName="username" type="text"/>
+      <mat-label>{{'models.user.username' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('username')">
+        {{'validation.username.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required appPasswordValidator formControlName="password" type="password"/>
+      <mat-label>{{'models.user.password' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('password')">
+        {{'validation.password.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required formControlName="email" type="text"/>
+      <mat-label>{{'models.user.email' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('email')">
+        {{'validation.email.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="firstName" type="text"/>
+      <mat-label>{{'models.user.firstName' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('firstName')">
+        {{'validation.firstName.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="lastName" type="text"/>
+      <mat-label>{{'models.user.lastName' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('lastName')">
+        {{'validation.lastName.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <span>
+      <button mat-flat-button color="primary" [disabled]="!newUserForm.valid" type="submit">
+        {{'common.' + newUserType | translate}}
+      </button>
+      <button mat-flat-button color="accent" (click)="onClickCancel()" type="button">
+        {{'common.cancel' | translate}}
+      </button>
+    </span>
+  </form>
+</div>

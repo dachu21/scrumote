@@ -1,18 +1,17 @@
 package com.adach.scrumote.entity;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,8 +28,9 @@ import lombok.Setter;
 public class Deck extends AbstractEntity {
 
   //region Data
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 32)
   @NotNull
+  @Size(min = 3, max = 32)
   private String name;
   //endregion
 
@@ -40,8 +40,9 @@ public class Deck extends AbstractEntity {
   @OrderBy("level asc")
   private Set<Card> cards = new LinkedHashSet<>();
 
-  @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY)
-  private Set<Planning> plannings = new HashSet<>();
+  @OneToMany(mappedBy = "deck")
+  @OrderBy("id desc")
+  private Set<Planning> plannings = new LinkedHashSet<>();
   //endregion
 
   //region Methods

@@ -1,48 +1,384 @@
 {
-  "login": {
-    "header": "Login"
+  "paginator": {
+    "itemsPerPageLabel": "Items per page:",
+    "nextPageLabel": "Next page",
+    "previousPageLabel": "Previous page",
+    "firstPageLabel": "First page",
+    "lastPageLabel": "Last page",
+    "rangePageLabel": "of"
   },
-  "register": {
-    "header": "Register",
-    "success": "You have been successfully registered!"
+  "roles": {
+    "DEVELOPER": "Developer",
+    "SCRUM_MASTER": "Scrum Master",
+    "PRODUCT_OWNER": "Product Owner",
+    "ADMINISTRATOR": "Administrator"
   },
-  "labels": {
-    "username": "Username",
-    "password": "Password",
-    "email": "E-mail",
-    "firstName": "First name",
-    "lastName": "Last name"
-  },
-  "buttons": {
+  "common": {
     "login": "Login",
     "register": "Register",
-    "logout": "Logout",
     "cancel": "Cancel",
-    "home": "Home page"
+    "home": "Home page",
+    "open": "Open",
+    "edit": "Edit",
+    "delete": "Delete",
+    "actions": "Actions",
+    "save": "Save",
+    "stats": "Statistics",
+    "close": "Close",
+    "create": "Create",
+    "activate": "Activate",
+    "estimate": "Estimate",
+    "ok": "OK",
+    "select": "Select...",
+    "vote": "Vote",
+    "refresh": "Refresh",
+    "manage": "Manage",
+    "enable": "Enable",
+    "disable": "Disable",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "models": {
+    "user": {
+      "username": "Username",
+      "password": "Password",
+      "email": "E-mail",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "active": "Active",
+      "roles": "Roles"
+    },
+    "planning": {
+      "code": "Code",
+      "name": "Name",
+      "deckName": "Deck",
+      "users": "Users",
+      "moderatorUsername": "Moderator",
+      "description": "Description",
+      "finished": "Finished"
+    },
+    "userStats": {
+      "plannings": "Plannings",
+      "issues": "Issues",
+      "votes": "Votes",
+      "firstVotesBelowEstimate": "First votes below estimate",
+      "firstVotesAboveEstimate": "First votes above estimate",
+      "firstVotesEqualEstimate": "First votes equal to estimate",
+      "averageFirstVoteLevelDifference": "Average first vote level difference"
+    },
+    "password": {
+      "oldPassword": "Old password",
+      "newPassword": " New Password",
+      "newPasswordRepeated": "Repeated new password"
+    },
+    "deck": {
+      "name": "Name",
+      "cards": "Cards"
+    },
+    "issue": {
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "finishedIterations": "Finished iterations",
+      "estimate": "Estimate",
+      "active": "In progress"
+    },
+    "systemFeature": {
+      "code": "Code",
+      "enabled": "Enabled"
+    }
+  },
+  "validation": {
+    "username": {
+      "required": "Username is required.",
+      "minlength": "Username must be at least 3 characters long.",
+      "maxlength": "Username cannot be more than 32 characters long."
+    },
+    "password": {
+      "required": "Password is required.",
+      "minlength": "Password must be at least 8 characters long.",
+      "maxlength": "Password cannot be more than 64 characters long.",
+      "conditions": "Password must contain at least one number and one uppercase letter."
+    },
+    "newPassword": {
+      "required": "New password is required.",
+      "minlength": "New password must be at least 8 characters long.",
+      "maxlength": "New password cannot be more than 64 characters long.",
+      "conditions": "New password must contain at least one number and one uppercase letter."
+    },
+    "oldPassword": {
+      "required": "Old password is required."
+    },
+    "newPasswordRepeated": {
+      "mismatch": "Passwords don't match.",
+      "required": "Repeated new password is required."
+    },
+    "email": {
+      "required": "E-mail is required.",
+      "email": "E-mail is not valid.",
+      "maxlength": "E-mail cannot be more than 64 characters long."
+    },
+    "name": {
+      "required": "Name is required.",
+      "minlength": "Name must be at least 3 characters long.",
+      "maxlength": "Name cannot be more than 32 characters long."
+    },
+    "code": {
+      "required": "Code is required.",
+      "maxlength": "Code cannot be more than 32 characters long."
+    },
+    "deckName": {
+      "required": "Deck is required."
+    },
+    "firstName": {
+      "maxlength": "First name cannot be more than 32 characters long."
+    },
+    "lastName": {
+      "maxlength": "Last name cannot be more than 32 characters long."
+    },
+    "description": "Description cannot be more than 255 characters long."
+  },
+  "app": {
+    "navbar": {
+      "appName": "Scrumote",
+      "myPlannings": "My plannings",
+      "allPlannings": "All plannings",
+      "allUsers": "Users",
+      "allDecks": "Decks",
+      "systemFeatures": "System features"
+    },
+    "userMenu": {
+      "logout": "Logout",
+      "editMyUser": "Edit my user",
+      "editMyPassword": "Change password",
+      "myStats": "My statistics",
+      "myRoles": "My roles",
+      "language": {
+        "change": "Change language",
+        "polish": "Polish",
+        "english": "English"
+      }
+    },
+    "languageNotSupported": "Language is not supported!"
   },
   "error": {
     "header": "Error",
     "404": "Page not found.",
     "unauthorized": "You don't have access to this page."
   },
-  "validation": {
-    "username": {
-      "required": "Username is required."
+  "home": {
+    "appName": "Scrumote"
+  },
+  "login": {
+    "header": "Login",
+    "error": "Invalid username or password!"
+  },
+  "createUser": {
+    "headers": {
+      "register": "Register",
+      "create": "Create user"
     },
-    "password": {
-      "required": "Password is required.",
-      "minlength": "Password must be at least 8 characters long.",
-      "maxlength": "Password cannot be more than 64 characters long."
+    "create": {
+      "success": "User created successfully!"
     },
-    "email": {
-      "required": "E-mail is required.",
-      "email": "E-mail address is not valid."
+    "register": {
+      "success": "You have been successfully registered."
     }
   },
+  "planningList": {
+    "headers": {
+      "my": "My plannings",
+      "all": "All plannings"
+    },
+    "delete": {
+      "success": "Planning deleted successfully."
+    },
+    "createPlanning": "Create planning",
+    "events": {
+      "planningCreated": "New planning was created!",
+      "planningFinished": "One of plannings was finished!",
+      "planningUpdated": "One of plannings was updated!",
+      "planningDeleted": "One of plannings was deleted!"
+    }
+  },
+  "editPlanning": {
+    "headers": {
+      "edit": "Edit planning",
+      "create": "Create planning"
+    },
+    "edit": {
+      "noPlanningLoaded": "No planning loaded to edit!",
+      "success": "Planning updated successfully."
+    },
+    "create": {
+      "success": "Planning created successfully."
+    }
+  },
+  "userList": {
+    "header": "Users",
+    "createUser": "Create user",
+    "editPassword": "Change password"
+  },
+  "editUser": {
+    "headers": {
+      "my": "Edit my user",
+      "any": "Edit any user"
+    },
+    "noUserLoaded": "No user loaded to edit!",
+    "success": "User updated successfully!"
+  },
+  "editPassword": {
+    "headers": {
+      "my": "Change my password",
+      "any": "Change any user's password"
+    },
+    "noUserLoaded": "No user loaded to edit!",
+    "success": "Password changed successfully!"
+  },
+  "myStats": {
+    "header": "My statistics"
+  },
+  "deckList": {
+    "header": "Decks",
+    "createDeck": "Create deck"
+  },
+  "editDeck": {
+    "headers": {
+      "edit": "Edit deck",
+      "create": "Create deck"
+    },
+    "edit": {
+      "noDeckLoaded": "No deck loaded to edit!",
+      "success": "Deck updated successfully."
+    },
+    "create": {
+      "success": "Deck created successfully."
+    }
+  },
+  "editIssue": {
+    "headers": {
+      "edit": "Edit issue",
+      "create": "Create issue"
+    },
+    "edit": {
+      "success": "Issue edited successfully.",
+      "noPlanningLoaded": "No planning loaded!",
+      "noIssueLoaded": "No issue loaded to edit!"
+    },
+    "create": {
+      "success": "Issue created successfully."
+    },
+    "createNext": "Create next"
+  },
+  "openedPlanning": {
+    "header": "Planning",
+    "noPlanningLoaded": "No planning loaded!",
+    "createIssue": "Create issue",
+    "finishPlanning": "Finish planning",
+    "finished": "FINISHED",
+    "finish": {
+      "success": "Planning finished successfully."
+    },
+    "activateIssue": {
+      "success": "Issue activated successfully."
+    },
+    "estimateIssue": {
+      "header": "Estimate issue",
+      "success": "Issue estimated successfully."
+    },
+    "deleteIssue": {
+      "success": "Issue deleted successfully."
+    },
+    "vote": {
+      "header": "Vote",
+      "success": "You have voted successfully."
+    },
+    "events": {
+      "allUsersVotedExp": "All users voted!",
+      "allUsersVoted": "All users voted in one of issues!",
+      "issueActivatedExp": "Issue was activated!",
+      "issueActivated": "One of issues was activated!",
+      "issueEstimatedExp": "Issue was estimated!",
+      "issueEstimated": "One of issues was estimated!",
+      "issueUpdatedExp": "Issue was updated!",
+      "issueUpdated": "One of issues was updated!",
+      "issueDeleted": "One of issues was deleted!",
+      "issueCreated": "New issue was created!",
+      "planningFinished": "Planning was finished!",
+      "planningUpdated": "Planning was updated!",
+      "planningDeleted": "Planning was deleted!"
+    }
+  },
+  "manageUser": {
+    "header": "Manage any user",
+    "noUserLoaded": "No user loaded to edit!"
+  },
+  "systemFeatureList": {
+    "header": "System features",
+    "success": "System feature updated successfully."
+  },
+  "voteDialog": {
+    "selectCard": "Select card..."
+  },
+  "areYouSureDialog": {
+    "header": "Are you sure?"
+  },
   "exception": {
-    "integrityViolation": "Data integrity has been violated.",
+    "integrityViolation": "Provided data violates constraints!",
+    "accessDenied": "Access is denied!",
+    "httpNotReadable": "HTTP request is invalid!",
+    "httpMethodNotSupported": "HTTP request method is not supported!",
+    "validation": "Data is not valid!",
+    "unknown": "Unknown error occured!",
+    "deck": {
+      "cardNotFound": "Card was not found in deck!",
+      "nameExists": "Deck with provided name already exists!",
+      "notFound": "Deck was not found!",
+      "usedInPlannings": "Deck is currently used in plannings!",
+      "invalidCardsLevels": "Provided cards have invalid levels!"
+    },
+    "issue": {
+      "alreadyActive": "Issue is already active!",
+      "alreadyEstimated": "Issue is already estimated!",
+      "iterationIsCurrentlyActive": "Unable to get votes for currently active issue iteration!",
+      "iterationIsNotCurrentlyActive": "Unable to vote in currently inactive issue iteration!",
+      "mismatch": "Issue doesn't belong to planning with provided identifier!",
+      "notFound": "Issue was not found!"
+    },
+    "optimisticLock": {
+      "outdatedVersion": "Data is out of date! Refresh page and try again.",
+      "missingVersion": "Version header is missing!",
+      "manipulatedVersion": "Data version was manipulated!",
+      "invalidVersionHeader": "Version header is invalid!"
+    },
     "password": {
-      "doesNotSatisfyConditions": "Provided password does not meet the requirements."
+      "doesNotSatisfyConditions": "Provided password does not meet the requirements!",
+      "oldNotValid": "Old password is not valid!",
+      "sameAsOld": "New password is same as old!"
+    },
+    "planning": {
+      "notFinished": "Planning is not finished yet!",
+      "alreadyFinished": "Planning is already finished!",
+      "hasIssuesInProgress": "Planning has issues in progress!",
+      "forbidden": "Access to planning is denied!",
+      "codeExists": "Planning with provided code already exists!",
+      "mismatch": "Issue doesn't belong to planning with provided identifier!",
+      "notFound": "Planning was not found!"
+    },
+    "role": {
+      "notFound": "Role was not found!"
+    },
+    "systemFeature": {
+      "notFound": "System feature was not found!",
+      "registrationDisabled": "Registration is disabled by administrator!"
+    },
+    "user": {
+      "notFound": "User was not found!",
+      "usernameExists": "User with provided username already exists!",
+      "emailExists": "User with provided e-mail already exists!"
+    },
+    "vote": {
+      "notFound": "Vote was not found!"
     }
   }
 }

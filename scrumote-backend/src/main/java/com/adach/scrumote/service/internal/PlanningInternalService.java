@@ -1,12 +1,12 @@
 package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
-import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.exception.planning.PlanningAlreadyFinishedException;
+import com.adach.scrumote.exception.planning.PlanningCodeAlreadyExistsException;
 import com.adach.scrumote.exception.planning.PlanningForbiddenException;
-import com.adach.scrumote.exception.planning.PlanningHasActiveIssuesException;
+import com.adach.scrumote.exception.planning.PlanningHasIssuesInProgressException;
 import com.adach.scrumote.exception.planning.PlanningNotFinishedException;
 import com.adach.scrumote.exception.planning.PlanningNotFoundException;
 import com.adach.scrumote.repository.PlanningRepository;
@@ -38,11 +38,11 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   }
 
   public List<Planning> findAll() {
-    return repository.findAll();
+    return repository.findAll(ID_DESC_SORT);
   }
 
   public List<Planning> findAllByUser(User user) {
-    return repository.findAllByUsersContains(user);
+    return repository.findAllByUsersContains(user, ID_DESC_SORT);
   }
 
   public void delete(Planning planning) {
@@ -51,6 +51,13 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
   //endregion
 
   //region Validation methods
+  public void validateCodeNotExists(String code) {
+    if (repository.existsByCode(code)) {
+      throw new PlanningCodeAlreadyExistsException(
+          String.format("Planning with code %s already exists.", code));
+    }
+  }
+
   public void validateContainsCurrentUser(Planning planning) {
     if (!planning.containsUser(sessionService.getCurrentUser())) {
       throw new PlanningForbiddenException(
@@ -89,10 +96,12 @@ public class PlanningInternalService extends AbstractInternalService<Planning> {
     }
   }
 
-  public void validateHasZeroActiveIssues(Planning planning) {
-    if (planning.getIssues().stream().anyMatch(Issue::isActive)) {
-      throw new PlanningHasActiveIssuesException(
-          String.format("Planning with id %d has active issues.", planning.getId()));
+  public void validateHasOnlyNewAndEstimatedIssues(Planning planning) {
+    if (planning.getIssues().stream().anyMatch(issue ->
+        issue.isActive() || (issue.getFinishedIterations() != 0 && issue.getEstimate()
+            .isEmpty()))) {
+      throw new PlanningHasIssuesInProgressException(
+          String.format("Planning with id %d has issues in progress.", planning.getId()));
     }
   }
   //endregion

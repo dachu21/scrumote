@@ -3,11 +3,13 @@ package com.adach.scrumote.sse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Repository
-public class SseRepository {
+@Slf4j
+class SseRepository {
 
   private final List<SseEmitter> emitters = Collections.synchronizedList(new ArrayList<>());
 
@@ -21,5 +23,6 @@ public class SseRepository {
 
   void removeEmitter(SseEmitter emitter) {
     emitters.remove(emitter);
+    log.info("SSE Emitter removed.");
   }
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @MandatoryTransactions
 public interface DeckRepository extends CustomJpaRepository<Deck, Long> {
 
+  boolean existsByName(String name);
 }

@@ -1,20 +1,13 @@
 package com.adach.scrumote.sse;
 
-import java.time.Instant;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class SseEvent {
 
-  @RequiredArgsConstructor
-  private static class SseEventMetadata {
-
-    private final Instant timestamp;
-    private final String name;
-  }
-
-  private final SseEventMetadata metadata;
-
-  protected SseEvent(String name) {
-    this.metadata = new SseEventMetadata(Instant.now(), name);
-  }
+  private String name;
 }

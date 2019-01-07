@@ -1,16 +1,33 @@
-import {Component} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from './_services';
+import {Component, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {AuthenticationService, LanguageService} from './_services';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private auth: AuthenticationService, private translateService: TranslateService) {
+  constructor(
+      private router: Router,
+      readonly auth: AuthenticationService,
+      readonly language: LanguageService) {
+
     this.auth.authenticate();
-    translateService.setDefaultLang('en');
-    translateService.use('en');
+    this.language.init();
+  }
+
+  ngOnInit() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+        window.scrollTo(0, 0);
+      }
+    });
   }
 }

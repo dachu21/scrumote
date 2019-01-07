@@ -5,6 +5,8 @@ import com.adach.scrumote.dto.complex.DeckWithCardsDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.mapper.DeckMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ public class DeckExternalService {
   @PreAuthorize("hasAnyAuthority('createDeck')")
   public Long createDeck(DeckWithCardsDto dto) {
     Deck deck = mapper.mapToEntity(dto);
+    internalService.validateNameNotExists(dto.getName());
     internalService.validateCardsHaveValidLevels(deck);
     return internalService.save(deck).getId();
   }
@@ -31,9 +34,18 @@ public class DeckExternalService {
     return mapper.mapToDtoWithCards(deck);
   }
 
+  @PreAuthorize("hasAnyAuthority('getAllDecks')")
+  public List<DeckWithCardsDto> getAllDecksWithCards() {
+    return internalService.findAll().stream().map(mapper::mapToDtoWithCards)
+        .collect(Collectors.toList());
+  }
+
   @PreAuthorize("hasAnyAuthority('updateDeck')")
   public void updateDeck(Long deckId, Long version, DeckWithCardsDto dto) {
     Deck deck = internalService.findById(deckId);
+    if (!deck.getName().equals(dto.getName())) {
+      internalService.validateNameNotExists(dto.getName());
+    }
     internalService.validateVersion(deck, version);
     validateDeckForUpdateOrDelete(deck);
 

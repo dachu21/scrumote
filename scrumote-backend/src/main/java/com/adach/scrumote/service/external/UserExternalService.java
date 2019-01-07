@@ -2,11 +2,13 @@ package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.complex.UserRolesWithActiveDto;
 import com.adach.scrumote.dto.complex.UserWithPasswordDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.Planning;
+import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
-import com.adach.scrumote.entity.UserHistory;
+import com.adach.scrumote.entity.UserStats;
 import com.adach.scrumote.exception.systemfeature.RegistrationDisabledException;
 import com.adach.scrumote.mapper.UserMapper;
 import com.adach.scrumote.service.internal.PlanningInternalService;
@@ -52,6 +54,8 @@ public class UserExternalService {
 
   private Long registerOrCreateUser(UserWithPasswordDto dto) {
     User user = mapper.mapToEntity(dto.getUser());
+    internalService.validateUsernameNotExists(dto.getUser().getUsername());
+    internalService.validateEmailNotExists(dto.getUser().getEmail());
 
     String textPassword = dto.getPassword().getNewPassword();
     passwordService.validateSatisfiesConditions(textPassword);
@@ -60,8 +64,8 @@ public class UserExternalService {
 
     user.getRoles().add(roleInternalService.findDeveloperRole());
 
-    UserHistory userHistory = UserHistory.createEmpty(user);
-    user.setUserHistory(userHistory);
+    UserStats userStats = UserStats.createEmpty(user);
+    user.setUserStats(userStats);
 
     user.setActive(true);
 
@@ -86,6 +90,14 @@ public class UserExternalService {
         .collect(Collectors.toList());
   }
 
+  @PreAuthorize("hasAnyAuthority('getAllDevelopers')")
+  public List<UserSimpleDto> getAllDevelopers() {
+    return internalService.findAllByRole(roleInternalService.findDeveloperRole())
+        .stream()
+        .map(mapper::mapToSimpleDto)
+        .collect(Collectors.toList());
+  }
+
   @PreAuthorize("hasAnyAuthority('getUsersForPlanning')")
   public List<UserSimpleDto> getUsersForPlanning(Long planningId) {
     Planning planning = planningInternalService.findById(planningId);
@@ -99,6 +111,8 @@ public class UserExternalService {
   public void updateMyUser(Long version, UserSimpleDto dto) {
     User currentUser = sessionService.getCurrentUser();
     internalService.validateVersion(currentUser, version);
+    validateUserForUpdate(currentUser, dto);
+
     updateUserFields(currentUser, dto);
   }
 
@@ -106,7 +120,18 @@ public class UserExternalService {
   public void updateAnyUser(Long userId, Long version, UserSimpleDto dto) {
     User user = internalService.findById(userId);
     internalService.validateVersion(user, version);
+    validateUserForUpdate(user, dto);
+
     updateUserFields(user, dto);
+  }
+
+  private void validateUserForUpdate(User user, UserSimpleDto dto) {
+    if (!user.getUsername().equals(dto.getUsername())) {
+      internalService.validateUsernameNotExists(dto.getUsername());
+    }
+    if (!user.getEmail().equals(dto.getEmail())) {
+      internalService.validateEmailNotExists(dto.getEmail());
+    }
   }
 
   private void updateUserFields(User user, UserSimpleDto dto) {
@@ -138,6 +163,18 @@ public class UserExternalService {
 
     String encodedPassword = passwordService.encode(dto.getNewPassword());
     user.setPassword(encodedPassword);
+  }
+
+  @PreAuthorize("hasAnyAuthority('manageAnyUser')")
+  public void manageAnyUser(Long userId, Long version, UserRolesWithActiveDto dto) {
+
+    User user = internalService.findById(userId);
+    internalService.validateVersion(user, version);
+    List<Role> roles = roleInternalService.findByIds(dto.getRoles());
+
+    user.getRoles().clear();
+    user.getRoles().addAll(roles);
+    user.setActive(dto.isActive());
   }
 
   private void validateRegistrationEnabled() {

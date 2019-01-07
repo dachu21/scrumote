@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,8 +26,9 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Role extends AbstractEntity {
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 32)
   @NotNull
+  @Size(min = 3, max = 32)
   private String name;
 
   @ManyToMany

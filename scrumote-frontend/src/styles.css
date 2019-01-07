@@ -1,1 +1,84 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body {
+  margin: 0;
+}
+
+.container {
+  padding: 16px;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.center-500 {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.left-text {
+  text-align: left;
+}
+
+.right-text {
+  text-align: left;
+}
+
+table.mat-table, mat-paginator.mat-paginator {
+  width: 100%;
+  background: #fafafa;
+}
+
+div.mat-paginator-container {
+  justify-content: center !important;
+}
+
+.mat-snack-bar-container.success-alert {
+  background-color: rgb(0, 150, 136);
+  color: white;
+}
+
+.success-alert button {
+  color: white;
+}
+
+.mat-snack-bar-container.error-alert {
+  background-color: rgb(244, 67, 54);
+  color: white;
+}
+
+.error-alert button {
+  color: white;
+}
+
+.mat-snack-bar-container.event-alert {
+  background-color: rgb(141, 110, 99);
+  color: white;
+}
+
+.event-alert button {
+  color: white;
+}
+
+.mat-flat-button.primary-darker {
+  background-color: #004d40;
+  color: #ffffff;
+}
+
+.mat-form-field {
+  padding: 10px 0 10px 0 !important;
+}

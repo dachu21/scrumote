@@ -1,0 +1,60 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="center-500 center-text">
+  <h2>{{'editPlanning.headers.' + planningType | translate}}</h2>
+
+  <form [formGroup]="planningForm" (ngSubmit)="onSubmit()" class="vertical">
+
+    <mat-form-field>
+      <input matInput required formControlName="code" type="text"/>
+      <mat-label>{{'models.planning.code' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('code')">
+        {{'validation.code.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required formControlName="name" type="text"/>
+      <mat-label>{{'models.planning.name' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('name')">
+        {{'validation.name.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select required formControlName="deckName" type="text">
+        <mat-option *ngFor="let deckName of allDecksKeys" [value]="deckName">
+          {{deckName}}
+        </mat-option>
+      </mat-select>
+      <mat-label>{{'models.planning.deckName' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('deckName')">
+        {{'validation.deck.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="usersUsernames" type="text" multiple>
+        <mat-option *ngFor="let username of allDevelopersKeys" [value]="username">
+          {{username}}
+        </mat-option>
+      </mat-select>
+      <mat-label>{{'models.planning.users' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('usersUsernames')">
+        {{'validation.users.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="description" type="text"/>
+      <mat-label>{{'models.planning.description' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('description')">
+        {{'validation.description.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <span>
+      <button mat-flat-button color="primary" [disabled]="!planningForm.valid" type="submit">
+        {{'common.save' | translate}}
+      </button>
+      <button mat-flat-button color="accent" routerLink="/all-plannings" type="button">
+        {{'common.cancel' | translate}}
+      </button>
+    </span>
+  </form>
+</div>

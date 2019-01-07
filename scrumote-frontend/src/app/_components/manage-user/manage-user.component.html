@@ -1,0 +1,38 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="center-500 center-text">
+  <h2>{{'manageUser.header' | translate}}</h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="vertical">
+
+    <mat-form-field>
+      <input matInput formControlName="username" type="text"/>
+      <mat-label>{{'models.user.username' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('username')">
+        {{'validation.username.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="roleNames" type="text" multiple>
+        <mat-option *ngFor="let roleName of allRolesKeys" [value]="roleName">
+          {{'roles.' + roleName | translate}}
+        </mat-option>
+      </mat-select>
+      <mat-label>{{'models.user.roles' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('roles')">
+        {{'validation.roles.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-checkbox formControlName="active" class="left-text">
+      {{'models.user.active' | translate}}
+    </mat-checkbox>
+
+    <span>
+      <button mat-flat-button color="primary" [disabled]="!userForm.valid" type="submit">
+        {{'common.save' | translate}}
+      </button>
+      <button mat-flat-button color="accent" (click)="onClickCancel()" type="button">
+        {{'common.cancel' | translate}}
+      </button>
+    </span>
+  </form>
+</div>

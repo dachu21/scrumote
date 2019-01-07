@@ -15,6 +15,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,15 +37,18 @@ public class Planning extends AbstractEntity {
   @NotNull
   private Deck deck;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 32)
   @NotNull
+  @Size(max = 32)
   private String code;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 32)
   @NotNull
+  @Size(min = 3, max = 32)
   private String name;
 
   @Column
+  @Size(max = 255)
   private String description;
 
   @Column(nullable = false)
@@ -67,7 +71,7 @@ public class Planning extends AbstractEntity {
   private Set<User> users = new LinkedHashSet<>();
 
   @OneToMany(mappedBy = "planning", cascade = CascadeType.REMOVE)
-  @OrderBy("code asc")
+  @OrderBy("id desc")
   private Set<Issue> issues = new LinkedHashSet<>();
   //endregion
 
