@@ -292,9 +292,61 @@
     "header": "Are you sure?"
   },
   "exception": {
-    "integrityViolation": "Data integrity has been violated!",
+    "integrityViolation": "Provided data violates constraints!",
+    "accessDenied": "Access is denied!",
+    "httpNotReadable": "HTTP request is invalid!",
+    "httpMethodNotSupported": "HTTP request method is not supported!",
+    "validation": "Data is not valid!",
+    "unknown": "Unknown error occured!",
+    "deck": {
+      "cardNotFound": "Card was not found in deck!",
+      "nameExists": "Deck with provided name already exists!",
+      "notFound": "Deck was not found!",
+      "usedInPlannings": "Deck is currently used in plannings!",
+      "invalidCardsLevels": "Provided cards have invalid levels!"
+    },
+    "issue": {
+      "alreadyActive": "Issue is already active!",
+      "alreadyEstimated": "Issue is already estimated!",
+      "iterationIsCurrentlyActive": "Unable to get votes for currently active issue iteration!",
+      "iterationIsNotCurrentlyActive": "Unable to vote in currently inactive issue iteration!",
+      "mismatch": "Issue doesn't belong to planning with provided identifier!",
+      "notFound": "Issue was not found!"
+    },
+    "optimisticLock": {
+      "outdatedVersion": "Data is out of date! Refresh page and try again.",
+      "missingVersion": "Version header is missing!",
+      "manipulatedVersion": "Data version has been manipulated!",
+      "invalidVersionHeader": "Version header is invalid!"
+    },
     "password": {
-      "doesNotSatisfyConditions": "Provided password does not meet the requirements!"
+      "doesNotSatisfyConditions": "Provided password does not meet the requirements!",
+      "oldNotValid": "Old password is not valid!",
+      "sameAsOld": "New password is same as old!"
+    },
+    "planning": {
+      "notFinished": "Planning has not been finished yet!",
+      "alreadyFinished": "Planning has already been finished!",
+      "hasIssuesInProgress": "Planning has issues in progress!",
+      "forbidden": "Access to planning is denied!",
+      "codeExists": "Planning with provided code already exists!",
+      "mismatch": "Issue doesn't belong to planning with provided identifier!",
+      "notFound": "Planning was not found!"
+    },
+    "role": {
+      "notFound": "Role was not found!"
+    },
+    "systemFeature": {
+      "notFound": "System feature was not found!",
+      "registrationDisabled": "Registration has been disabled by administrator!"
+    },
+    "user": {
+      "notFound": "User was not found!",
+      "usernameExists": "User with provided username already exists!",
+      "emailExists": "User with provided e-mail already exists!"
+    },
+    "vote": {
+      "notFound": "Vote was not found!"
     }
   }
 }
