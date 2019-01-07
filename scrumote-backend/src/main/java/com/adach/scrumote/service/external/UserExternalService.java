@@ -2,9 +2,11 @@ package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.complex.UserRolesWithActiveDto;
 import com.adach.scrumote.dto.complex.UserWithPasswordDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.Planning;
+import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserStats;
 import com.adach.scrumote.exception.systemfeature.RegistrationDisabledException;
@@ -152,6 +154,18 @@ public class UserExternalService {
 
     String encodedPassword = passwordService.encode(dto.getNewPassword());
     user.setPassword(encodedPassword);
+  }
+
+  @PreAuthorize("hasAnyAuthority('manageAnyUser')")
+  public void manageAnyUser(Long userId, Long version, UserRolesWithActiveDto dto) {
+
+    User user = internalService.findById(userId);
+    internalService.validateVersion(user, version);
+    List<Role> roles = roleInternalService.findByIds(dto.getRoles());
+
+    user.getRoles().clear();
+    user.getRoles().addAll(roles);
+    user.setActive(dto.isActive());
   }
 
   private void validateRegistrationEnabled() {

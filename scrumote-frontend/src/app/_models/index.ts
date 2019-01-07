@@ -10,3 +10,4 @@ export * from './role';
 export * from './system-feature';
 export * from './user-stats';
 export * from './vote';
+export * from './user-roles-with-active';

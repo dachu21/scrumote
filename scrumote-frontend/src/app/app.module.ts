@@ -20,6 +20,7 @@ import {
   ErrorComponent,
   HomeComponent,
   LoginComponent,
+  ManageUserComponent,
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
@@ -64,7 +65,8 @@ import {httpLoaderFactory} from './_functions';
     EditDeckComponent,
     OpenedPlanningComponent,
     EditIssueComponent,
-    VoteDialogComponent
+    VoteDialogComponent,
+    ManageUserComponent
   ],
   entryComponents: [
     VoteDialogComponent

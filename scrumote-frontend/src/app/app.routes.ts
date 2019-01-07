@@ -10,6 +10,7 @@ import {
   ErrorComponent,
   HomeComponent,
   LoginComponent,
+  ManageUserComponent,
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
@@ -183,6 +184,14 @@ export const ROUTES: Routes = [
     canActivate: [AuthorizationGuard],
     data: {
       requiredAuthorities: ['updateIssue'],
+    }
+  },
+  {
+    path: 'manage-any-user',
+    component: ManageUserComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      requiredAuthorities: ['manageAnyUser']
     }
   },
   {

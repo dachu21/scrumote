@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @MandatoryTransactions
 public abstract class AbstractInternalService<T extends AbstractEntity> {
 
-  protected final Sort ID_DESC_SORT = new Sort(Sort.Direction.DESC, "id");
+  protected static final Sort ID_DESC_SORT = new Sort(Sort.Direction.DESC, "id");
 
   public void validateVersion(T entity, Long version) {
     if (version < entity.getVersion()) {

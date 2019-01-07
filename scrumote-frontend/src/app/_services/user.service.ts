@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Password, User, UserWithPassword} from '../_models';
+import {Password, User, UserRolesWithActive, UserWithPassword} from '../_models';
 import {ifMatchOptions} from '../_functions';
 import {NewUserForm} from '../_interfaces';
 
@@ -70,6 +70,11 @@ export class UserService {
   updateAnyUsersPassword(user: User, password: Password) {
     return this.http.put<Password>(this.baseUrl + '/' + user.id + '/password',
         password, ifMatchOptions(user.version));
+  }
+
+  manageAnyUser(user: User, userRolesWithActive: UserRolesWithActive) {
+    return this.http.put<UserRolesWithActive>(this.baseUrl + '/' + user.id + '/manage',
+        userRolesWithActive, ifMatchOptions(user.version));
   }
 
 }

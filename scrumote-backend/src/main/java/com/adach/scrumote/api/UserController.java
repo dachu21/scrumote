@@ -2,6 +2,7 @@ package com.adach.scrumote.api;
 
 import com.adach.scrumote.configuration.api.PrefixedRestController;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.complex.UserRolesWithActiveDto;
 import com.adach.scrumote.dto.complex.UserWithPasswordDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.service.external.UserExternalService;
@@ -118,6 +119,16 @@ public class UserController extends AbstractController {
       @RequestHeader(value = VERSION_HEADER) String versionHeader) {
     Long version = extractVersion(versionHeader);
     userExternalService.updateAnyUsersPassword(userId, version, dto);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PreAuthorize("hasAnyAuthority('manageAnyUser')")
+  @PutMapping("/users/{userId}/manage")
+  public ResponseEntity<?> manageAnyUser(@PathVariable Long userId,
+      @RequestBody @Valid UserRolesWithActiveDto dto,
+      @RequestHeader(value = VERSION_HEADER) String versionHeader) {
+    Long version = extractVersion(versionHeader);
+    userExternalService.manageAnyUser(userId, version, dto);
     return ResponseEntity.noContent().build();
   }
 }

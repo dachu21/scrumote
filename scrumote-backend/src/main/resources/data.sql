@@ -47,10 +47,13 @@ insert into permission_t (id, version, name) values
 (31, 0, 'updateAnyUser'),                       -- |  +  |    -    |  -
 (32, 0, 'updateMyUsersPassword'),               -- |  +  |    +    |  +
 (33, 0, 'updateAnyUsersPassword'),              -- |  +  |    -    |  -
+(38, 0, 'manageAnyUser'),              			-- |  +  |    -    |  -
 
-(34, 0, 'getMyUserStats'),                    -- |  +  |    +    |  +
-(35, 0, 'getAnyUserStats');                   -- |  +  |    +    |  -
-alter sequence permission_seq restart with 38;
+(34, 0, 'getMyUserStats'),                    	-- |  +  |    +    |  +
+(35, 0, 'getAnyUserStats');                   	-- |  +  |    +    |  -
+
+(39, 0, 'getAllRoles');                   		-- |  +  |    0    |  -
+alter sequence permission_seq restart with 40;
 
 insert into role_permissions_t (role_id, permission_id) values
 -- ADMINISTRATOR
@@ -59,8 +62,9 @@ insert into role_permissions_t (role_id, permission_id) values
 (1, 18),
 (1, 19), (1, 20), (1, 36), (1, 21), (1, 22),
 (1, 23), (1, 24),
-(1, 25), (1, 26), (1, 27), (1, 28), (1, 37), (1, 29), (1, 30), (1, 31), (1, 32), (1, 33),
+(1, 25), (1, 26), (1, 27), (1, 28), (1, 37), (1, 29), (1, 30), (1, 31), (1, 32), (1, 33), (1, 38),
 (1, 34), (1, 35),
+(1, 39),
 -- SCRUM_MASTER
 (2, 2), (2, 3), (2, 5), (2, 7), (2, 8),
 (2, 10), (2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16),

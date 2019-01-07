@@ -13,3 +13,4 @@ export * from './edit-deck/edit-deck.component';
 export * from './opened-planning/opened-planning.component';
 export * from './edit-issue/edit-issue.component';
 export * from './vote-dialog/vote-dialog.component';
+export * from './manage-user/manage-user.component';
