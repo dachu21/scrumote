@@ -100,7 +100,8 @@
       "required": "Old password is required."
     },
     "newPasswordRepeated": {
-      "mismatch": "Passwords don't match."
+      "mismatch": "Passwords don't match.",
+      "required": "Repeated new password is required."
     },
     "email": {
       "required": "E-mail is required.",
