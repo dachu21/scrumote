@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/for
 import {AlertService, UserService} from '../../_services';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-create-user',
   templateUrl: 'create-user.component.html'
 })
 export class CreateUserComponent {

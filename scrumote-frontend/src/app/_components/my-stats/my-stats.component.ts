@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
 import {UserStatsService} from '../../_services';
 import {UserStats} from '../../_models';
-import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-user-list',

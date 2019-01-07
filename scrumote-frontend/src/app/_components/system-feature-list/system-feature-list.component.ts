@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {AlertService, AuthenticationService, SystemFeatureService} from '../../_services';
 import {SystemFeature} from '../../_models';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-system-feature-list',

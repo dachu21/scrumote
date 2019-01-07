@@ -78,3 +78,7 @@ div.mat-paginator-container {
   background-color: #004d40;
   color: #ffffff;
 }
+
+.mat-form-field {
+  padding: 10px 0 10px 0 !important;
+}

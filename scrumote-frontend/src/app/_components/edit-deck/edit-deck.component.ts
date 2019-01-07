@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, DeckService} from '../../_services';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Card} from '../../_models';
 import {ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material';
+import {Card} from '../../_models';
 
 @Component({
   selector: 'app-edit-deck',

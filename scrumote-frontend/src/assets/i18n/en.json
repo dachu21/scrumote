@@ -97,12 +97,14 @@
     "password": {
       "required": "Password is required.",
       "minlength": "Password must be at least 8 characters long.",
-      "maxlength": "Password cannot be more than 64 characters long."
+      "maxlength": "Password cannot be more than 64 characters long.",
+      "conditions": "Password must contain at least one number and one uppercase letter."
     },
     "newPassword": {
       "required": "New password is required.",
       "minlength": "New password must be at least 8 characters long.",
-      "maxlength": "New password cannot be more than 64 characters long."
+      "maxlength": "New password cannot be more than 64 characters long.",
+      "conditions": "New password must contain at least one number and one uppercase letter."
     },
     "oldPassword": {
       "required": "Old password is required."

@@ -33,6 +33,7 @@ import {
 
 import {MatPaginatorIntlCustom} from './_other';
 import {CustomMaterialModule} from './_modules';
+import {PasswordValidator} from './_directives';
 import {ApiInterceptor, ErrorInterceptor, XhrInterceptor} from './_interceptors';
 import {AuthenticationGuard, AuthorizationGuard, SystemFeatureGuard} from './_guards';
 import {
@@ -74,7 +75,8 @@ import {httpLoaderFactory} from './_functions';
     VoteDialogComponent,
     ManageUserComponent,
     SystemFeatureListComponent,
-    AreYouSureDialogComponent
+    AreYouSureDialogComponent,
+    PasswordValidator
   ],
   entryComponents: [
     VoteDialogComponent,

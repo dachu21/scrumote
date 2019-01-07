@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthenticationService, SystemFeatureService} from '../_services';
 import {map} from 'rxjs/operators';
-import {SystemFeature} from '../_models';
 import {Observable} from 'rxjs';
+import {AuthenticationService, SystemFeatureService} from '../_services';
+import {SystemFeature} from '../_models';
+
 
 @Injectable()
 export class SystemFeatureGuard implements CanActivate {

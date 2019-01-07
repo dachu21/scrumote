@@ -1,5 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {Subscription} from 'rxjs';
 import {
   AlertService,
   AuthenticationService,
@@ -8,8 +10,6 @@ import {
   PlanningService
 } from '../../_services';
 import {Planning} from '../../_models';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {Subscription} from 'rxjs';
 import {
   PlanningCreatedEvent,
   PlanningDeletedEvent,

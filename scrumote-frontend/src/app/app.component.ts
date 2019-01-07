@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, LanguageService} from './_services';
 import {NavigationEnd, Router} from '@angular/router';
+import {AuthenticationService, LanguageService} from './_services';
 
 @Component({
   selector: 'app-root',
