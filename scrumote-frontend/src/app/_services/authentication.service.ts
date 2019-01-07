@@ -14,6 +14,7 @@ export class AuthenticationService {
 
   private authenticated = false;
   private sessionInfo = SessionInfo.createAnonymous();
+  roleNames: string[] = [];
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -34,6 +35,7 @@ export class AuthenticationService {
       if (!!response.id && !!response.username && !!response.authorities) {
         this.authenticated = true;
         this.sessionInfo = response;
+        this.setRoleNames();
       } else {
         this.authenticated = false;
       }
@@ -55,6 +57,13 @@ export class AuthenticationService {
         this.guardUrl = undefined;
       }
     });
+  }
+
+  private setRoleNames() {
+    this.roleNames = this.sessionInfo.authorities
+    .filter(authority => authority.startsWith('ROLE_'))
+    .map(role => role.substring(5))
+    .sort();
   }
 
   logout() {

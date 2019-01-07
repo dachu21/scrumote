@@ -14,7 +14,7 @@
     <mat-form-field>
       <mat-select formControlName="roleNames" type="text" multiple>
         <mat-option *ngFor="let roleName of allRolesKeys" [value]="roleName">
-          {{roleName}}
+          {{'roles.' + roleName | translate}}
         </mat-option>
       </mat-select>
       <mat-label>{{'models.user.roles' | translate}}</mat-label>

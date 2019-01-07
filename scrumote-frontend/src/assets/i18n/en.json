@@ -1,4 +1,10 @@
 {
+  "roles": {
+    "DEVELOPER": "Developer",
+    "SCRUM_MASTER": "Scrum Master",
+    "PRODUCT_OWNER": "Product Owner",
+    "ADMINISTRATOR": "Administrator"
+  },
   "common": {
     "login": "Login",
     "register": "Register",
@@ -133,6 +139,7 @@
       "editMyUser": "Edit my user",
       "editMyPassword": "Change password",
       "myStats": "My statistics",
+      "myRoles": "My roles",
       "language": {
         "change": "Change language",
         "polish": "Polish",
