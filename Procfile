@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dspring.profiles.active=$SPRING_PROFILE $JAVA_OPTS -jar $JAR_PATH
