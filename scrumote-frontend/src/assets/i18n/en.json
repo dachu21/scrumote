@@ -26,7 +26,9 @@
     "refresh": "Refresh",
     "manage": "Manage",
     "enable": "Enable",
-    "disable": "Disable"
+    "disable": "Disable",
+    "yes": "Yes",
+    "no": "No"
   },
   "models": {
     "user": {
@@ -285,6 +287,9 @@
   },
   "voteDialog": {
     "selectCard": "Select card..."
+  },
+  "areYouSureDialog": {
+    "header": "Are you sure?"
   },
   "exception": {
     "integrityViolation": "Data integrity has been violated!",

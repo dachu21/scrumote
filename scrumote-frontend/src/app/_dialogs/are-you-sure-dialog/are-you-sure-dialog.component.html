@@ -1,0 +1,11 @@
+<div class="center-text">
+  <h1 mat-dialog-title>{{'areYouSureDialog.header' | translate}}</h1>
+  <div mat-dialog-content>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">{{'common.yes' | translate}}</button>
+    <button mat-button (click)="cancel()" cdkFocusInitial>
+      {{'common.no' | translate}}
+    </button>
+  </div>
+</div>

@@ -10,3 +10,4 @@ export * from './vote.service';
 export * from './language.service';
 export * from './notifications.service';
 export * from './role.service';
+export * from './dialog.service';

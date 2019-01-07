@@ -10,6 +10,7 @@ import {PropagationStopModule} from 'ngx-propagation-stop';
 
 import {AppComponent} from './app.component';
 import {
+  AreYouSureDialogComponent,
   CreateUserComponent,
   DeckListComponent,
   EditDeckComponent,
@@ -36,6 +37,7 @@ import {
   AlertService,
   AuthenticationService,
   DeckService,
+  DialogService,
   IssueService,
   LanguageService,
   NotificationsService,
@@ -69,10 +71,12 @@ import {httpLoaderFactory} from './_functions';
     EditIssueComponent,
     VoteDialogComponent,
     ManageUserComponent,
-    SystemFeatureListComponent
+    SystemFeatureListComponent,
+    AreYouSureDialogComponent
   ],
   entryComponents: [
-    VoteDialogComponent
+    VoteDialogComponent,
+    AreYouSureDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +115,7 @@ import {httpLoaderFactory} from './_functions';
     RoleService,
     LanguageService,
     NotificationsService,
+    DialogService
   ],
   bootstrap: [AppComponent]
 })

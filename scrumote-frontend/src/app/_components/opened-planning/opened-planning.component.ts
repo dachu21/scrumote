@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Subscription} from 'rxjs';
 import {
@@ -26,7 +26,7 @@ import {
   PlanningUpdatedEvent
 } from '../../_events';
 // noinspection TypeScriptPreferShortImport
-import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
+import {DialogService} from '../../_services/dialog.service';
 
 @Component({
   selector: 'app-planning',
@@ -45,7 +45,6 @@ import {VoteDialogComponent} from '../vote-dialog/vote-dialog.component';
 export class OpenedPlanningComponent implements OnInit, OnDestroy {
 
   // region Data
-  private DIALOG_WIDTH = '300px';
   private subscriptions = new Subscription();
 
   canVote = false;
@@ -70,7 +69,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   // region Constructor
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private dialog: MatDialog,
               private alert: AlertService,
               readonly auth: AuthenticationService,
               private planningService: PlanningService,
@@ -78,7 +76,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private deckService: DeckService,
               private voteService: VoteService,
-              private notifications: NotificationsService) {
+              private notifications: NotificationsService,
+              private dialogService: DialogService) {
 
     const planningToOpen = this.planningService.planningToOpen;
     this.planningService.planningToOpen = undefined;
@@ -145,11 +144,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.success('openedPlanning.allUsersVoted');
+        this.alert.event('openedPlanning.allUsersVoted');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.success('openedPlanning.allUsersVoted');
+        this.alert.event('openedPlanning.allUsersVoted');
       }
     }
   }
@@ -159,11 +158,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
         this.canVote = true;
-        this.alert.success('openedPlanning.issueActivated');
+        this.alert.event('openedPlanning.issueActivated');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.success('openedPlanning.issueActivated');
+        this.alert.event('openedPlanning.issueActivated');
       }
     }
   }
@@ -172,11 +171,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.success('openedPlanning.issueEstimated');
+        this.alert.event('openedPlanning.issueEstimated');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.success('openedPlanning.issueEstimated');
+        this.alert.event('openedPlanning.issueEstimated');
       }
     }
   }
@@ -185,11 +184,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.success('openedPlanning.issueUpdated');
+        this.alert.event('openedPlanning.issueUpdated');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.success('openedPlanning.issueUpdated');
+        this.alert.event('openedPlanning.issueUpdated');
       }
     }
   }
@@ -198,7 +197,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       this.loadAllIssues();
       this.expandedIssue = null;
-      this.alert.success('openedPlanning.issueDeleted');
+      this.alert.event('openedPlanning.issueDeleted');
     }
   }
 
@@ -206,14 +205,14 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       this.loadAllIssues();
       this.expandedIssue = null;
-      this.alert.success('openedPlanning.issueCreated');
+      this.alert.event('openedPlanning.issueCreated');
     }
   }
 
   private planningFinishedEventHandler(event: PlanningFinishedEvent) {
     if (this.openedPlanning.id === event.planningId) {
       this.loadPlanning();
-      this.alert.success('openedPlanning.planningFinished');
+      this.alert.event('openedPlanning.planningFinished');
     }
   }
 
@@ -222,13 +221,13 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       this.loadPlanning();
       this.loadDeck();
       this.loadUsers();
-      this.alert.success('openedPlanning.planningUpdated');
+      this.alert.event('openedPlanning.planningUpdated');
     }
   }
 
   private planningDeletedEventHandler(event: PlanningDeletedEvent) {
     if (this.openedPlanning.id === event.planningId) {
-      this.alert.error('openedPlanning.planningDeleted');
+      this.alert.event('openedPlanning.planningDeleted');
       const url = this.auth.hasAuthority('getAllPlannings') ?
           '/all-plannings' : '/my-plannings';
       this.router.navigate([url]);
@@ -379,8 +378,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   }
 
   estimateIssue(issue: Issue) {
-    const dialogRef = this.openVoteDialog('openedPlanning.estimateIssue.header');
-    dialogRef.afterClosed().subscribe(cardValue => {
+    this.dialogService.openVoteDialog('openedPlanning.estimateIssue.header', this.deck)
+    .afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id) {
         this.issueService.estimateIssue(this.openedPlanning.id, issue, cardValue).subscribe(() => {
           this.alert.success('openedPlanning.estimateIssue.success');
@@ -390,11 +389,15 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   }
 
   deleteIssue(issue: Issue) {
-    if (this.openedPlanning.id) {
-      this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
-        this.alert.success('openedPlanning.deleteIssue.success');
-      });
-    }
+    this.dialogService.openAreYouSureDialog().afterClosed().subscribe(value => {
+      if (value) {
+        if (this.openedPlanning.id) {
+          this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
+            this.alert.success('openedPlanning.deleteIssue.success');
+          });
+        }
+      }
+    });
   }
 
   expandIssue(issue: Issue) {
@@ -408,8 +411,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   }
 
   createVote(issue: Issue) {
-    const dialogRef = this.openVoteDialog('openedPlanning.vote.header');
-    dialogRef.afterClosed().subscribe(cardValue => {
+    this.dialogService.openVoteDialog('openedPlanning.vote.header', this.deck)
+    .afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations != null) {
         const vote = Vote.create(issue.finishedIterations + 1, cardValue);
         this.voteService.createVote(this.openedPlanning.id, issue.id, vote).subscribe(() => {
@@ -423,15 +426,6 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   // endregion
 
   // region Utils
-  openVoteDialog(i18nHeaderCode: string) {
-    return this.dialog.open(VoteDialogComponent, {
-      width: this.DIALOG_WIDTH,
-      data: {
-        deck: this.deck,
-        i18nHeaderCode: i18nHeaderCode
-      }
-    });
-  }
 
   stringToNumber(str: string) {
     return Number(str);

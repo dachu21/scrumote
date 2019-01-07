@@ -12,6 +12,7 @@ export * from './deck-list/deck-list.component';
 export * from './edit-deck/edit-deck.component';
 export * from './opened-planning/opened-planning.component';
 export * from './edit-issue/edit-issue.component';
-export * from './vote-dialog/vote-dialog.component';
+export * from '../_dialogs/vote-dialog/vote-dialog.component';
 export * from './manage-user/manage-user.component';
 export * from './system-feature-list/system-feature-list.component';
+export * from '../_dialogs/are-you-sure-dialog/are-you-sure-dialog.component';

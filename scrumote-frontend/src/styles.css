@@ -65,6 +65,15 @@ div.mat-paginator-container {
   color: white;
 }
 
+.mat-snack-bar-container.event-alert {
+  background-color: rgb(141, 110, 99);
+  color: white;
+}
+
+.event-alert button {
+  color: white;
+}
+
 .mat-flat-button.primary-darker {
   background-color: #004d40;
   color: #ffffff;
