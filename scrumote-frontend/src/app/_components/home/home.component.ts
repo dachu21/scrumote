@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from '../../_services';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
 
-  constructor(readonly auth: AuthenticationService) {
+  constructor() {
   }
 
 }

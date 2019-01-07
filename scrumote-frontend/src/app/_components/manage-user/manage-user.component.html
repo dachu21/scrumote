@@ -11,7 +11,6 @@
         {{'validation.username.' + error | translate}}
       </mat-error>
     </mat-form-field>
-    <mat-checkbox formControlName="active">{{'models.user.active' | translate}}</mat-checkbox>
     <mat-form-field>
       <mat-select formControlName="roleNames" type="text" multiple>
         <mat-option *ngFor="let roleName of allRolesKeys" [value]="roleName">
@@ -23,6 +22,9 @@
         {{'validation.roles.' + error | translate}}
       </mat-error>
     </mat-form-field>
+    <mat-checkbox formControlName="active" class="left-text">
+      {{'models.user.active' | translate}}
+    </mat-checkbox>
 
     <span>
       <button mat-flat-button color="primary" [disabled]="!userForm.valid" type="submit">

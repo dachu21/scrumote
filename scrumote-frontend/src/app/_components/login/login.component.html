@@ -5,14 +5,16 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="vertical">
 
     <mat-form-field>
-      <input matInput required formControlName="username" type="text"/>
+      <input matInput required formControlName="username" type="text"
+             autocomplete="username"/>
       <mat-label>{{'models.user.username' | translate}}</mat-label>
       <mat-error *ngFor="let error of getErrorKeys('username')">
         {{'validation.username.' + error | translate}}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput required formControlName="password" type="password"/>
+      <input matInput required formControlName="password" type="password"
+             autocomplete="current-password"/>
       <mat-label>{{'models.user.password' | translate}}</mat-label>
       <mat-error *ngFor="let error of getErrorKeys('password')">
         {{'validation.password.' + error | translate}}

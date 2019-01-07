@@ -141,6 +141,9 @@
     },
     "languageNotSupported": "Language is not supported!"
   },
+  "home": {
+    "appName": "Scrumote"
+  },
   "error": {
     "header": "Error",
     "404": "Page not found.",
@@ -245,7 +248,7 @@
     "header": "Planning",
     "noPlanningLoaded": "No planning loaded!",
     "createIssue": "Create issue",
-    "finishPlanning": "Finish",
+    "finishPlanning": "Finish planning",
     "finished": "FINISHED",
     "finish": {
       "success": "Planning finished successfully."

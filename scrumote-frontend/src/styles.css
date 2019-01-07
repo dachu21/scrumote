@@ -30,6 +30,14 @@ body {
   text-align: center;
 }
 
+.left-text {
+  text-align: left;
+}
+
+.right-text {
+  text-align: left;
+}
+
 table.mat-table, mat-paginator.mat-paginator {
   width: 100%;
   background: #fafafa;

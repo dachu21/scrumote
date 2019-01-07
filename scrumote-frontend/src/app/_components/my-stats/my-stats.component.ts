@@ -1,9 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, AuthenticationService, UserService, UserStatsService} from '../../_services';
-import {User, UserStats} from '../../_models';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Component, OnInit} from '@angular/core';
+import {UserStatsService} from '../../_services';
+import {UserStats} from '../../_models';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-user-list',
