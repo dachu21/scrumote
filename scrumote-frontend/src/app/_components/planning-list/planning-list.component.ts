@@ -91,22 +91,22 @@ export class PlanningListComponent implements OnInit, OnDestroy {
 
   private planningCreatedEventHandler(event: PlanningCreatedEvent) {
     this.loadPlannings();
-    this.alert.event('planningList.planningCreated');
+    this.alert.event('planningList.events.planningCreated');
   }
 
   private planningFinishedEventHandler(event: PlanningFinishedEvent) {
     this.loadPlannings();
-    this.alert.event('planningList.planningFinished');
+    this.alert.event('planningList.events.planningFinished');
   }
 
   private planningUpdatedEventHandler(event: PlanningUpdatedEvent) {
     this.loadPlannings();
-    this.alert.event('planningList.planningUpdated');
+    this.alert.event('planningList.events.planningUpdated');
   }
 
   private planningDeletedEventHandler(event: PlanningDeletedEvent) {
     this.loadPlannings();
-    this.alert.event('planningList.planningDeleted');
+    this.alert.event('planningList.events.planningDeleted');
   }
 
   // endregion

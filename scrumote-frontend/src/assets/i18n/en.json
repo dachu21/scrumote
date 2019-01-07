@@ -182,7 +182,13 @@
     "delete": {
       "success": "Planning deleted successfully."
     },
-    "createPlanning": "Create planning"
+    "createPlanning": "Create planning",
+    "events": {
+      "planningCreated": "New planning was created!",
+      "planningFinished": "One of plannings was finished!",
+      "planningUpdated": "One of plannings was updated!",
+      "planningDeleted": "One of plannings was deleted!"
+    }
   },
   "editPlanning": {
     "headers": {
@@ -275,6 +281,21 @@
     "vote": {
       "header": "Vote",
       "success": "You have voted successfully."
+    },
+    "events": {
+      "allUsersVotedExp": "All users voted!",
+      "allUsersVoted": "All users voted in one of issues!",
+      "issueActivatedExp": "Issue was activated!",
+      "issueActivated": "One of issues was activated!",
+      "issueEstimatedExp": "Issue was estimated!",
+      "issueEstimated": "One of issues was estimated!",
+      "issueUpdatedExp": "Issue was updated!",
+      "issueUpdated": "One of issues was updated!",
+      "issueDeleted": "One of issues was deleted!",
+      "issueCreated": "New issue was created!",
+      "planningFinished": "Planning was finished!",
+      "planningUpdated": "Planning was updated!",
+      "planningDeleted": "Planning was deleted!"
     }
   },
   "manageUser": {
@@ -325,8 +346,8 @@
       "sameAsOld": "New password is same as old!"
     },
     "planning": {
-      "notFinished": "Planning has not been finished yet!",
-      "alreadyFinished": "Planning has already been finished!",
+      "notFinished": "Planning is finished yet!",
+      "alreadyFinished": "Planning is already finished!",
       "hasIssuesInProgress": "Planning has issues in progress!",
       "forbidden": "Access to planning is denied!",
       "codeExists": "Planning with provided code already exists!",
@@ -338,7 +359,7 @@
     },
     "systemFeature": {
       "notFound": "System feature was not found!",
-      "registrationDisabled": "Registration has been disabled by administrator!"
+      "registrationDisabled": "Registration is disabled by administrator!"
     },
     "user": {
       "notFound": "User was not found!",

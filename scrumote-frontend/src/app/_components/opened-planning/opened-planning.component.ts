@@ -144,11 +144,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.event('openedPlanning.allUsersVoted');
+        this.alert.event('openedPlanning.events.allUsersVotedExp');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.event('openedPlanning.allUsersVoted');
+        this.alert.event('openedPlanning.events.allUsersVoted');
       }
     }
   }
@@ -158,11 +158,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
         this.canVote = true;
-        this.alert.event('openedPlanning.issueActivated');
+        this.alert.event('openedPlanning.events.issueActivatedExp');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.event('openedPlanning.issueActivated');
+        this.alert.event('openedPlanning.events.issueActivated');
       }
     }
   }
@@ -171,11 +171,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.event('openedPlanning.issueEstimated');
+        this.alert.event('openedPlanning.events.issueEstimatedExp');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.event('openedPlanning.issueEstimated');
+        this.alert.event('openedPlanning.events.issueEstimated');
       }
     }
   }
@@ -184,11 +184,11 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
-        this.alert.event('openedPlanning.issueUpdated');
+        this.alert.event('openedPlanning.events.issueUpdatedExp');
       } else {
         this.loadAllIssues();
         this.expandedIssue = null;
-        this.alert.event('openedPlanning.issueUpdated');
+        this.alert.event('openedPlanning.events.issueUpdated');
       }
     }
   }
@@ -197,7 +197,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       this.loadAllIssues();
       this.expandedIssue = null;
-      this.alert.event('openedPlanning.issueDeleted');
+      this.alert.event('openedPlanning.events.issueDeleted');
     }
   }
 
@@ -205,14 +205,14 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       this.loadAllIssues();
       this.expandedIssue = null;
-      this.alert.event('openedPlanning.issueCreated');
+      this.alert.event('openedPlanning.events.issueCreated');
     }
   }
 
   private planningFinishedEventHandler(event: PlanningFinishedEvent) {
     if (this.openedPlanning.id === event.planningId) {
       this.loadPlanning();
-      this.alert.event('openedPlanning.planningFinished');
+      this.alert.event('openedPlanning.events.planningFinished');
     }
   }
 
@@ -221,13 +221,13 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       this.loadPlanning();
       this.loadDeck();
       this.loadUsers();
-      this.alert.event('openedPlanning.planningUpdated');
+      this.alert.event('openedPlanning.events.planningUpdated');
     }
   }
 
   private planningDeletedEventHandler(event: PlanningDeletedEvent) {
     if (this.openedPlanning.id === event.planningId) {
-      this.alert.event('openedPlanning.planningDeleted');
+      this.alert.event('openedPlanning.events.planningDeleted');
       const url = this.auth.hasAuthority('getAllPlannings') ?
           '/all-plannings' : '/my-plannings';
       this.router.navigate([url]);
