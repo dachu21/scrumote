@@ -27,6 +27,7 @@ insert into permission_t (id, version, name) values
 
 (17, 0, 'createVote'),                          -- |  -  |    -    |  +
 (18, 0, 'getVotesForIssue'),                    -- |  +  |    +    |  +
+(40, 0, 'checkIfMyVoteExists'),                 -- |  -  |    -    |  +
 
 (19, 0, 'createDeck'),                          -- |  +  |    -    |  -
 (20, 0, 'getDeck'),                             -- |  +  |    +    |  +
@@ -53,7 +54,7 @@ insert into permission_t (id, version, name) values
 (35, 0, 'getAnyUserStats'),                   	-- |  +  |    +    |  -
 
 (39, 0, 'getAllRoles');                   		  -- |  +  |    -    |  -
-alter sequence permission_seq restart with 40;
+alter sequence permission_seq restart with 41;
 
 insert into role_permissions_t (role_id, permission_id) values
 -- ADMINISTRATOR
@@ -80,7 +81,7 @@ insert into role_permissions_t (role_id, permission_id) values
 -- DEVELOPER
 (4, 4), (4, 6),
 (4, 11), (4, 12),
-(4, 17), (4, 18),
+(4, 17), (4, 18), (4, 40),
 (4, 20),
 (4, 26), (4, 29), (4, 30), (4, 32),
 (4, 34);

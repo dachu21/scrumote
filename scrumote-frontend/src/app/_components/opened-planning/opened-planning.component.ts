@@ -48,6 +48,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   private DIALOG_WIDTH = '300px';
   private subscriptions = new Subscription();
 
+  canVote = false;
+
   openedPlanning!: Planning;
   deck!: Deck;
   usersDataSource = new MatTableDataSource<User>();
@@ -156,6 +158,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     if (this.openedPlanning.id === event.planningId) {
       if (this.expandedIssue && this.expandedIssue.id === event.issueId) {
         this.reloadIssue(this.expandedIssue);
+        this.canVote = true;
         this.alert.success('openedPlanning.issueActivated');
       } else {
         this.loadAllIssues();
@@ -217,6 +220,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   private planningUpdatedEventHandler(event: PlanningUpdatedEvent) {
     if (this.openedPlanning.id === event.planningId) {
       this.loadPlanning();
+      this.loadDeck();
+      this.loadUsers();
       this.alert.success('openedPlanning.planningUpdated');
     }
   }
@@ -236,31 +241,31 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   private loadPlanning() {
     if (this.openedPlanning.id) {
       this.planningService.getPlanning(this.openedPlanning.id).subscribe(
-          response => this.assignPlanning(response));
+          response => this._assignPlanning(response));
     }
   }
 
-  private assignPlanning(response: Planning) {
+  private _assignPlanning(response: Planning) {
     this.openedPlanning = response;
   }
 
   private loadDeck() {
     this.deckService.getDeck(this.openedPlanning.deckId).subscribe(
-        response => this.assignDeck(response));
+        response => this._assignDeck(response));
   }
 
-  private assignDeck(response: Deck) {
+  private _assignDeck(response: Deck) {
     this.deck = response;
   }
 
   private loadUsers() {
     if (this.openedPlanning.id) {
       this.userService.getUsersForPlanning(this.openedPlanning.id).subscribe(
-          response => this.assignUsers(response));
+          response => this._assignUsers(response));
     }
   }
 
-  private assignUsers(response: User[]) {
+  private _assignUsers(response: User[]) {
     this.usersDataSource.data = response;
     this.expandedIssueVotesMap.clear();
     for (const user of this.usersDataSource.data) {
@@ -273,38 +278,37 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   private loadAllIssues() {
     if (this.openedPlanning.id) {
       this.issueService.getIssuesForPlanning(this.openedPlanning.id).subscribe(
-          response => this.assignAllIssues(response));
+          response => this._assignAllIssues(response));
     }
   }
 
-  private assignAllIssues(response: Issue[]) {
+  private _assignAllIssues(response: Issue[]) {
     this.issuesDataSource.data = response;
   }
 
   private reloadIssue(issue: Issue) {
     if (this.openedPlanning.id && issue.id) {
       this.issueService.getIssue(this.openedPlanning.id, issue.id).subscribe(
-          response => this.overwriteIssue(issue, response));
+          response => this._overwriteIssue(issue, response));
     }
   }
 
-  private overwriteIssue(issue: Issue, response: Issue) {
+  private _overwriteIssue(issue: Issue, response: Issue) {
     Issue.overwrite(issue, response);
     if (this.expandedIssue && this.expandedIssue.id === issue.id) {
       this.reloadExpandedIssueContent();
-      this.setExpandedIssueDisplayedColumns();
     }
   }
 
   private reloadExpandedIssueContent() {
     if (this.openedPlanning.id && this.expandedIssue && this.expandedIssue.id) {
       this.voteService.getVotesForIssue(this.openedPlanning.id, this.expandedIssue.id).subscribe(
-          response => this.assignExpandedIssueVotes(response));
+          response => this._assignExpandedIssueVotes(response));
     }
-    this.setExpandedIssueDisplayedColumns();
+    this._setExpandedIssueDisplayedColumns();
   }
 
-  private assignExpandedIssueVotes(response: Vote[]) {
+  private _assignExpandedIssueVotes(response: Vote[]) {
     for (const vote of response) {
       if (vote.userId) {
         const userVotesMap = this.expandedIssueVotesMap.get(vote.userId);
@@ -315,7 +319,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setExpandedIssueDisplayedColumns() {
+  private _setExpandedIssueDisplayedColumns() {
     this.usersDisplayedColumns = ['username'];
     this.finishedIterationsColumns = [''];
     if (this.expandedIssue && this.expandedIssue.finishedIterations) {
@@ -329,6 +333,20 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     }
   }
 
+  private checkIfCanVote(issue: Issue) {
+    if (this.auth.hasAuthority('checkIfMyVoteExists') &&
+        issue.active && issue.id && issue.finishedIterations != null && this.openedPlanning.id) {
+
+      this.voteService.checkIfMyVoteExists(this.openedPlanning.id, issue.id,
+          issue.finishedIterations + 1).subscribe(
+          response => {
+            this.canVote = !response;
+          });
+    } else {
+      this.canVote = false;
+    }
+  }
+
   // endregion
 
   // region Planning actions
@@ -336,7 +354,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.planningService.finishPlanning(this.openedPlanning).subscribe(() => {
       this.alert.success('openedPlanning.finish.success');
     });
-    this.loadPlanning();
+    // this.loadPlanning(); // TODO Delete: handled by incoming event
   }
 
   // endregion
@@ -356,7 +374,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   activateIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.activateIssue(this.openedPlanning.id, issue).subscribe(() => {
-        this.reloadIssue(issue);
+        // this.reloadIssue(issue); // TODO Delete: handled by incoming event
         this.alert.success('openedPlanning.activateIssue.success');
       });
     }
@@ -367,7 +385,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(cardValue => {
       if (cardValue && this.openedPlanning.id) {
         this.issueService.estimateIssue(this.openedPlanning.id, issue, cardValue).subscribe(() => {
-          this.reloadIssue(issue);
+          // this.reloadIssue(issue); // TODO Delete: handled by incoming event
           this.alert.success('openedPlanning.estimateIssue.success');
         });
       }
@@ -377,8 +395,8 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   deleteIssue(issue: Issue) {
     if (this.openedPlanning.id) {
       this.issueService.deleteIssue(this.openedPlanning.id, issue).subscribe(() => {
-        this.loadAllIssues();
-        this.expandedIssue = null;
+        // this.loadAllIssues(); // TODO Delete: handled by incoming event
+        // this.expandedIssue = null;
         this.alert.success('openedPlanning.deleteIssue.success');
       });
     }
@@ -387,7 +405,9 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   expandIssue(issue: Issue) {
     if (this.expandedIssue !== issue && issue.id) {
       this.expandedIssue = issue;
+      // this.reloadIssue(issue); // TODO Delete: no need to reload
       this.reloadExpandedIssueContent();
+      this.checkIfCanVote(issue);
     } else {
       this.expandedIssue = null;
     }
@@ -399,7 +419,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
       if (cardValue && this.openedPlanning.id && issue.id && issue.finishedIterations != null) {
         const vote = Vote.create(issue.finishedIterations + 1, cardValue);
         this.voteService.createVote(this.openedPlanning.id, issue.id, vote).subscribe(() => {
-          this.reloadExpandedIssueContent();
+          this.canVote = false;
           this.alert.success('openedPlanning.vote.success');
         });
       }

@@ -2,6 +2,7 @@ package com.adach.scrumote.service.internal;
 
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.Issue;
+import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.Vote;
 import com.adach.scrumote.exception.vote.VoteNotFoundException;
 import com.adach.scrumote.repository.VoteRepository;
@@ -35,6 +36,10 @@ public class VoteInternalService extends AbstractInternalService<Vote> {
     Optional<Vote> voteOpt = repository.findById(id);
     return voteOpt.orElseThrow(
         () -> new VoteNotFoundException(String.format("Vote with id %d does not exist.", id)));
+  }
+
+  public boolean checkIfVoteExists(Issue issue, Integer iteration, User currentUser) {
+    return repository.existsByIssueAndIterationAndUser(issue, iteration, currentUser);
   }
   //endregion
 }

@@ -44,4 +44,11 @@ public class VoteController extends AbstractController {
       return voteExternalService.getVotesForIssueAndIteration(planningId, issueId, iteration);
     }
   }
+
+  @PreAuthorize("hasAnyAuthority('checkIfMyVoteExists')")
+  @GetMapping("/plannings/{planningId}/issues/{issueId}/votes/my")
+  public boolean checkIfMyVoteExists(@PathVariable Long planningId,
+      @PathVariable Long issueId, @RequestParam @NotNull Integer iteration) {
+    return voteExternalService.checkIfMyVoteExists(planningId, issueId, iteration);
+  }
 }

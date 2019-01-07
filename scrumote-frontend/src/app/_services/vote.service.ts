@@ -25,4 +25,13 @@ export class VoteService {
           }
         });
   }
+
+  checkIfMyVoteExists(planningId: number, issueId: number, iteration: number) {
+    return this.http.get<boolean>(
+        this.planningBaseUrl + planningId + this.issueBaseUrl + issueId + this.baseUrl + '/my', {
+          params: {
+            iteration: iteration.toString()
+          }
+        });
+  }
 }

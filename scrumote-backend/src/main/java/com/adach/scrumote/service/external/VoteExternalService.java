@@ -5,6 +5,7 @@ import com.adach.scrumote.dto.simple.VoteSimpleDto;
 import com.adach.scrumote.entity.Deck;
 import com.adach.scrumote.entity.Issue;
 import com.adach.scrumote.entity.Planning;
+import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.Vote;
 import com.adach.scrumote.mapper.VoteMapper;
 import com.adach.scrumote.service.internal.DeckInternalService;
@@ -76,5 +77,14 @@ public class VoteExternalService {
 
     return internalService.findAllByIssueAndIteration(issue, iteration).stream()
         .map(mapper::mapToSimpleDto).collect(Collectors.toList());
+  }
+
+  @PreAuthorize("hasAnyAuthority('checkIfMyVoteExists')")
+  public boolean checkIfMyVoteExists(Long planningId, Long issueId, Integer iteration) {
+    Issue issue = issueInternalService.findById(issueId);
+    issueInternalService.validateBelongsToPlanningWithId(issue, planningId);
+    User currentUser = sessionService.getCurrentUser();
+
+    return internalService.checkIfVoteExists(issue, iteration, currentUser);
   }
 }

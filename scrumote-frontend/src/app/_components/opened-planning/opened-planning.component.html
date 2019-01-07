@@ -93,7 +93,7 @@
         <button propagationStop *ngIf="auth.hasAuthority('createVote') &&
                 !openedPlanning.finished &&
                 !issue.estimate"
-                [disabled]="!issue.active"
+                [disabled]="issue !== expandedIssue || !issue.active || !canVote "
                 mat-flat-button class="primary-darker" (click)="createVote(issue)">
           {{'common.vote' | translate}}
         </button>
