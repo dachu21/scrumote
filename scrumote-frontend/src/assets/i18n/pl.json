@@ -1,7 +1,384 @@
 {
+  "paginator": {
+    "itemsPerPageLabel": "Elementów na stronie:",
+    "nextPageLabel": "Następna strona",
+    "previousPageLabel": "Poprzednia strona",
+    "firstPageLabel": "Pierwsza strona",
+    "lastPageLabel": "Ostatnia strona",
+    "rangePageLabel": "z"
+  },
+  "roles": {
+    "DEVELOPER": "Deweloper",
+    "SCRUM_MASTER": "Scrum Master",
+    "PRODUCT_OWNER": "Właściciel Produktu",
+    "ADMINISTRATOR": "Administrator"
+  },
+  "common": {
+    "login": "Zaloguj",
+    "register": "Zarejestruj się",
+    "cancel": "Anuluj",
+    "home": "Strona główna",
+    "open": "Otwórz",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "actions": "Akcje",
+    "save": "Zapisz",
+    "stats": "Statystyki",
+    "close": "Zamknij",
+    "create": "Utwórz",
+    "activate": "Aktywuj",
+    "estimate": "Wyceń",
+    "ok": "OK",
+    "select": "Wybierz...",
+    "vote": "Zagłosuj",
+    "refresh": "Odśwież",
+    "manage": "Zarządzaj",
+    "enable": "Włącz",
+    "disable": "Wyłącz",
+    "yes": "Tak",
+    "no": "Nie"
+  },
+  "models": {
+    "user": {
+      "username": "Nazwa użytkownika",
+      "password": "Hasło",
+      "email": "E-mail",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "active": "Aktywny",
+      "roles": "Role"
+    },
+    "planning": {
+      "code": "Kod",
+      "name": "Nazwa",
+      "deckName": "Talia",
+      "users": "Użytkownicy",
+      "moderatorUsername": "Moderator",
+      "description": "Opis",
+      "finished": "Zakończone"
+    },
+    "userStats": {
+      "plannings": "Spotkania",
+      "issues": "Zadania",
+      "votes": "Głosy",
+      "firstVotesBelowEstimate": "Pierwsze głosy poniżej wyceny",
+      "firstVotesAboveEstimate": "Pierwsze głosy powyżej wyceny",
+      "firstVotesEqualEstimate": "Pierwsze głosy równe wycenie",
+      "averageFirstVoteLevelDifference": "Średnia różnica poziomu pierwszego głosu"
+    },
+    "password": {
+      "oldPassword": "Stare hasło",
+      "newPassword": "Nowe hasło",
+      "newPasswordRepeated": "Powtórzone nowe hasło"
+    },
+    "deck": {
+      "name": "Nazwa",
+      "cards": "Karty"
+    },
+    "issue": {
+      "code": "Kod",
+      "name": "Nazwa",
+      "description": "Opis",
+      "finishedIterations": "Zakończone iteracje",
+      "estimate": "Wycena",
+      "active": "W toku"
+    },
+    "systemFeature": {
+      "code": "Kod",
+      "enabled": "Włączona"
+    }
+  },
+  "validation": {
+    "username": {
+      "required": "Nazwa użytkownika jest wymagana.",
+      "minlength": "Nazwa użytkownika musi mieć co najmniej 3 znaki.",
+      "maxlength": "Nazwa użytkownika może mieć maksymalnie 32 znaki."
+    },
+    "password": {
+      "required": "Hasło jest wymagane.",
+      "minlength": "Hasło musi mieć co najmniej 8 znaków.",
+      "maxlength": "Hasło może mieć maksymalnie 64 znaki.",
+      "conditions": "Hasło musi zawierać co najmniej jedną wielką literę i jedną cyfrę."
+    },
+    "newPassword": {
+      "required": "Nowe hasło jest wymagane",
+      "minlength": "Nowe hasło musi mieć co najmniej 8 znaków.",
+      "maxlength": "Nowe hasło może mieć maksymalnie 64 znaki.",
+      "conditions": "Nowe hasło musi zawierać co najmniej jedną wielką literę i jedną cyfrę."
+    },
+    "oldPassword": {
+      "required": "Stare hasło jest wymagane."
+    },
+    "newPasswordRepeated": {
+      "mismatch": "Hasło potwórzone niepoprawnie.",
+      "required": "Powtórzone nowe hasło jest wymagane."
+    },
+    "email": {
+      "required": "E-mail jest wymagany.",
+      "email": "E-mail jest nieprawidłowy.",
+      "maxlength": "E-mail może mieć maksymalnie 64 znaki."
+    },
+    "name": {
+      "required": "Nazwa jest wymagana",
+      "minlength": "Nazwa musi mieć co najmniej 3 znaki.",
+      "maxlength": "Nazwa może mieć maksymalnie 32 znaki."
+    },
+    "code": {
+      "required": "Kod jest wymagany.",
+      "maxlength": "Kod może mieć maksymalnie 32 znaki."
+    },
+    "deckName": {
+      "required": "Talia jest wymagana."
+    },
+    "firstName": {
+      "maxlength": "Imię może mieć maksymalnie 32 znaki."
+    },
+    "lastName": {
+      "maxlength": "Nazwisko może mieć maksymalnie 32 znaki."
+    },
+    "description": "Opis może mieć maksymalnie 255 znaków."
+  },
   "app": {
     "navbar": {
-      "appName": "KOPYTKO"
+      "appName": "Scrumote",
+      "myPlannings": "Moje spotkania",
+      "allPlannings": "Wszystkie spotkania",
+      "allUsers": "Użytkownicy",
+      "allDecks": "Talie",
+      "systemFeatures": "Opcje systemowe"
+    },
+    "userMenu": {
+      "logout": "Wyloguj",
+      "editMyUser": "Edytuj dane",
+      "editMyPassword": "Zmień hasło",
+      "myStats": "Moje statystyki",
+      "myRoles": "Moje role",
+      "language": {
+        "change": "Zmień język",
+        "polish": "Polski",
+        "english": "Angielski"
+      }
+    },
+    "languageNotSupported": "Język nie jest wspierany!"
+  },
+  "error": {
+    "header": "Błąd",
+    "404": "Nie znaleziono takiej strony.",
+    "unauthorized": "Nie masz dostępu do tej strony."
+  },
+  "home": {
+    "appName": "Scrumote"
+  },
+  "login": {
+    "header": "Zaloguj",
+    "error": "Nieprawidłowa nazwa użytkownika lub hasło!"
+  },
+  "createUser": {
+    "headers": {
+      "register": "Zarejestruj się",
+      "create": "Utwórz użytkownika"
+    },
+    "create": {
+      "success": "Użytkownik utworzony pomyślnie."
+    },
+    "register": {
+      "success": "Zostałeś pomyślnie zarejestrowany."
+    }
+  },
+  "planningList": {
+    "headers": {
+      "my": "Moje spotkania",
+      "all": "Wszystkie spotkania"
+    },
+    "delete": {
+      "success": "Spotkanie usunięte pomyślnie."
+    },
+    "createPlanning": "Utwórz spotkanie",
+    "events": {
+      "planningCreated": "Zostało utworzone nowe spotkanie!",
+      "planningFinished": "Jedno ze spotkań zostało zakończone!",
+      "planningUpdated": "Jedno ze spotkań zostało zaktualizowane!",
+      "planningDeleted": "Jedno ze spotkań zostało usunięte!"
+    }
+  },
+  "editPlanning": {
+    "headers": {
+      "edit": "Edytuj spotkanie",
+      "create": "Utwórz spotkanie"
+    },
+    "edit": {
+      "noPlanningLoaded": "Brak spotkania wczytanego do edycji!",
+      "success": "Spotkanie zaktualizowane pomyślnie."
+    },
+    "create": {
+      "success": "Spotkanie utworzone pomyślnie."
+    }
+  },
+  "userList": {
+    "header": "Użytkownicy",
+    "createUser": "Utwórz użytkownika",
+    "editPassword": "Zmień hasło"
+  },
+  "editUser": {
+    "headers": {
+      "my": "Edytuj mojego użytkownika",
+      "any": "Edytuj innego użytkownika"
+    },
+    "noUserLoaded": "Brak użytkownika wczytanego do edycji!",
+    "success": "Użytkownik zaktualizowany pomyślnie."
+  },
+  "editPassword": {
+    "headers": {
+      "my": "Zmień moje hasło",
+      "any": "Zmień hasło innego użytkownika"
+    },
+    "noUserLoaded": "Brak użytkownika wczytanego do edycji!",
+    "success": "Hasło zmienione pomyślnie!"
+  },
+  "myStats": {
+    "header": "Moje statystyki"
+  },
+  "deckList": {
+    "header": "Talie",
+    "createDeck": "Utwórz talię"
+  },
+  "editDeck": {
+    "headers": {
+      "edit": "Edytuj talię",
+      "create": "Utwórz talię"
+    },
+    "edit": {
+      "noDeckLoaded": "Brak talii wczytanej do edycji!",
+      "success": "Talia zaktualizowana pomyślnie."
+    },
+    "create": {
+      "success": "Talia utworzona pomyślnie."
+    }
+  },
+  "editIssue": {
+    "headers": {
+      "edit": "Edytuj zadanie",
+      "create": "Utwórz zadanie"
+    },
+    "edit": {
+      "success": "Zadanie zaktualizowane pomyślnie.",
+      "noPlanningLoaded": "Brak wczytanego spotkania!",
+      "noIssueLoaded": "Brak zadania wczytanego do edycji!"
+    },
+    "create": {
+      "success": "Zadanie utworzone pomyślnie."
+    },
+    "createNext": "Utwórz kolejne"
+  },
+  "openedPlanning": {
+    "header": "Spotkanie",
+    "noPlanningLoaded": "Brak wczytanego spotkania!",
+    "createIssue": "Utwórz zadanie",
+    "finishPlanning": "Zakończ spotkanie",
+    "finished": "ZAKOŃCZONE",
+    "finish": {
+      "success": "Spotkanie zakończone pomyślnie."
+    },
+    "activateIssue": {
+      "success": "Zadanie aktywowane pomyślnie."
+    },
+    "estimateIssue": {
+      "header": "Wyceń zadanie.",
+      "success": "Zadanie wycenione pomyślnie."
+    },
+    "deleteIssue": {
+      "success": "Zadanie usunięte pomyślnie."
+    },
+    "vote": {
+      "header": "Zagłosuj",
+      "success": "Zagłosowałeś pomyślnie."
+    },
+    "events": {
+      "allUsersVotedExp": "Wszyscy użytkownicy zagłosowali!",
+      "allUsersVoted": "W jednym z zadań wszyscy użytkownicy zagłosowali!",
+      "issueActivatedExp": "Zadanie zostało aktywowane!",
+      "issueActivated": "Jedno z zadań zostało aktywowane!",
+      "issueEstimatedExp": "Zadanie zostało wycenione!",
+      "issueEstimated": "Jedno z zadań zostało wycenione!",
+      "issueUpdatedExp": "Zadanie zostało zaktualizowane!",
+      "issueUpdated": "Jedno z zadań zostało zaktualizowane!",
+      "issueDeleted": "Jedno z zadań zostało usunięte!",
+      "issueCreated": "Zostało utworzone nowe zadanie!",
+      "planningFinished": "Spotkanie zostało zakończone!",
+      "planningUpdated": "Spotkanie zostało zaktualizowane!",
+      "planningDeleted": "Spotkanie zostało usunięte!"
+    }
+  },
+  "manageUser": {
+    "header": "Zarządzaj innym użytkownikiem",
+    "noUserLoaded": "Brak użytkownika wczytanego do edycji!"
+  },
+  "systemFeatureList": {
+    "header": "Opcje systemowe",
+    "success": "Opcja systemowa zaktualizowana pomyślnie."
+  },
+  "voteDialog": {
+    "selectCard": "Wybierz kartę..."
+  },
+  "areYouSureDialog": {
+    "header": "Jesteś pewien?"
+  },
+  "exception": {
+    "integrityViolation": "Wpisane dane naruszają ograniczenia!",
+    "accessDenied": "Dostęp zabroniony!",
+    "httpNotReadable": "Żądanie HTTP jest nieprawidłowe!",
+    "httpMethodNotSupported": "Metoda HTTP zabroniona!",
+    "validation": "Wpisane dane nie są poprawne!",
+    "unknown": "Wystąpił nieznany błąd!",
+    "deck": {
+      "cardNotFound": "Brak takiej karty w talii!",
+      "nameExists": "Istnieje już talia o takiej nazwie!",
+      "notFound": "Talia nie została znaleziona!",
+      "usedInPlannings": "Talia jest używana w istniejących spoktaniach!",
+      "invalidCardsLevels": "Podane karty mają nieprawidłową hierarchię!"
+    },
+    "issue": {
+      "alreadyActive": "Zadanie jest już aktywne!",
+      "alreadyEstimated": "Zadanie jest już wycenione!",
+      "iterationIsCurrentlyActive": "Nie można pobrać głosów dla aktualnej iteracji zadania!",
+      "iterationIsNotCurrentlyActive": "Nie można oddać głosu w nieaktualnej iteracji zadania!",
+      "mismatch": "Zadanie nie należy do spotkania o podanym identyfikatorze!",
+      "notFound": "Zadanie nie zostało znalezione!"
+    },
+    "optimisticLock": {
+      "outdatedVersion": "Dane formularza są nieaktualne! Odśwież stronę.",
+      "missingVersion": "Żądanie nie zawiera nagłówka wersji!",
+      "manipulatedVersion": "Wersja danych została zmanipulowana!",
+      "invalidVersionHeader": "Nagłówek wersji jest nieprawidłowy!"
+    },
+    "password": {
+      "doesNotSatisfyConditions": "Podane hasło nie spełnia wymagań!",
+      "oldNotValid": "Stare hasło jest nieprawidłowe!",
+      "sameAsOld": "Nowe hasło jest takie samo jak stare!"
+    },
+    "planning": {
+      "notFinished": "Spotkanie nie zostało jeszcze zakończone!",
+      "alreadyFinished": "Spotkanie jest już zakończone!",
+      "hasIssuesInProgress": "Spotkanie posiada zadania w toku!",
+      "forbidden": "Dostęp do spotkania zabroniony!",
+      "codeExists": "Spotkanie o podanym kodzie już istnieje!",
+      "mismatch": "Zadanie nie należy do spotkania o podanym identyfikatorze!",
+      "notFound": "Spotkanie nie zostało znalezione!"
+    },
+    "role": {
+      "notFound": "Rola nie została znaleziona!"
+    },
+    "systemFeature": {
+      "notFound": "Opcja systemowa nie została znaleziona!",
+      "registrationDisabled": "Rejestracja została wyłączona przez administratora!"
+    },
+    "user": {
+      "notFound": "Użytkownik nie został znaleziony!",
+      "usernameExists": "Użytkownik o podanej nazwie już istnieje!",
+      "emailExists": "Użytkownik o podanym E-mail już istnieje!"
+    },
+    "vote": {
+      "notFound": "Głos nie został znaleziony!"
     }
   }
 }

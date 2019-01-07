@@ -357,7 +357,7 @@
       "sameAsOld": "New password is same as old!"
     },
     "planning": {
-      "notFinished": "Planning is finished yet!",
+      "notFinished": "Planning is not finished yet!",
       "alreadyFinished": "Planning is already finished!",
       "hasIssuesInProgress": "Planning has issues in progress!",
       "forbidden": "Access to planning is denied!",
