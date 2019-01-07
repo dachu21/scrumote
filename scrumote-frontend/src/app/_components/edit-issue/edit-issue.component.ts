@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, IssueService, PlanningService} from '../../_services';
+import {AlertService, AuthenticationService, IssueService, PlanningService} from '../../_services';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Planning} from '../../_models';
 
@@ -22,7 +22,8 @@ export class EditIssueComponent implements OnInit {
               private alert: AlertService,
               private formBuilder: FormBuilder,
               private issueService: IssueService,
-              private planningService: PlanningService) {
+              private planningService: PlanningService,
+              private auth: AuthenticationService) {
 
     const issueToEdit = this.issueService.issueToEdit;
     const openedPlanning = this.issueService.openedPlanning;
@@ -31,15 +32,18 @@ export class EditIssueComponent implements OnInit {
 
     if (!openedPlanning) {
       this.alert.error('editIssue.edit.noPlanningLoaded');
-      this.router.navigate(['/home']);
+      const url = this.auth.hasAuthority('getAllPlannings') ?
+          '/all-plannings' : '/my-plannings';
+      this.router.navigate([url]);
     } else {
       this.openedPlanning = openedPlanning;
     }
     if (this.route.snapshot.url[0].path === 'edit-issue') {
       this.issueType = 'edit';
       if (!issueToEdit) {
-        this.alert.error('editIssue.edit.noIssueLoaded');
-        this.router.navigate(['/home']);
+        const url = this.auth.hasAuthority('getAllPlannings') ?
+            '/all-plannings' : '/my-plannings';
+        this.router.navigate([url]);
       }
     } else if (this.route.snapshot.url[0].path === 'create-issue') {
       this.issueType = 'create';
