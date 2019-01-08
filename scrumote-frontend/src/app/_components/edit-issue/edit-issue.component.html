@@ -2,7 +2,7 @@
 <div class="center-500 center-text">
   <h2>{{'editIssue.headers.' + issueType | translate}}</h2>
 
-  <form [formGroup]="issueForm" (ngSubmit)="onSubmit(submitType)" class="vertical">
+  <form [formGroup]="issueForm" (ngSubmit)="onSubmit()" class="vertical">
 
     <mat-form-field>
       <input matInput required formControlName="code" type="text"/>
