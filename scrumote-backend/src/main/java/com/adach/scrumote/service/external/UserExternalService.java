@@ -9,16 +9,12 @@ import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserStats;
-import com.adach.scrumote.entity.UserToken;
-import com.adach.scrumote.entity.UserToken.TokenType;
 import com.adach.scrumote.exception.systemfeature.RegistrationDisabledException;
 import com.adach.scrumote.mapper.UserMapper;
-import com.adach.scrumote.service.email.EmailService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.RoleInternalService;
 import com.adach.scrumote.service.internal.SystemFeatureInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
-import com.adach.scrumote.service.internal.UserTokenInternalService;
 import com.adach.scrumote.service.security.PasswordService;
 import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
@@ -41,25 +37,19 @@ public class UserExternalService {
   private final RoleInternalService roleInternalService;
   private final SystemFeatureInternalService systemFeatureInternalService;
   private final PlanningInternalService planningInternalService;
-  private final UserTokenInternalService userTokenInternalService;
 
   private final PasswordService passwordService;
   private final SessionService sessionService;
-  private final EmailService emailService;
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
-  public Long registerUser(UserWithPasswordDto dto, String language) {
+  public Long registerUser(UserWithPasswordDto dto) {
     validateRegistrationEnabled();
-    User newUser = registerOrCreateUser(dto, false);
-    UserToken userToken = userTokenInternalService.saveOrUpdateToken(newUser, TokenType.ACTIVATION);
-    emailService.sendActivationEmail(userToken, language);
-    return newUser.getId();
+    return registerOrCreateUser(dto, false).getId();
   }
 
   @PreAuthorize("hasAnyAuthority('createUser')")
   public Long createUser(UserWithPasswordDto dto) {
-    User newUser = registerOrCreateUser(dto, true);
-    return newUser.getId();
+    return registerOrCreateUser(dto, true).getId();
   }
 
   private User registerOrCreateUser(UserWithPasswordDto dto, boolean active) {

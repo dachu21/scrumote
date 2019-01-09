@@ -1,21 +1,79 @@
 package com.adach.scrumote.service.email;
 
-import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
+import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.entity.UserToken;
+import com.adach.scrumote.entity.UserToken.UserTokenType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Service
-@MandatoryTransactions
+@Async
+@RequiresNewTransactions
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class EmailService {
 
-  public void sendActivationEmail(UserToken userToken, String language) {
+  @Value("${custom.application.url}")
+  private String APPLICATION_URL;
 
+  private final JavaMailSender mailSender;
+  private final TemplateEngine templateEngine;
+
+  public void sendUserTokenEmail(UserToken userToken, String requestLanguage) {
+    String verifiedLanguage = verifyAndSetLanguage(requestLanguage);
+
+    MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
+      MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+      messageHelper.setTo(userToken.getUser().getEmail());
+      messageHelper
+          .setSubject(EmailConstants.SUBJECTS_MAP.get(verifiedLanguage).get(userToken.getType()));
+      String content = buildHtmlContent(userToken, verifiedLanguage);
+      messageHelper.setText(content, true);
+    };
+    sendMessage(mimeMessagePreparator);
   }
 
-  public void sendResetPasswordEmail(UserToken userToken, String language) {
+  private String verifyAndSetLanguage(String requestLanguage) {
+    if (!requestLanguage.equals(EmailConstants.EN_LANGUAGE) &&
+        !requestLanguage.equals(EmailConstants.PL_LANGUAGE)) {
+      return EmailConstants.EN_LANGUAGE;
+    }
+    return requestLanguage;
+  }
 
+  private String buildHtmlContent(UserToken userToken, String verifiedLanguage) {
+    Context context = new Context();
+    context.setVariable("username", userToken.getUser().getUsername());
+    context.setVariable("url", buildUserTokenUrl(userToken));
+    return templateEngine.process(
+        EmailConstants.TEMPLATES_MAP.get(verifiedLanguage).get(userToken.getType()), context);
+  }
+
+  private String buildUserTokenUrl(UserToken userToken) {
+    String url = "";
+    if (userToken.getType().equals(UserTokenType.ACTIVATION)) {
+      url = APPLICATION_URL + EmailConstants.ACTIVATION_URL + "?token=" + userToken.getValue();
+    } else if (userToken.getType().equals(UserTokenType.RESET_PASSWORD)) {
+      url = APPLICATION_URL + EmailConstants.RESET_PASSWORD_URL + "?token=" + userToken.getValue();
+    }
+    return url;
+  }
+
+  protected void sendMessage(MimeMessagePreparator mimeMessagePreparator) {
+    try {
+      mailSender.send(mimeMessagePreparator);
+    } catch (MailException e) {
+      log.error(e.getMessage(), e);
+    }
   }
 }

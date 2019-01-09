@@ -38,7 +38,7 @@ public class UserTokenController extends AbstractController {
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
-  @PutMapping("/user-tokens/reset-password/{tokenValue}/")
+  @PutMapping("/user-tokens/reset-password/{tokenValue}")
   public ResponseEntity<?> resetUserPassword(@PathVariable UUID tokenValue,
       @RequestBody @Valid PasswordDto passwordDto) {
     userTokenExternalService.resetUserPassword(tokenValue, passwordDto);

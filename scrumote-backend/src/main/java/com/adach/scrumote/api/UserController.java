@@ -6,6 +6,7 @@ import com.adach.scrumote.dto.complex.UserRolesWithActiveDto;
 import com.adach.scrumote.dto.complex.UserWithPasswordDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.service.external.UserExternalService;
+import com.adach.scrumote.service.external.UserTokenExternalService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserController extends AbstractController {
 
   private final UserExternalService userExternalService;
+  private final UserTokenExternalService userTokenExternalService;
 
   @Override
   URI buildLocationUri(Long id) {
@@ -43,7 +45,8 @@ public class UserController extends AbstractController {
   @PostMapping("/users/register")
   public ResponseEntity<?> registerUser(@RequestBody @Valid UserWithPasswordDto dto,
       @RequestParam @NotNull String language) {
-    Long newUserId = userExternalService.registerUser(dto, language);
+    Long newUserId = userExternalService.registerUser(dto);
+    userTokenExternalService.createActivationToken(newUserId, language);
     URI location = buildLocationUri(newUserId);
 
     return ResponseEntity.created(location).build();

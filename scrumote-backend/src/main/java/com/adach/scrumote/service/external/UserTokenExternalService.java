@@ -4,7 +4,7 @@ import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.dto.complex.PasswordDto;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserToken;
-import com.adach.scrumote.entity.UserToken.TokenType;
+import com.adach.scrumote.entity.UserToken.UserTokenType;
 import com.adach.scrumote.service.email.EmailService;
 import com.adach.scrumote.service.internal.UserInternalService;
 import com.adach.scrumote.service.internal.UserTokenInternalService;
@@ -37,13 +37,14 @@ public class UserTokenExternalService {
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   public void createResetPasswordToken(String email, String language) {
     User user = userInternalService.findByEmail(email);
-    UserToken userToken = internalService.saveOrUpdateToken(user, TokenType.RESET_PASSWORD);
-    emailService.sendResetPasswordEmail(userToken, language);
+    UserToken userToken = internalService.saveOrUpdateToken(user, UserTokenType.RESET_PASSWORD);
+    emailService.sendUserTokenEmail(userToken, language);
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   public void resetUserPassword(UUID tokenValue, PasswordDto passwordDto) {
-    UserToken userToken = internalService.findByValueAndType(tokenValue, TokenType.RESET_PASSWORD);
+    UserToken userToken = internalService
+        .findByValueAndType(tokenValue, UserTokenType.RESET_PASSWORD);
     User user = userToken.getUser();
 
     passwordService.validateSatisfiesConditions(passwordDto.getNewPassword());
@@ -53,8 +54,15 @@ public class UserTokenExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
+  public void createActivationToken(Long userId, String language) {
+    User user = userInternalService.findById(userId);
+    UserToken userToken = internalService.saveOrUpdateToken(user, UserTokenType.ACTIVATION);
+    emailService.sendUserTokenEmail(userToken, language);
+  }
+
+  @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   public void activateUser(UUID tokenValue) {
-    UserToken userToken = internalService.findByValueAndType(tokenValue, TokenType.ACTIVATION);
+    UserToken userToken = internalService.findByValueAndType(tokenValue, UserTokenType.ACTIVATION);
     User user = userToken.getUser();
     user.setActive(true);
   }

@@ -3,7 +3,7 @@ package com.adach.scrumote.service.internal;
 import com.adach.scrumote.configuration.transaction.MandatoryTransactions;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserToken;
-import com.adach.scrumote.entity.UserToken.TokenType;
+import com.adach.scrumote.entity.UserToken.UserTokenType;
 import com.adach.scrumote.exception.usertoken.UserTokenNotFoundException;
 import com.adach.scrumote.repository.UserTokenRepository;
 import java.util.UUID;
@@ -30,34 +30,34 @@ public class UserTokenInternalService extends AbstractInternalService<UserToken>
             String.format("User token with value %s does not exist.", value)));
   }
 
-  public UserToken findByValueAndType(UUID value, TokenType tokenType) {
+  public UserToken findByValueAndType(UUID value, UserTokenType userTokenType) {
     return repository
-        .findByValueAndType(value, tokenType)
+        .findByValueAndType(value, userTokenType)
         .orElseThrow(() -> new UserTokenNotFoundException(
             String.format("User token with value %s and type %s does not exist.", value,
-                tokenType.name())));
+                userTokenType.name())));
   }
 
-  public UserToken findByUserAndType(User user, TokenType tokenType) {
+  public UserToken findByUserAndType(User user, UserTokenType userTokenType) {
     return repository
-        .findByUserAndType(user, tokenType)
+        .findByUserAndType(user, userTokenType)
         .orElseThrow(() -> new UserTokenNotFoundException(
             String.format("User token for user %d with type %s does not exist.", user.getId(),
-                tokenType.name())));
+                userTokenType.name())));
   }
 
-  public boolean existsByUserAndType(User user, TokenType tokenType) {
-    return repository.existsByUserAndType(user, tokenType);
+  public boolean existsByUserAndType(User user, UserTokenType userTokenType) {
+    return repository.existsByUserAndType(user, userTokenType);
   }
   //endregion
 
-  public UserToken saveOrUpdateToken(User user, TokenType tokenType) {
+  public UserToken saveOrUpdateToken(User user, UserTokenType userTokenType) {
     UserToken token;
-    if (this.existsByUserAndType(user, tokenType)) {
-      token = this.findByUserAndType(user, tokenType);
+    if (this.existsByUserAndType(user, userTokenType)) {
+      token = this.findByUserAndType(user, userTokenType);
       token.setValue(UUID.randomUUID());
     } else {
-      token = this.save(new UserToken(user, UUID.randomUUID(), tokenType));
+      token = this.save(new UserToken(user, UUID.randomUUID(), userTokenType));
     }
     return token;
   }

@@ -24,7 +24,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class UserToken extends AbstractEntity {
 
-  public enum TokenType {
+  public enum UserTokenType {
     ACTIVATION, RESET_PASSWORD
   }
 
@@ -40,6 +40,6 @@ public class UserToken extends AbstractEntity {
 
   @Column(nullable = false)
   @NotNull
-  private TokenType type;
+  private UserToken.UserTokenType type;
   //endregion
 }
