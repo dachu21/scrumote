@@ -9,12 +9,16 @@ import com.adach.scrumote.entity.Planning;
 import com.adach.scrumote.entity.Role;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserStats;
+import com.adach.scrumote.entity.UserToken;
+import com.adach.scrumote.entity.UserToken.TokenType;
 import com.adach.scrumote.exception.systemfeature.RegistrationDisabledException;
 import com.adach.scrumote.mapper.UserMapper;
+import com.adach.scrumote.service.email.EmailService;
 import com.adach.scrumote.service.internal.PlanningInternalService;
 import com.adach.scrumote.service.internal.RoleInternalService;
 import com.adach.scrumote.service.internal.SystemFeatureInternalService;
 import com.adach.scrumote.service.internal.UserInternalService;
+import com.adach.scrumote.service.internal.UserTokenInternalService;
 import com.adach.scrumote.service.security.PasswordService;
 import com.adach.scrumote.service.security.SessionService;
 import java.util.List;
@@ -37,22 +41,28 @@ public class UserExternalService {
   private final RoleInternalService roleInternalService;
   private final SystemFeatureInternalService systemFeatureInternalService;
   private final PlanningInternalService planningInternalService;
+  private final UserTokenInternalService userTokenInternalService;
 
   private final PasswordService passwordService;
   private final SessionService sessionService;
+  private final EmailService emailService;
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS', 'swagger')")
-  public Long registerUser(UserWithPasswordDto dto) {
+  public Long registerUser(UserWithPasswordDto dto, String language) {
     validateRegistrationEnabled();
-    return registerOrCreateUser(dto);
+    User newUser = registerOrCreateUser(dto, false);
+    UserToken userToken = userTokenInternalService.saveOrUpdateToken(newUser, TokenType.ACTIVATION);
+    emailService.sendActivationEmail(userToken, language);
+    return newUser.getId();
   }
 
   @PreAuthorize("hasAnyAuthority('createUser')")
   public Long createUser(UserWithPasswordDto dto) {
-    return registerOrCreateUser(dto);
+    User newUser = registerOrCreateUser(dto, true);
+    return newUser.getId();
   }
 
-  private Long registerOrCreateUser(UserWithPasswordDto dto) {
+  private User registerOrCreateUser(UserWithPasswordDto dto, boolean active) {
     User user = mapper.mapToEntity(dto.getUser());
     internalService.validateUsernameNotExists(dto.getUser().getUsername());
     internalService.validateEmailNotExists(dto.getUser().getEmail());
@@ -67,9 +77,9 @@ public class UserExternalService {
     UserStats userStats = UserStats.createEmpty(user);
     user.setUserStats(userStats);
 
-    user.setActive(true);
+    user.setActive(active);
 
-    return internalService.save(user).getId();
+    return internalService.save(user);
   }
 
   @PreAuthorize("hasAnyAuthority('getMyUser')")

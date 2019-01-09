@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Password, User, UserRolesWithActive, UserWithPassword} from '../_models';
 import {ifMatchOptions} from '../_functions';
 import {NewUserForm} from '../_interfaces';
+import {LanguageService} from './language.service';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,8 @@ export class UserService {
 
   userToEdit?: User;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private languageService: LanguageService) {
   }
 
   private convertToUserWithPassword(newUserForm: NewUserForm) {
@@ -24,7 +26,11 @@ export class UserService {
 
   registerUser(newUserForm: NewUserForm) {
     return this.http.post<UserWithPassword>(this.baseUrl + '/register',
-        this.convertToUserWithPassword(newUserForm));
+        this.convertToUserWithPassword(newUserForm), {
+          params: {
+            language: this.languageService.getCurrentLanguage()
+          }
+        });
   }
 
   createUser(newUserForm: NewUserForm) {

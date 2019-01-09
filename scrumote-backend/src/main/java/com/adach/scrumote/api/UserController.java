@@ -9,6 +9,7 @@ import com.adach.scrumote.service.external.UserExternalService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @PrefixedRestController
@@ -39,8 +41,9 @@ public class UserController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   @PostMapping("/users/register")
-  public ResponseEntity<?> registerUser(@RequestBody @Valid UserWithPasswordDto dto) {
-    Long newUserId = userExternalService.registerUser(dto);
+  public ResponseEntity<?> registerUser(@RequestBody @Valid UserWithPasswordDto dto,
+      @RequestParam @NotNull String language) {
+    Long newUserId = userExternalService.registerUser(dto, language);
     URI location = buildLocationUri(newUserId);
 
     return ResponseEntity.created(location).build();

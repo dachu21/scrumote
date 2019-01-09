@@ -311,7 +311,8 @@
   },
   "manageUser": {
     "header": "Zarządzaj innym użytkownikiem",
-    "noUserLoaded": "Brak użytkownika wczytanego do edycji!"
+    "noUserLoaded": "Brak użytkownika wczytanego do edycji!",
+    "success": "Użytkownik zaktualizowany pomyślnie."
   },
   "systemFeatureList": {
     "header": "Opcje systemowe",

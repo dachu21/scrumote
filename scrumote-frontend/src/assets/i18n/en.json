@@ -179,7 +179,7 @@
       "create": "Create user"
     },
     "create": {
-      "success": "User created successfully!"
+      "success": "User created successfully."
     },
     "register": {
       "success": "You have been successfully registered."
@@ -225,7 +225,7 @@
       "any": "Edit any user"
     },
     "noUserLoaded": "No user loaded to edit!",
-    "success": "User updated successfully!"
+    "success": "User updated successfully."
   },
   "editPassword": {
     "headers": {
@@ -233,7 +233,7 @@
       "any": "Change any user's password"
     },
     "noUserLoaded": "No user loaded to edit!",
-    "success": "Password changed successfully!"
+    "success": "Password changed successfully."
   },
   "myStats": {
     "header": "My statistics"
@@ -311,7 +311,8 @@
   },
   "manageUser": {
     "header": "Manage any user",
-    "noUserLoaded": "No user loaded to edit!"
+    "noUserLoaded": "No user loaded to edit!",
+    "success": "User updated successfully."
   },
   "systemFeatureList": {
     "header": "System features",

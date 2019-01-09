@@ -43,6 +43,12 @@ public class UserInternalService extends AbstractInternalService<User> {
   public List<User> findByIds(Set<Long> userIds) {
     return repository.findAllById(userIds);
   }
+
+  public User findByEmail(String email) {
+    Optional<User> userOpt = repository.findByEmail(email);
+    return userOpt.orElseThrow(() -> new UserNotFoundException(
+        String.format("User with email %s does not exist.", email)));
+  }
   //endregion
 
   //region Validation methods
