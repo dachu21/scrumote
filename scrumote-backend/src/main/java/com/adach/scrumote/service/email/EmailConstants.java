@@ -12,8 +12,8 @@ class EmailConstants {
   static final String FROM = "Scrumote";
   static final String EN_LANGUAGE = "en";
   static final String PL_LANGUAGE = "pl";
-  static final String ACTIVATION_URL = "activate";
-  static final String RESET_PASSWORD_URL = "reset-password";
+  static final String ACTIVATION_URL = "/activate";
+  static final String RESET_PASSWORD_URL = "/reset-password";
   static final Map<String, Map<UserTokenType, String>> SUBJECTS_MAP;
   static final Map<String, Map<UserTokenType, String>> TEMPLATES_MAP;
 
@@ -23,8 +23,8 @@ class EmailConstants {
     SUBJECTS_MAP.put(PL_LANGUAGE, new HashMap<>());
     SUBJECTS_MAP.get(EN_LANGUAGE).put(UserTokenType.ACTIVATION, FROM + " - Account activation");
     SUBJECTS_MAP.get(PL_LANGUAGE).put(UserTokenType.ACTIVATION, FROM + " - Aktywacja konta");
-    SUBJECTS_MAP.get(EN_LANGUAGE).put(UserTokenType.RESET_PASSWORD, FROM + " - Resetowanie hasła");
-    SUBJECTS_MAP.get(PL_LANGUAGE).put(UserTokenType.RESET_PASSWORD, FROM + " - Password reset");
+    SUBJECTS_MAP.get(EN_LANGUAGE).put(UserTokenType.RESET_PASSWORD, FROM + " - Reset password");
+    SUBJECTS_MAP.get(PL_LANGUAGE).put(UserTokenType.RESET_PASSWORD, FROM + " - Zresetuj hasło");
 
     TEMPLATES_MAP = new HashMap<>();
     TEMPLATES_MAP.put(EN_LANGUAGE, new HashMap<>());

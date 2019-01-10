@@ -2,6 +2,7 @@ package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserToken;
 import com.adach.scrumote.entity.UserToken.UserTokenType;
@@ -28,10 +29,12 @@ public class UserTokenExternalService {
   private final EmailService emailService;
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
-  public String getUsernameForToken(UUID tokenValue) {
+  public UserSimpleDto getUsernameForToken(UUID tokenValue) {
     UserToken userToken = internalService.findByValue(tokenValue);
     User user = userToken.getUser();
-    return user.getUsername();
+    UserSimpleDto userSimpleDto = new UserSimpleDto();
+    userSimpleDto.setUsername(user.getUsername());
+    return userSimpleDto;
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")

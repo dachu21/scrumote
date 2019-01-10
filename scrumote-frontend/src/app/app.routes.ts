@@ -8,12 +8,14 @@ import {
   EditPlanningComponent,
   EditUserComponent,
   ErrorComponent,
+  ForgotPasswordComponent,
   HomeComponent,
   LoginComponent,
   ManageUserComponent,
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
+  ResetPasswordComponent,
   SystemFeatureListComponent,
   UserListComponent,
 } from './_components';
@@ -36,6 +38,22 @@ export const ROUTES: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthenticationGuard],
+    data: {
+      authenticated: false
+    }
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
+    canActivate: [AuthenticationGuard],
+    data: {
+      authenticated: false
+    }
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
     canActivate: [AuthenticationGuard],
     data: {
       authenticated: false

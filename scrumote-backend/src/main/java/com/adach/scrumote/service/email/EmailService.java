@@ -3,6 +3,7 @@ package com.adach.scrumote.service.email;
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.entity.UserToken;
 import com.adach.scrumote.entity.UserToken.UserTokenType;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class EmailService {
 
   private final JavaMailSender mailSender;
   private final TemplateEngine templateEngine;
+
+  @PostConstruct
+  void postConstruct() {
+    if (APPLICATION_URL.endsWith("/")) {
+      APPLICATION_URL = APPLICATION_URL.substring(0, APPLICATION_URL.length() - 1);
+    }
+  }
 
   public void sendUserTokenEmail(UserToken userToken, String requestLanguage) {
     String verifiedLanguage = verifyAndSetLanguage(requestLanguage);
@@ -62,9 +70,9 @@ public class EmailService {
   private String buildUserTokenUrl(UserToken userToken) {
     String url = "";
     if (userToken.getType().equals(UserTokenType.ACTIVATION)) {
-      url = APPLICATION_URL + EmailConstants.ACTIVATION_URL + "?token=" + userToken.getValue();
+      url = APPLICATION_URL + EmailConstants.ACTIVATION_URL + "/" + userToken.getValue();
     } else if (userToken.getType().equals(UserTokenType.RESET_PASSWORD)) {
-      url = APPLICATION_URL + EmailConstants.RESET_PASSWORD_URL + "?token=" + userToken.getValue();
+      url = APPLICATION_URL + EmailConstants.RESET_PASSWORD_URL + "/" + userToken.getValue();
     }
     return url;
   }

@@ -11,3 +11,4 @@ export * from './language.service';
 export * from './notifications.service';
 export * from './role.service';
 export * from './dialog.service';
+export * from './user-token.service';

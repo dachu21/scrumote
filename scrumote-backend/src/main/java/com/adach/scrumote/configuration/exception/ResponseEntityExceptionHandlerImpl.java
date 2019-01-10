@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
@@ -28,6 +29,9 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
 
   private static final String ACCESS_DENIED_CODE = "exception.accessDenied";
   private static final HttpStatus ACCESS_DENIED_STATUS = HttpStatus.FORBIDDEN;
+
+  private static final String METHOD_ARGUMENT_TYPE_MISMATCH_CODE = "exception.typeMismatch";
+  private static final HttpStatus METHOD_ARGUMENT_TYPE_MISMATCH_STATUS = HttpStatus.BAD_REQUEST;
 
   private static final String HTTP_NOT_READABLE_ERROR_CODE = "exception.httpNotReadable";
   private static final HttpStatus HTTP_NOT_READABLE_ERROR_STATUS = HttpStatus.BAD_REQUEST;
@@ -72,6 +76,14 @@ public class ResponseEntityExceptionHandlerImpl extends ResponseEntityExceptionH
     log.error(e.getMessage(), e);
     ErrorResponse errorResponse = new ErrorResponse(ACCESS_DENIED_CODE);
     return new ResponseEntity<>(errorResponse, ACCESS_DENIED_STATUS);
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public final ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException
+      (MethodArgumentTypeMismatchException e, WebRequest request) {
+    log.error(e.getMessage(), e);
+    ErrorResponse errorResponse = new ErrorResponse(METHOD_ARGUMENT_TYPE_MISMATCH_CODE);
+    return new ResponseEntity<>(errorResponse, METHOD_ARGUMENT_TYPE_MISMATCH_STATUS);
   }
 
   @Override

@@ -19,12 +19,14 @@ import {
   EditPlanningComponent,
   EditUserComponent,
   ErrorComponent,
+  ForgotPasswordComponent,
   HomeComponent,
   LoginComponent,
   ManageUserComponent,
   MyStatsComponent,
   OpenedPlanningComponent,
   PlanningListComponent,
+  ResetPasswordComponent,
   SystemFeatureListComponent,
   UserListComponent,
   VoteDialogComponent
@@ -48,6 +50,7 @@ import {
   SystemFeatureService,
   UserService,
   UserStatsService,
+  UserTokenService,
   VoteService
 } from './_services';
 
@@ -71,9 +74,11 @@ import {httpLoaderFactory} from './_functions';
     EditDeckComponent,
     OpenedPlanningComponent,
     EditIssueComponent,
-    VoteDialogComponent,
     ManageUserComponent,
     SystemFeatureListComponent,
+    VoteDialogComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
     AreYouSureDialogComponent,
     PasswordValidator
   ],
@@ -118,7 +123,8 @@ import {httpLoaderFactory} from './_functions';
     RoleService,
     LanguageService,
     NotificationsService,
-    DialogService
+    DialogService,
+    UserTokenService
   ],
   bootstrap: [AppComponent]
 })

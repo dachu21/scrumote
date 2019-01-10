@@ -14,7 +14,7 @@ export class UserService {
   userToEdit?: User;
 
   constructor(private http: HttpClient,
-              private languageService: LanguageService) {
+              private language: LanguageService) {
   }
 
   private convertToUserWithPassword(newUserForm: NewUserForm) {
@@ -28,7 +28,7 @@ export class UserService {
     return this.http.post<UserWithPassword>(this.baseUrl + '/register',
         this.convertToUserWithPassword(newUserForm), {
           params: {
-            language: this.languageService.getCurrentLanguage()
+            language: this.language.getCurrentLanguage()
           }
         });
   }

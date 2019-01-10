@@ -36,7 +36,8 @@
     "enable": "Enable",
     "disable": "Disable",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "send": "Send"
   },
   "models": {
     "user": {
@@ -171,7 +172,8 @@
   },
   "login": {
     "header": "Login",
-    "error": "Invalid username or password!"
+    "error": "Invalid username or password!",
+    "forgotPassword": "Forgot password?"
   },
   "createUser": {
     "headers": {
@@ -318,6 +320,15 @@
     "header": "System features",
     "success": "System feature updated successfully."
   },
+  "resetPassword": {
+    "header": "Reset password"
+  },
+  "forgotPassword": {
+    "header": "Forgot password?",
+    "info1": "Enter your e-mail below. ",
+    "info2": "We will send you instructions on how to reset your password.",
+    "success": "Reset password instructions have been sent to your e-mail."
+  },
   "voteDialog": {
     "selectCard": "Select card..."
   },
@@ -327,6 +338,7 @@
   "exception": {
     "integrityViolation": "Provided data violates constraints!",
     "accessDenied": "Access is denied!",
+    "typeMismatch": "Invalid request!",
     "httpNotReadable": "HTTP request is invalid!",
     "httpMethodNotSupported": "HTTP request method is not supported!",
     "validation": "Data is not valid!",
@@ -380,6 +392,9 @@
     },
     "vote": {
       "notFound": "Vote was not found!"
+    },
+    "userToken": {
+      "notFound": "Token was not found!"
     }
   }
 }

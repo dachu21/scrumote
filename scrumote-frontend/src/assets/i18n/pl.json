@@ -36,7 +36,8 @@
     "enable": "Włącz",
     "disable": "Wyłącz",
     "yes": "Tak",
-    "no": "Nie"
+    "no": "Nie",
+    "send": "Wyślij"
   },
   "models": {
     "user": {
@@ -171,7 +172,8 @@
   },
   "login": {
     "header": "Zaloguj",
-    "error": "Nieprawidłowa nazwa użytkownika lub hasło!"
+    "error": "Nieprawidłowa nazwa użytkownika lub hasło!",
+    "forgotPassword": "Zapomniałeś hasła?"
   },
   "createUser": {
     "headers": {
@@ -318,6 +320,15 @@
     "header": "Opcje systemowe",
     "success": "Opcja systemowa zaktualizowana pomyślnie."
   },
+  "resetPassword": {
+    "header": "Zresetuj hasło"
+  },
+  "forgotPassword": {
+    "header": "Zapomniałeś hasła?",
+    "info1": "Wpisz poniżej swój adres e-mail.",
+    "info2": "Otrzymasz instrukcję, która pozwoli Ci zresetować hasło.",
+    "success": "E-mail z instrukcją resetowania hasła został wysłany."
+  },
   "voteDialog": {
     "selectCard": "Wybierz kartę..."
   },
@@ -327,6 +338,7 @@
   "exception": {
     "integrityViolation": "Wpisane dane naruszają ograniczenia!",
     "accessDenied": "Dostęp zabroniony!",
+    "typeMismatch": "Nieprawidłowe żądanie!",
     "httpNotReadable": "Żądanie HTTP jest nieprawidłowe!",
     "httpMethodNotSupported": "Metoda HTTP zabroniona!",
     "validation": "Wpisane dane nie są poprawne!",
@@ -380,6 +392,9 @@
     },
     "vote": {
       "notFound": "Głos nie został znaleziony!"
+    },
+    "userToken": {
+      "notFound": "Token nie został znaleziony!"
     }
   }
 }

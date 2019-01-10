@@ -14,8 +14,9 @@ class AntMatchers {
       "/ui/**",
       "/login",
       "/register",
-      "/activate",
-      "/reset-password",
+      "/activate/**",
+      "/forgot-password",
+      "/reset-password/**",
       API_PREFIX + "/users/register",
       API_PREFIX + "/system-features/*",
       API_PREFIX + "/user-tokens/**"

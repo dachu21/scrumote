@@ -22,12 +22,17 @@
     </mat-form-field>
 
     <span>
-      <button mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit">
+      <button mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit"
+              class="button-160">
         {{'common.login' | translate}}
       </button>
       <button mat-flat-button color="accent" *ngIf="registrationEnabled" type="button"
-              routerLink="/register">
+              class="button-160" routerLink="/register">
         {{'common.register' | translate}}
+      </button>
+      <button mat-flat-button color="warn" type="button" routerLink="/forgot-password"
+              class="button-160">
+        {{'login.forgotPassword' | translate}}
       </button>
     </span>
   </form>

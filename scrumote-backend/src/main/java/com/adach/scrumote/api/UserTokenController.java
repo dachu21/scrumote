@@ -2,6 +2,7 @@ package com.adach.scrumote.api;
 
 import com.adach.scrumote.configuration.api.PrefixedRestController;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.service.external.UserTokenExternalService;
 import java.util.UUID;
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class UserTokenController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   @GetMapping("/user-tokens/{tokenValue}/username")
-  public String getUsernameForToken(@PathVariable UUID tokenValue) {
+  public UserSimpleDto getUsernameForToken(@PathVariable UUID tokenValue) {
     return userTokenExternalService.getUsernameForToken(tokenValue);
   }
 
