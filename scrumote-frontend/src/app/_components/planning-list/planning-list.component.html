@@ -20,33 +20,44 @@
     <ng-container matColumnDef="code">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.code' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.code}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="name">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.name' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.description' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.description}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="deckName">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.deckName' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.deckName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.deckName}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="moderatorUsername">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.moderatorUsername' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.moderatorUsername}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.moderatorUsername}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="finished">
       <th mat-header-cell mat-sort-header
           *matHeaderCellDef> {{'models.planning.finished' | translate}}</th>
       <td mat-cell *matCellDef="let element">
         <mat-checkbox [(ngModel)]="element.finished" [disabled]=true></mat-checkbox>
+        <span class="center-cell"></span>
       </td>
     </ng-container>
 

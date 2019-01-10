@@ -86,3 +86,16 @@ div.mat-paginator-container {
 .button-160 {
   width: 160px;
 }
+
+button.mat-sort-header-button {
+  margin-left: auto !important;
+}
+
+div.mat-sort-header-arrow {
+  margin-right: auto !important;
+}
+
+span.center-cell {
+  width: 12px;
+  display: inline-block;
+}

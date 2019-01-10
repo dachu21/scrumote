@@ -19,7 +19,9 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> {{'models.deck.name' | translate}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}}
+        <span class="center-cell"></span>
+      </td>
     </ng-container>
     <ng-container matColumnDef="cards">
       <th mat-header-cell mat-sort-header
@@ -28,6 +30,7 @@
         <span *ngFor="let card of element.cards">
            [{{card.value}}]
         </span>
+        <span class="center-cell"></span>
       </td>
     </ng-container>
 
