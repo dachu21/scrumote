@@ -43,6 +43,7 @@
     "user": {
       "username": "Nazwa użytkownika",
       "password": "Hasło",
+      "passwordRepeated": "Powtórzone hasło",
       "email": "E-mail",
       "firstName": "Imię",
       "lastName": "Nazwisko",
@@ -114,6 +115,10 @@
       "mismatch": "Hasło potwórzone niepoprawnie.",
       "required": "Powtórzone nowe hasło jest wymagane."
     },
+    "passwordRepeated": {
+      "mismatch": "Hasło potwórzone niepoprawnie.",
+      "required": "Powtórzone hasło jest wymagane."
+    },
     "email": {
       "required": "E-mail jest wymagany.",
       "email": "E-mail jest nieprawidłowy.",
@@ -184,7 +189,7 @@
       "success": "Użytkownik utworzony pomyślnie."
     },
     "register": {
-      "success": "Zostałeś pomyślnie zarejestrowany."
+      "success": "Na podany adres e-mail został wysłany link aktywacyjny."
     }
   },
   "planningList": {
@@ -328,6 +333,9 @@
     "info1": "Wpisz poniżej swój adres e-mail.",
     "info2": "Otrzymasz instrukcję, która pozwoli Ci zresetować hasło.",
     "success": "E-mail z instrukcją resetowania hasła został wysłany."
+  },
+  "activateUser": {
+    "success": "Konto aktywowane pomyślnie."
   },
   "voteDialog": {
     "selectCard": "Wybierz kartę..."

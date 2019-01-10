@@ -141,6 +141,7 @@ public class UserExternalService {
     user.setEmail(dto.getEmail());
   }
 
+  @SuppressWarnings("Duplicates")
   @PreAuthorize("hasAnyAuthority('updateMyUsersPassword')")
   public void updateMyUsersPassword(Long version, PasswordDto dto) {
     User currentUser = sessionService.getCurrentUser();
@@ -160,6 +161,7 @@ public class UserExternalService {
     internalService.validateVersion(user, version);
 
     passwordService.validateSatisfiesConditions(dto.getNewPassword());
+    passwordService.validateNotEqualToOldPassword(dto.getNewPassword(), user);
 
     String encodedPassword = passwordService.encode(dto.getNewPassword());
     user.setPassword(encodedPassword);

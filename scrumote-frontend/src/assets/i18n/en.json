@@ -43,6 +43,7 @@
     "user": {
       "username": "Username",
       "password": "Password",
+      "passwordRepeated": "Repeated password",
       "email": "E-mail",
       "firstName": "First name",
       "lastName": "Last name",
@@ -114,6 +115,10 @@
       "mismatch": "Passwords don't match.",
       "required": "Repeated new password is required."
     },
+    "passwordRepeated": {
+      "mismatch": "Passwords don't match.",
+      "required": "Repeated password is required."
+    },
     "email": {
       "required": "E-mail is required.",
       "email": "E-mail is not valid.",
@@ -184,7 +189,7 @@
       "success": "User created successfully."
     },
     "register": {
-      "success": "You have been successfully registered."
+      "success": "An activation link has been sent to your e-mail."
     }
   },
   "planningList": {
@@ -328,6 +333,9 @@
     "info1": "Enter your e-mail below. ",
     "info2": "We will send you instructions on how to reset your password.",
     "success": "Reset password instructions have been sent to your e-mail."
+  },
+  "activateUser": {
+    "success": "Account activated successfully."
   },
   "voteDialog": {
     "selectCard": "Select card..."

@@ -44,12 +44,14 @@ public class UserTokenExternalService {
     emailService.sendUserTokenEmail(userToken, language);
   }
 
+  @SuppressWarnings("Duplicates")
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   public void resetUserPassword(UUID tokenValue, PasswordDto passwordDto) {
     UserToken userToken = internalService
         .findByValueAndType(tokenValue, UserTokenType.RESET_PASSWORD);
     User user = userToken.getUser();
 
+    passwordService.validateNotEqualToOldPassword(passwordDto.getNewPassword(), user);
     passwordService.validateSatisfiesConditions(passwordDto.getNewPassword());
     String encodedPassword = passwordService.encode(passwordDto.getNewPassword());
 

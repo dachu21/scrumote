@@ -16,6 +16,7 @@ export * from './manage-user/manage-user.component';
 export * from './system-feature-list/system-feature-list.component';
 export * from './reset-password/reset-password.component';
 export * from './forgot-password/forgot-password.component';
+export * from './activate-user/activate-user.component';
 export * from '../_dialogs/vote-dialog/vote-dialog.component';
 export * from '../_dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 

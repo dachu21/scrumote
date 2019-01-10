@@ -90,7 +90,7 @@ insert into role_permissions_t (role_id, permission_id) values
 (4, 38), (4, 39), (4, 40);
 
 insert into user_t (id, version, active, password, username, email, first_name, last_name) values
-(1, 0, true, '$2a$10$4dA/YnrD2OhqYcN3KrnrZegKS7eJQRnwIkXhIkkOCBXCwNOnQ54vq', 'swagger', 'swagger@server.com', 'John', 'Doe');
+(1, 0, true, '$2a$10$Gldl1RAt7wmpHI1tpBzew.6bedOx3FbRQ7kCdSiOn0f4MNun7uaFq', 'swagger', 'swagger@server.com', 'John', 'Doe');
 alter sequence user_seq restart with 2;
 
 insert into user_stats_t(id, version, user_id, average_first_vote_level_difference, first_votes_above_estimate, first_votes_below_estimate, first_votes_equal_estimate, issues, plannings, votes) values

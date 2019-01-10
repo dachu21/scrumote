@@ -19,6 +19,13 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
+      <input matInput required formControlName="passwordRepeated" type="password"/>
+      <mat-label>{{'models.user.passwordRepeated' | translate}}</mat-label>
+      <mat-error *ngFor="let error of getErrorKeys('passwordRepeated')">
+        {{'validation.passwordRepeated.' + error | translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
       <input matInput required formControlName="email" type="text"/>
       <mat-label>{{'models.user.email' | translate}}</mat-label>
       <mat-error *ngFor="let error of getErrorKeys('email')">

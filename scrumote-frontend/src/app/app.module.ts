@@ -10,6 +10,7 @@ import {PropagationStopModule} from 'ngx-propagation-stop';
 
 import {AppComponent} from './app.component';
 import {
+  ActivateUserComponent,
   AreYouSureDialogComponent,
   CreateUserComponent,
   DeckListComponent,
@@ -80,7 +81,8 @@ import {httpLoaderFactory} from './_functions';
     ResetPasswordComponent,
     ForgotPasswordComponent,
     AreYouSureDialogComponent,
-    PasswordValidator
+    PasswordValidator,
+    ActivateUserComponent
   ],
   entryComponents: [
     VoteDialogComponent,

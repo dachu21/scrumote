@@ -1,6 +1,12 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import {AlertService, UserService} from '../../_services';
 
 @Component({
@@ -40,8 +46,27 @@ export class CreateUserComponent {
       firstName: ['',
         Validators.maxLength(32)],
       lastName: ['',
-        Validators.maxLength(32)]
+        Validators.maxLength(32)],
+
+      passwordRepeated: ['']
     });
+
+    const passwordControl = this.newUserForm.controls['password'];
+    const passwordRepeatedControl = this.newUserForm.controls['passwordRepeated'];
+
+    passwordControl.valueChanges
+    .subscribe(() => this.validatePasswordsMatch(passwordControl, passwordRepeatedControl));
+    passwordRepeatedControl.valueChanges
+    .subscribe(() => this.validatePasswordsMatch(passwordControl, passwordRepeatedControl));
+  }
+
+  private validatePasswordsMatch(newPasswordControl: AbstractControl,
+                                 newPasswordRepeatedControl: AbstractControl) {
+    if (newPasswordControl.value !== newPasswordRepeatedControl.value) {
+      newPasswordRepeatedControl.setErrors({mismatch: true});
+    } else {
+      newPasswordRepeatedControl.setErrors(null);
+    }
   }
 
   onSubmit() {

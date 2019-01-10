@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {
+  ActivateUserComponent,
   CreateUserComponent,
   DeckListComponent,
   EditDeckComponent,
@@ -54,6 +55,14 @@ export const ROUTES: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
+    canActivate: [AuthenticationGuard],
+    data: {
+      authenticated: false
+    }
+  },
+  {
+    path: 'activate/:token',
+    component: ActivateUserComponent,
     canActivate: [AuthenticationGuard],
     data: {
       authenticated: false
