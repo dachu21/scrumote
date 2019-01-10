@@ -9,6 +9,13 @@ export class MatPaginatorIntlCustom extends MatPaginatorIntl {
 
   constructor(private translate: TranslateService) {
     super();
+    this.translate.onLangChange.subscribe(() => {
+      this.translateLabels();
+    });
+    this.translateLabels();
+  }
+
+  private translateLabels() {
     this.translate.get('paginator.itemsPerPageLabel').subscribe(value => {
       this.itemsPerPageLabel = value;
       this.nextPageLabel = this.translate.instant('paginator.nextPageLabel');
@@ -18,6 +25,7 @@ export class MatPaginatorIntlCustom extends MatPaginatorIntl {
       this.rangePageLabel = this.translate.instant('paginator.rangePageLabel');
       this.getRangeLabel = this.getRangeLabelFunction;
     });
+    this.changes.next();
   }
 
   private getRangeLabelFunction(page: number, pageSize: number, length: number): string {
