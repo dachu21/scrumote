@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AlertService, AuthenticationService, SystemFeatureService} from '../../_services';
 import {SystemFeature} from '../../_models';
 
@@ -16,6 +16,7 @@ export class SystemFeatureListComponent implements OnInit {
   displayedColumns: string[]
       = ['code', 'enabled', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class SystemFeatureListComponent implements OnInit {
   ngOnInit() {
     this.loadSystemFeatures();
     this.systemFeaturesDataSource.paginator = this.paginator;
+    this.systemFeaturesDataSource.sort = this.sort;
   }
 
   private loadSystemFeatures() {

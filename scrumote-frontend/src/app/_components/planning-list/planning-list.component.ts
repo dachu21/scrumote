@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Subscription} from 'rxjs';
 import {
   AlertService,
@@ -33,6 +33,7 @@ export class PlanningListComponent implements OnInit, OnDestroy {
   displayedColumns: string[]
       = ['code', 'name', 'description', 'deckName', 'moderatorUsername', 'finished', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     this.subscribeNotifications();
     this.loadPlannings();
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Subscription} from 'rxjs';
 import {
@@ -63,6 +63,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
   finishedIterationsColumns: string[] = [];
 
   @ViewChild(MatPaginator) issuesPaginator!: MatPaginator;
+  @ViewChild(MatSort) issuesSort!: MatSort;
 
   // endregion
 
@@ -98,6 +99,7 @@ export class OpenedPlanningComponent implements OnInit, OnDestroy {
     this.subscribeNotifications();
     this.initData();
     this.issuesDataSource.paginator = this.issuesPaginator;
+    this.issuesDataSource.sort = this.issuesSort;
   }
 
   private initData() {

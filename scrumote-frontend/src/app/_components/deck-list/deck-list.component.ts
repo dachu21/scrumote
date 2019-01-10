@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AlertService, AuthenticationService, DeckService, DialogService} from '../../_services';
 import {Deck} from '../../_models';
 
@@ -17,6 +17,7 @@ export class DeckListComponent implements OnInit {
   displayedColumns: string[]
       = ['name', 'cards', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class DeckListComponent implements OnInit {
   ngOnInit() {
     this.refreshDataSource();
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   editDeck(deck: Deck) {

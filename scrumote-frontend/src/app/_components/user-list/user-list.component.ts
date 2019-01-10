@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AlertService, AuthenticationService, UserService, UserStatsService} from '../../_services';
 import {User, UserStats} from '../../_models';
@@ -33,6 +33,7 @@ export class UserListComponent implements OnInit {
     'firstVotesEqualEstimate', 'averageFirstVoteLevelDifference'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -51,6 +52,7 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.refreshDataSource();
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   manageUser(user: User) {
