@@ -49,6 +49,10 @@ public class UserTokenInternalService extends AbstractInternalService<UserToken>
   public boolean existsByUserAndType(User user, UserTokenType userTokenType) {
     return repository.existsByUserAndType(user, userTokenType);
   }
+
+  public void delete(UserToken userToken) {
+    repository.delete(userToken);
+  }
   //endregion
 
   public UserToken saveOrUpdateToken(User user, UserTokenType userTokenType) {

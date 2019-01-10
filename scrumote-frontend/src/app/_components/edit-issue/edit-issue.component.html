@@ -27,15 +27,18 @@
     </mat-form-field>
 
     <span>
-      <button mat-flat-button class="primary-darker" [disabled]="!issueForm.valid" type="submit"
+      <button mat-flat-button [disabled]="!issueForm.valid" type="submit"
+              class="primary-darker button-160"
               *ngIf="issueType === 'create'"
               (click)="createNext = true">
         {{'editIssue.createNext' | translate}}
       </button>
-      <button mat-flat-button color="primary" [disabled]="!issueForm.valid" type="submit">
+      <button mat-flat-button color="primary" [disabled]="!issueForm.valid" type="submit"
+              class="button-160">
         {{'common.save' | translate}}
       </button>
-      <button mat-flat-button color="accent" (click)="navigateToOpenedPlanning()" type="button">
+      <button mat-flat-button color="accent" (click)="navigateToOpenedPlanning()" type="button"
+              class="button-160">
         {{'common.cancel' | translate}}
       </button>
     </span>

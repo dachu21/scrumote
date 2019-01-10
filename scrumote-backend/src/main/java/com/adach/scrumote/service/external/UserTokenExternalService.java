@@ -54,6 +54,7 @@ public class UserTokenExternalService {
     String encodedPassword = passwordService.encode(passwordDto.getNewPassword());
 
     user.setPassword(encodedPassword);
+    internalService.delete(userToken);
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
@@ -67,6 +68,8 @@ public class UserTokenExternalService {
   public void activateUser(UUID tokenValue) {
     UserToken userToken = internalService.findByValueAndType(tokenValue, UserTokenType.ACTIVATION);
     User user = userToken.getUser();
+
     user.setActive(true);
+    internalService.delete(userToken);
   }
 }
