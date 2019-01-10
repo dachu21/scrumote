@@ -36,6 +36,6 @@ export class MatPaginatorIntlCustom extends MatPaginatorIntl {
     const startIndex = page * pageSize;
     const endIndex = startIndex < length ?
         Math.min(startIndex + pageSize, length) : startIndex + pageSize;
-    return startIndex + ' - ' + endIndex + ' ' + this.rangePageLabel + ' ' + length;
+    return startIndex + 1 + ' - ' + endIndex + ' ' + this.rangePageLabel + ' ' + length;
   }
 }

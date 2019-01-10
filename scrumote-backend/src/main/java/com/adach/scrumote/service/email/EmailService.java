@@ -27,6 +27,9 @@ public class EmailService {
   @Value("${custom.application.url}")
   private String APPLICATION_URL;
 
+  @Value("${custom.mail.address}")
+  private String EMAIL_ADDRESS;
+
   private final JavaMailSender mailSender;
   private final TemplateEngine templateEngine;
 
@@ -42,6 +45,7 @@ public class EmailService {
 
     MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
       MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+      messageHelper.setFrom(EMAIL_ADDRESS, EmailConstants.FROM);
       messageHelper.setTo(userToken.getUser().getEmail());
       messageHelper
           .setSubject(EmailConstants.SUBJECTS_MAP.get(verifiedLanguage).get(userToken.getType()));
