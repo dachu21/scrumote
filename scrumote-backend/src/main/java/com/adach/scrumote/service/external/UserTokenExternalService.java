@@ -2,6 +2,7 @@ package com.adach.scrumote.service.external;
 
 import com.adach.scrumote.configuration.transaction.RequiresNewTransactions;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.complex.UsernameWithEmailDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.entity.User;
 import com.adach.scrumote.entity.UserToken;
@@ -38,8 +39,8 @@ public class UserTokenExternalService {
   }
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
-  public void createResetPasswordToken(String email, String language) {
-    User user = userInternalService.findByEmail(email);
+  public void createResetPasswordToken(UsernameWithEmailDto dto, String language) {
+    User user = userInternalService.findByUsernameAndEmail(dto.getUsername(), dto.getEmail());
     UserToken userToken = internalService.saveOrUpdateToken(user, UserTokenType.RESET_PASSWORD);
     emailService.sendUserTokenEmail(userToken, language);
   }

@@ -9,7 +9,7 @@ import {AlertService, UserTokenService} from '../../_services';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  emailForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   readonly path: string;
 
   constructor(private router: Router,
@@ -18,7 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
               private alert: AlertService,
               private userTokenService: UserTokenService) {
 
-    this.emailForm = this.formBuilder.group({
+    this.forgotPasswordForm = this.formBuilder.group({
+      username: ['', Validators.required],
       email: ['', [
         Validators.required,
         Validators.email]]
@@ -31,14 +32,14 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.userTokenService.createResetPasswordToken(this.emailForm.value.email).subscribe(() => {
+    this.userTokenService.createResetPasswordToken(this.forgotPasswordForm.value).subscribe(() => {
       this.alert.success('forgotPassword.success');
       this.router.navigate(['/login']);
     });
   }
 
   getErrorKeys(controlName: string) {
-    const errors: ValidationErrors | null = this.emailForm.controls[controlName].errors;
+    const errors: ValidationErrors | null = this.forgotPasswordForm.controls[controlName].errors;
     return errors && Object.keys(errors);
   }
 }

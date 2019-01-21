@@ -44,10 +44,10 @@ public class UserInternalService extends AbstractInternalService<User> {
     return repository.findAllById(userIds);
   }
 
-  public User findByEmail(String email) {
-    Optional<User> userOpt = repository.findByEmail(email);
+  public User findByUsernameAndEmail(String username, String email) {
+    Optional<User> userOpt = repository.findByUsernameAndEmail(username, email);
     return userOpt.orElseThrow(() -> new UserNotFoundException(
-        String.format("User with email %s does not exist.", email)));
+        String.format("User with username %s and email %s does not exist.", username, email)));
   }
   //endregion
 

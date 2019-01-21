@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Password, User} from '../_models';
 import {LanguageService} from './language.service';
+import {ForgotPasswordForm} from '../_interfaces';
 
 @Injectable()
 export class UserTokenService {
@@ -17,8 +18,8 @@ export class UserTokenService {
     return this.http.get<User>(this.baseUrl + '/' + token + '/username');
   }
 
-  createResetPasswordToken(email: string) {
-    return this.http.post<string>(this.baseUrl + '/reset-password', email, {
+  createResetPasswordToken(forgotPasswordForm: ForgotPasswordForm) {
+    return this.http.post<ForgotPasswordForm>(this.baseUrl + '/reset-password', forgotPasswordForm, {
       params: {
         language: this.language.getCurrentLanguage()
       }

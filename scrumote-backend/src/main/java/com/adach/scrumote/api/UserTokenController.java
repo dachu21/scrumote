@@ -2,6 +2,7 @@ package com.adach.scrumote.api;
 
 import com.adach.scrumote.configuration.api.PrefixedRestController;
 import com.adach.scrumote.dto.complex.PasswordDto;
+import com.adach.scrumote.dto.complex.UsernameWithEmailDto;
 import com.adach.scrumote.dto.simple.UserSimpleDto;
 import com.adach.scrumote.service.external.UserTokenExternalService;
 import java.util.UUID;
@@ -32,9 +33,9 @@ public class UserTokenController extends AbstractController {
 
   @PreAuthorize("hasAnyAuthority('ROLE_ANONYMOUS')")
   @PostMapping("/user-tokens/reset-password")
-  public ResponseEntity<?> createResetPasswordToken(@RequestBody String email,
+  public ResponseEntity<?> createResetPasswordToken(@RequestBody @Valid UsernameWithEmailDto dto,
       @RequestParam @NotNull String language) {
-    userTokenExternalService.createResetPasswordToken(email, language);
+    userTokenExternalService.createResetPasswordToken(dto, language);
     return ResponseEntity.noContent().build();
   }
 
