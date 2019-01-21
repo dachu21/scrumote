@@ -36,7 +36,7 @@ public class UserStats extends AbstractEntity {
 
   //region Data
   @OneToOne
-  @JoinColumn(nullable = false)
+  @JoinColumn(nullable = false, unique = true)
   @NotNull
   private User user;
 

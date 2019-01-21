@@ -53,6 +53,7 @@ public class Issue extends AbstractEntity {
   private Integer finishedIterations;
 
   @Column
+  @Size(max = 32)
   private String estimate;
 
   @Column(nullable = false)
