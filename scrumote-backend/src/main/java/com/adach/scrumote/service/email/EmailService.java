@@ -81,7 +81,7 @@ public class EmailService {
     return url;
   }
 
-  protected void sendMessage(MimeMessagePreparator mimeMessagePreparator) {
+  private void sendMessage(MimeMessagePreparator mimeMessagePreparator) {
     try {
       mailSender.send(mimeMessagePreparator);
     } catch (MailException e) {
